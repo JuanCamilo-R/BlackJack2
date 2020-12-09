@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -19,6 +20,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import comunes.Baraja;
+import comunes.Carta;
 import comunes.DatosBlackJack;
 
 public class VentanaSalaJuego extends JInternalFrame {
@@ -27,7 +30,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 		private JTextArea areaMensajes;
 		private JButton pedir, plantar;
 		private JPanel panelYo, panelBotones, yoFull, panelDealer,panelJugador2;
-		
+		private Baraja barajaNueva; 
 		private String yoId, jugador2Id;
 		//private DatosBlackJack datosRecibidos;
 		private Escucha escucha;
@@ -36,7 +39,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			this.yoId = yoId;
 			this.jugador2Id = jugador2Id;
 			//this.datosRecibidos=datosRecibidos;
-						
+			barajaNueva = new Baraja();			
 			initGUI();
 			
 			//default window settings
@@ -109,14 +112,23 @@ public class VentanaSalaJuego extends JInternalFrame {
 			pedir.setEnabled(turno);
 			plantar.setEnabled(turno);
 		}
-		
+		public ArrayList<Carta> asignarCartas(ArrayList<Carta> manoJugador) {
+			
+			ArrayList<Carta> manoJugadorAuxiliar = new ArrayList<Carta>();
+			for(int i = 0; i < manoJugador.size(); i++) {
+				manoJugadorAuxiliar.add(barajaNueva.revisarCarta(manoJugador.get(i)));
+				
+			}
+			System.out.println("Size auxiliar: "+manoJugadorAuxiliar.size());
+			return manoJugadorAuxiliar;
+		}
 		public void pintarCartasInicio(DatosBlackJack datosRecibidos) {
 			if(datosRecibidos.getIdJugadores()[0].equals(yoId)) {
-				yo.pintarCartasInicio(datosRecibidos.getManoJugador1());
-				jugador2.pintarCartasInicio(datosRecibidos.getManoJugador2());
+				yo.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador1()));
+				jugador2.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador2()));
 			}else {
-				yo.pintarCartasInicio(datosRecibidos.getManoJugador2());
-				jugador2.pintarCartasInicio(datosRecibidos.getManoJugador1());
+				yo.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador2()));
+				jugador2.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador1()));
 			}
 			dealer.pintarCartasInicio(datosRecibidos.getManoDealer());
 			
@@ -134,7 +146,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 					if(datosRecibidos.getJugadorEstado().equals("plantó") ){
 						cliente.setTurno(false);
 					}else {
-						yo.pintarLaCarta(datosRecibidos.getCarta());
+						yo.dibujarCarta(datosRecibidos.getCarta());
 						if(datosRecibidos.getJugadorEstado().equals("voló")) {
 							SwingUtilities.invokeLater(new Runnable() {
 								@Override
@@ -151,14 +163,14 @@ public class VentanaSalaJuego extends JInternalFrame {
 						//mensaje para PanelJuego jugador2
 						if(datosRecibidos.getJugadorEstado().equals("sigue")||
 						   datosRecibidos.getJugadorEstado().equals("voló")) {
-							jugador2.pintarLaCarta(datosRecibidos.getCarta());
+							jugador2.dibujarCarta(datosRecibidos.getCarta());
 						}
 					}else {
 						//mensaje para PanelJuego dealer
 						if(datosRecibidos.getJugadorEstado().equals("sigue") ||
 						   datosRecibidos.getJugadorEstado().equals("voló")	||
 						   datosRecibidos.getJugadorEstado().equals("plantó")) {
-							dealer.pintarLaCarta(datosRecibidos.getCarta());
+							dealer.dibujarCarta(datosRecibidos.getCarta());
 						}
 					}
 				}			 	

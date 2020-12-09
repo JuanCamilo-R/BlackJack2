@@ -26,7 +26,7 @@ import comunes.DatosBlackJack;
  */
 public class ServidorBJ implements Runnable{
 	//constantes para manejo de la conexion.
-	public static final int PUERTO=7377;
+	public static final int PUERTO=7375;
 	public static final String IP="127.0.0.1";
 	public static final int LONGITUD_COLA=2;
 
@@ -394,7 +394,8 @@ public class ServidorBJ implements Runnable{
 				datosEnviar = new DatosBlackJack();
 				datosEnviar.setManoDealer(manosJugadores.get(2));
 				datosEnviar.setManoJugador1(manosJugadores.get(0));
-				datosEnviar.setManoJugador2(manosJugadores.get(1));		
+				datosEnviar.setManoJugador2(manosJugadores.get(1));	
+				datosEnviar.setMazo(mazo);
 				datosEnviar.setIdJugadores(idJugadores);
 				datosEnviar.setValorManos(valorManos);
 				datosEnviar.setMensaje("Inicias "+idJugadores[0]+" tienes "+valorManos[0]);

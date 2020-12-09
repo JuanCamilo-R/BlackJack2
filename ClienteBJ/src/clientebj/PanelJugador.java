@@ -21,12 +21,12 @@ public class PanelJugador extends JPanel {
 	private static final int ALTO = 89;
 	
 	//variables para control del graficado
-	private ArrayList<Recuerdo> dibujoRecordar;
+	private ArrayList<Recuerdo> cartasRecuerdo;
 	private int x;
 	    
 	public PanelJugador(String nombreJugador) {
 		//this.setBackground(Color.GREEN);
-		dibujoRecordar = new ArrayList<Recuerdo>();
+		cartasRecuerdo = new ArrayList<Recuerdo>();
 		this.setPreferredSize(new Dimension(ANCHO,ALTO));
 		TitledBorder bordes;
 		bordes = BorderFactory.createTitledBorder(nombreJugador);
@@ -36,18 +36,34 @@ public class PanelJugador extends JPanel {
 	public void pintarCartasInicio(ArrayList<Carta> manoJugador) {
 		x=5;
 	    for(int i=0;i<manoJugador.size();i++) {
-	    	dibujoRecordar.add(new Recuerdo(manoJugador.get(i),x));
+	    	cartasRecuerdo.add(new Recuerdo(manoJugador.get(i).getImagen(),x));
 	    	x+=27;
 	    }			
 	    repaint();
 	}
 	
+	public void dibujarCarta(Carta carta) {
+		cartasRecuerdo.add(new Recuerdo(carta.getImagen(),x));
+		x+=17;
+		repaint();
+	}
+	/*
 	public void pintarLaCarta (Carta carta) {
 		dibujoRecordar.add(new Recuerdo(carta,x));
 		x+=27;
 		repaint();
 	}
-	
+	*/
+	public void paintComponent(Graphics g)  {
+		super.paintComponent(g); 
+		//Pinta con memoria
+		
+			for(Recuerdo carta : cartasRecuerdo) {
+				g.drawImage(carta.getImagenRecordar(), carta.getxRecordar(),20, this);
+			}
+			//clase.seguir=true;		
+		}
+	/*
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Font font =new Font(Font.DIALOG,Font.BOLD,12);
@@ -58,7 +74,26 @@ public class PanelJugador extends JPanel {
 			g.drawString(dibujoRecordar.get(i).getCartaRecordar(), dibujoRecordar.get(i).getxRecordar(),35);
 		}	
 	}
+	*/
 	
+	private class Recuerdo{
+		private Image imagenRecordar;
+		private int xRecordar;
+
+		public Recuerdo(Image imagenRecordar, int xRecordar) {
+			this.imagenRecordar = imagenRecordar;
+			this.xRecordar = xRecordar;
+		}
+
+		public Image getImagenRecordar() {
+			return imagenRecordar;
+		}
+
+		public int getxRecordar() {
+			return xRecordar;
+		}
+	}
+	/*
 	private class Recuerdo{
 		private Carta cartaRecordar;
 		private int xRecordar;
@@ -76,5 +111,6 @@ public class PanelJugador extends JPanel {
 			return xRecordar;
 		}
 	}
+	*/
 
 }

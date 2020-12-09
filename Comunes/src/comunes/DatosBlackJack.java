@@ -11,7 +11,7 @@ public class DatosBlackJack implements Serializable{
 	private Carta carta;
 	private String mensaje;
 	private String jugador,jugadorEstado;
-	
+	private Baraja baraja;
 	public String getJugador() {
 		return jugador;
 	}
@@ -71,5 +71,9 @@ public class DatosBlackJack implements Serializable{
 	}
 	public Carta getCarta() {
 		return carta;
+	}
+	
+	public void setMazo(Baraja mazo) {
+		baraja = mazo;
 	}
 }

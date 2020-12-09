@@ -3,6 +3,7 @@ package cartasGraficas;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,7 +13,7 @@ public class Baraja {
    private ArrayList<Carta> mazo;
    private Random aleatorio;
    
-   public Baraja() {
+   public Baraja()  {
 	   aleatorio = new Random();
 	   mazo = new ArrayList<Carta>();
 	   String valor;
