@@ -76,4 +76,5 @@ public class DatosBlackJack implements Serializable{
 	public void setMazo(Baraja mazo) {
 		baraja = mazo;
 	}
+	
 }

@@ -197,6 +197,7 @@ public class ServidorBJ implements Runnable{
     		datosEnviar.setIdJugadores(idJugadores);
 			datosEnviar.setValorManos(valorManos);
 			datosEnviar.setCarta(carta);
+			//datosEnviar.ponerImagen(carta);
 			datosEnviar.setJugador(idJugadores[indexJugador]);
     		//determinar qué sucede con la carta dada en la mano del jugador y 
 			//mandar mensaje a todos los jugadores

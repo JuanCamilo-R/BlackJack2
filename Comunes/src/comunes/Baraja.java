@@ -71,14 +71,18 @@ public class Baraja implements Serializable {
 	   for(int i = 0; i < mazo.size(); i++) {
 		   if(mazo.get(i).getPalo().equals(carta.getPalo()) &&
 			 mazo.get(i).getValor().equals(carta.getValor())) {
-			   return mazo.get(i);
+			   return eliminarCarta(i);
 		   }
 	   }
 	   return getCarta();
 	   
    }
-   
-
+ 
+   public Carta eliminarCarta(int i) {
+	   Carta carta = mazo.get(i);
+	   mazo.remove(i);
+	   return carta;
+   }
    
    public Carta getCarta() {
 	   int index = aleatorio.nextInt(mazoSize());

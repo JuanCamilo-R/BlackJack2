@@ -112,15 +112,19 @@ public class VentanaSalaJuego extends JInternalFrame {
 			pedir.setEnabled(turno);
 			plantar.setEnabled(turno);
 		}
+		//Coloca la imagen a la carta pedida por el usuario (dada por el servidor)
+		public Carta colocarImagenCarta(DatosBlackJack datosRecibidos) {
+			Carta carta = datosRecibidos.getCarta();
+			System.out.println("Carta dada por el servidor: "+carta);
+			return barajaNueva.revisarCarta(carta);
+		}
 		public ArrayList<Carta> asignarCartas(ArrayList<Carta> manoJugador) {
 			
 			ArrayList<Carta> manoJugadorAuxiliar = new ArrayList<Carta>();
 			System.out.println(manoJugador);
 			for(int i = 0; i < manoJugador.size(); i++) {
-				manoJugadorAuxiliar.add(barajaNueva.revisarCarta(manoJugador.get(i)));
-				
+				manoJugadorAuxiliar.add(barajaNueva.revisarCarta(manoJugador.get(i)));		
 			}
-			System.out.println("Size auxiliar: "+manoJugadorAuxiliar.size());
 			return manoJugadorAuxiliar;
 		}
 		public void pintarCartasInicio(DatosBlackJack datosRecibidos) {
@@ -147,7 +151,8 @@ public class VentanaSalaJuego extends JInternalFrame {
 					if(datosRecibidos.getJugadorEstado().equals("plantó") ){
 						cliente.setTurno(false);
 					}else {
-						yo.dibujarCarta(datosRecibidos.getCarta());
+						//yo.dibujarCarta(datosRecibidos.getCarta());
+						yo.dibujarCarta(colocarImagenCarta(datosRecibidos));
 						if(datosRecibidos.getJugadorEstado().equals("voló")) {
 							SwingUtilities.invokeLater(new Runnable() {
 								@Override
@@ -164,14 +169,16 @@ public class VentanaSalaJuego extends JInternalFrame {
 						//mensaje para PanelJuego jugador2
 						if(datosRecibidos.getJugadorEstado().equals("sigue")||
 						   datosRecibidos.getJugadorEstado().equals("voló")) {
-							jugador2.dibujarCarta(datosRecibidos.getCarta());
+							//jugador2.dibujarCarta(datosRecibidos.getCarta());
+							jugador2.dibujarCarta(colocarImagenCarta(datosRecibidos));
 						}
 					}else {
 						//mensaje para PanelJuego dealer
 						if(datosRecibidos.getJugadorEstado().equals("sigue") ||
 						   datosRecibidos.getJugadorEstado().equals("voló")	||
 						   datosRecibidos.getJugadorEstado().equals("plantó")) {
-							dealer.dibujarCarta(datosRecibidos.getCarta());
+							//dealer.dibujarCarta(datosRecibidos.getCarta());
+							dealer.dibujarCarta(colocarImagenCarta(datosRecibidos));
 						}
 					}
 				}			 	
