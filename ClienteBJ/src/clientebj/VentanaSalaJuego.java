@@ -135,8 +135,8 @@ public class VentanaSalaJuego extends JInternalFrame {
 				yo.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador2()));
 				jugador2.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador1()));
 			}
-			dealer.pintarCartasInicio(datosRecibidos.getManoDealer());
-			
+			//dealer.pintarCartasInicio(datosRecibidos.getManoDealer());
+			dealer.pintarCartasInicio(asignarCartas(datosRecibidos.getManoDealer()));
 			areaMensajes.append(datosRecibidos.getMensaje()+"\n");
 		}
 		
