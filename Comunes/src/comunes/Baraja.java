@@ -70,7 +70,8 @@ public class Baraja implements Serializable {
 	   
 		   System.out.println("Entro");
 		   for(int i = 0; i < mazo.size(); i++) {
-			   if(mazo.get(i) == carta) {
+			   if(mazo.get(i).getPalo() == carta.getPalo() &&
+				   mazo.get(i).getValor() == carta.getValor()) {
 				   System.out.println("Doy carta");
 				   return mazo.get(i);
 			   }

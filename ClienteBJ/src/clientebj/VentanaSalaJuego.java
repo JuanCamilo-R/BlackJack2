@@ -115,6 +115,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 		public ArrayList<Carta> asignarCartas(ArrayList<Carta> manoJugador) {
 			
 			ArrayList<Carta> manoJugadorAuxiliar = new ArrayList<Carta>();
+			System.out.println(manoJugador);
 			for(int i = 0; i < manoJugador.size(); i++) {
 				manoJugadorAuxiliar.add(barajaNueva.revisarCarta(manoJugador.get(i)));
 				
