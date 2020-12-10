@@ -174,9 +174,15 @@ public class VentanaSalaJuego extends JInternalFrame {
 			if(datosRecibidos.getIdJugadores()[0].equals(yoId)) {
 				yo.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador1()));
 				jugador2.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador2()));
-			}else {
+				jugador3.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador3()));
+			}else if(datosRecibidos.getIdJugadores()[1].equals(yoId)){
 				yo.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador2()));
 				jugador2.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador1()));
+				jugador3.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador3()));
+			}else {
+				yo.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador3()));
+				jugador2.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador2()));
+				jugador3.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador1()));
 			}
 			//dealer.pintarCartasInicio(datosRecibidos.getManoDealer());
 			dealer.pintarCartasInicio(asignarCartas(datosRecibidos.getManoDealer()));
@@ -215,7 +221,13 @@ public class VentanaSalaJuego extends JInternalFrame {
 							//jugador2.dibujarCarta(datosRecibidos.getCarta());
 							jugador2.dibujarCarta(colocarImagenCarta(datosRecibidos));
 						}
-					}else {
+					}else if(datosRecibidos.getJugador().equals(jugador3Id)) {
+						if(datosRecibidos.getJugadorEstado().equals("sigue")||
+						   datosRecibidos.getJugadorEstado().equals("voló")) {
+							jugador3.dibujarCarta(colocarImagenCarta(datosRecibidos));
+						}
+					}
+					else {
 						//mensaje para PanelJuego dealer
 						if(datosRecibidos.getJugadorEstado().equals("sigue") ||
 						   datosRecibidos.getJugadorEstado().equals("voló")	||
@@ -224,7 +236,9 @@ public class VentanaSalaJuego extends JInternalFrame {
 							dealer.dibujarCarta(colocarImagenCarta(datosRecibidos));
 						}
 					}
-				}			 	
+					
+				}
+						 	
 		}		
 	   
 	   private void enviarDatos(String mensaje) {

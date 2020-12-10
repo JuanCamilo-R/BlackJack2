@@ -6,7 +6,7 @@ import java.util.Collections;
 
 public class DatosBlackJack implements Serializable{
 	private String[] idJugadores;
-	private ArrayList<Carta> manoJugador1, manoJugador2, manoDealer;
+	private ArrayList<Carta> manoJugador1, manoJugador2, manoDealer, manoJugador3;
 	private int[] valorManos;
 	private Carta carta;
 	private String mensaje;
@@ -40,8 +40,14 @@ public class DatosBlackJack implements Serializable{
 		this.manoJugador1 = manoJugador1;
 	}
 	
+	
+	
 	public ArrayList<Carta> getManoJugador2() {
 		return manoJugador2;
+	}
+	
+	public void setManoJugador3(ArrayList<Carta> manoJugador3) {
+		this.manoJugador3 = manoJugador3;
 	}
 	public void setManoJugador2(ArrayList<Carta> manoJugador2) {
 		this.manoJugador2 = manoJugador2;
@@ -49,6 +55,10 @@ public class DatosBlackJack implements Serializable{
 	
 	public ArrayList<Carta> getManoDealer() {
 		return manoDealer;
+	}
+	
+	public ArrayList<Carta> getManoJugador3(){
+		return manoJugador3;
 	}
 	public void setManoDealer(ArrayList<Carta> manoDealer) {
 		this.manoDealer = manoDealer;

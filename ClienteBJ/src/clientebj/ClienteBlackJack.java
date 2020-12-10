@@ -43,7 +43,7 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 	public static final int HEIGHT=500;
 	
 	//Constantes de conexión con el Servidor BlackJack
-	public static final int PUERTO=7375;
+	public static final int PUERTO=7378;
 	public static final String IP="127.0.0.1";
 	
 	//variables de control del juego
@@ -164,9 +164,14 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 				datosRecibidos = (DatosBlackJack) in.readObject();
 				if(datosRecibidos.getIdJugadores()[0].equals(idYo)) {
 					otroJugador=datosRecibidos.getIdJugadores()[1];
+					otroJugador3 = datosRecibidos.getIdJugadores()[2];
 					turno=true;
-				}else {
+				}else if(datosRecibidos.getIdJugadores()[1].equals(idYo)){
 					otroJugador=datosRecibidos.getIdJugadores()[0];
+					otroJugador3 = datosRecibidos.getIdJugadores()[2];
+				}else {
+					otroJugador3 = datosRecibidos.getIdJugadores()[0];
+					otroJugador = datosRecibidos.getIdJugadores()[1];
 				}
 				this.habilitarSalaJuego(datosRecibidos);
 			} catch (ClassNotFoundException | IOException e) {
