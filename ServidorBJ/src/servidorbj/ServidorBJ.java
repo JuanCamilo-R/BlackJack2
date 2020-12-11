@@ -26,7 +26,7 @@ import comunes.DatosBlackJack;
  */
 public class ServidorBJ implements Runnable{
 	//constantes para manejo de la conexion.
-	public static final int PUERTO=7378;
+	public static final int PUERTO=7372;
 	public static final String IP="127.0.0.1";
 	public static final int LONGITUD_COLA=3;
 
@@ -212,10 +212,15 @@ public class ServidorBJ implements Runnable{
     			//jugador Voló
 	    		datosEnviar.setMensaje(idJugadores[indexJugador]+" tienes "+valorManos[indexJugador]+" volaste :(");	
 	    		datosEnviar.setJugadorEstado("voló");
-	    		
-	    		jugadores[0].enviarMensajeCliente(datosEnviar);
-	    		jugadores[1].enviarMensajeCliente(datosEnviar);
-	    		jugadores[2].enviarMensajeCliente(datosEnviar);
+	    		for(int i = 0; i < jugadores.length; i++) {
+	    			if(indexJugador == i) {
+	    				datosEnviar.setMensaje(idJugadores[indexJugador]+" tienes "+valorManos[indexJugador]+ " volaste");
+	    				jugadores[i].enviarMensajeCliente(datosEnviar);
+	    			}else {
+	    				datosEnviar.setMensaje(idJugadores[indexJugador]+" ahora tiene "+valorManos[indexJugador]+ " volo");
+	    				jugadores[i].enviarMensajeCliente(datosEnviar);
+	    			}
+	    		}
 	    		//notificar a todos que jugador sigue
 	    		if(jugadorEnTurno==0) {
 	        		
@@ -224,11 +229,12 @@ public class ServidorBJ implements Runnable{
 					datosEnviar.setValorManos(valorManos);
 					datosEnviar.setJugador(idJugadores[1]);
 					datosEnviar.setJugadorEstado("iniciar");
-					datosEnviar.setMensaje(idJugadores[1]+" te toca jugar y tienes "+valorManos[1]);
 					
+					datosEnviar.setMensaje("Juega "+idJugadores[1]+" y tiene: "+valorManos[1]);
 					jugadores[0].enviarMensajeCliente(datosEnviar);
-					jugadores[1].enviarMensajeCliente(datosEnviar);
 					jugadores[2].enviarMensajeCliente(datosEnviar);
+					datosEnviar.setMensaje(idJugadores[1]+" te toca jugar y tienes "+valorManos[1]);
+					jugadores[1].enviarMensajeCliente(datosEnviar);
 					//levantar al jugador en espera de turno
 					
 					bloqueoJuego.lock();
@@ -246,10 +252,10 @@ public class ServidorBJ implements Runnable{
 	        		datosEnviar.setValorManos(valorManos);
 	        		datosEnviar.setJugador(idJugadores[2]);
 	        		datosEnviar.setJugadorEstado("iniciar");
-	        		datosEnviar.setMensaje(idJugadores[2]+" te toca jugar y tienes "+valorManos[2]);
-	        		
+	        		datosEnviar.setMensaje("Juega "+idJugadores[2]+" y tiene: "+valorManos[2]);
 	        		jugadores[0].enviarMensajeCliente(datosEnviar);
 					jugadores[1].enviarMensajeCliente(datosEnviar);
+					datosEnviar.setMensaje(idJugadores[2]+" te toca jugar y tienes "+valorManos[2]);
 					jugadores[2].enviarMensajeCliente(datosEnviar);
 	        		
 					bloqueoJuego.lock();
@@ -283,9 +289,15 @@ public class ServidorBJ implements Runnable{
     			datosEnviar.setMensaje(idJugadores[indexJugador]+" ahora tienes "+valorManos[indexJugador]);
 	    		datosEnviar.setJugadorEstado("sigue");
 	    		
-	    		jugadores[0].enviarMensajeCliente(datosEnviar);
-	    		jugadores[1].enviarMensajeCliente(datosEnviar);
-	    		jugadores[2].enviarMensajeCliente(datosEnviar);
+	    		for(int i = 0; i < jugadores.length; i++) {
+	    			if(indexJugador == i) {
+	    				datosEnviar.setMensaje(idJugadores[indexJugador]+" ahora tienes "+valorManos[indexJugador]);
+	    				jugadores[i].enviarMensajeCliente(datosEnviar);
+	    			}else {
+	    				datosEnviar.setMensaje(idJugadores[indexJugador]+" ahora tiene "+valorManos[indexJugador]);
+	    				jugadores[i].enviarMensajeCliente(datosEnviar);
+	    			}
+	    		}
     		}
     		//Plantar
     	}else {
@@ -310,9 +322,9 @@ public class ServidorBJ implements Runnable{
 				datosEnviar.setJugador(idJugadores[1]);
 				datosEnviar.setJugadorEstado("iniciar");
 				datosEnviar.setMensaje(idJugadores[1]+" te toca jugar y tienes "+valorManos[1]);
-				
-				jugadores[0].enviarMensajeCliente(datosEnviar);
 				jugadores[1].enviarMensajeCliente(datosEnviar);
+				datosEnviar.setMensaje("Juega "+idJugadores[1]+" y tiene: "+valorManos[1]);
+				jugadores[0].enviarMensajeCliente(datosEnviar);
 				jugadores[2].enviarMensajeCliente(datosEnviar);
 				//levantar al jugador en espera de turno
 				
@@ -332,10 +344,11 @@ public class ServidorBJ implements Runnable{
         		datosEnviar.setJugador(idJugadores[2]);
         		datosEnviar.setJugadorEstado("iniciar");
         		datosEnviar.setMensaje(idJugadores[2]+" te toca jugar y tienes "+valorManos[2]);
-        		
+        		jugadores[2].enviarMensajeCliente(datosEnviar);
+        		datosEnviar.setMensaje("Juega "+idJugadores[2]+" y tiene: "+valorManos[2]);
         		jugadores[0].enviarMensajeCliente(datosEnviar);
 				jugadores[1].enviarMensajeCliente(datosEnviar);
-				jugadores[2].enviarMensajeCliente(datosEnviar);
+				
 				//levantar al jugador en espera de turno
 
 				bloqueoJuego.lock();
@@ -496,7 +509,7 @@ public class ServidorBJ implements Runnable{
 				datosEnviar.setMazo(mazo);
 				datosEnviar.setIdJugadores(idJugadores);
 				datosEnviar.setValorManos(valorManos);
-				datosEnviar.setMensaje("Inicias "+idJugadores[0]+" tienes "+valorManos[0]);
+				datosEnviar.setMensaje("Inicia "+idJugadores[0]+" tiene "+valorManos[0]);
 				enviarMensajeCliente(datosEnviar);
 				jugadorEnTurno=0;
 			}else {
@@ -520,7 +533,7 @@ public class ServidorBJ implements Runnable{
 				datosEnviar.setManoJugador3(manosJugadores.get(2));
 				datosEnviar.setIdJugadores(idJugadores);
 				datosEnviar.setValorManos(valorManos);
-				datosEnviar.setMensaje("Inicias "+idJugadores[0]+" tienes "+valorManos[0]);
+				datosEnviar.setMensaje("Inicia "+idJugadores[0]+" tiene "+valorManos[0]);
 				enviarMensajeCliente(datosEnviar);
 				
 				iniciarRondaJuego(); //despertar al jugador 1 para iniciar el juego
