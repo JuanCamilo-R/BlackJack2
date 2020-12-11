@@ -7,11 +7,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -31,11 +33,12 @@ public class VentanaSalaJuego extends JInternalFrame {
 	    
 		private PanelJugador dealer, yo, jugador2, jugador3;
 		private JTextArea areaMensajes;
-		private JButton pedir, plantar;
+		private JButton pedir, plantar, apostar;
 		private JPanel panelYo, panelBotones, yoFull, panelDealer,panelJugador2, panelJugador3;
 		private Baraja barajaNueva; 
 		private String yoId, jugador2Id, jugador3Id;
 		private GridBagConstraints constraints;
+		private ImageIcon imagen;
 		//private DatosBlackJack datosRecibidos;
 		private Escucha escucha;
 		
@@ -85,6 +88,8 @@ public class VentanaSalaJuego extends JInternalFrame {
 			panelJugador2.add(jugador2);
 			add(panelJugador2,constraints);	
 			
+			
+			
 			panelJugador3 = new JPanel();
 			jugador3 = new PanelJugador(jugador3Id);
 			constraints.gridx = 2;
@@ -130,25 +135,44 @@ public class VentanaSalaJuego extends JInternalFrame {
 			panelBotones.add(plantar);
 			
 			yoFull = new JPanel();
-			yoFull.setLayout(new GridLayout(2,1));
-			yoFull.setPreferredSize(new Dimension(190,190));//206 100
+			yoFull.setLayout(new GridBagLayout());
+			yoFull.setPreferredSize(new Dimension(225,225));//206 100  190 190
 			constraints.gridx = 0;
 			constraints.gridy = 0;
-			constraints.gridwidth =1;
+			constraints.gridwidth =2;
 			constraints.gridheight = 1;
+			//constraints.fill = constraints.SOUTHWEST;
 			yoFull.add(panelYo, constraints);
 			constraints.gridx = 0;
 			constraints.gridy = 1;
 			constraints.gridwidth =1;
 			constraints.gridheight = 1;
+			//constraints.fill = constraints.SOUTHWEST;
 			yoFull.add(panelBotones, constraints);
+			
+			apostar = new JButton();
+			apostar.setSize(45, 45);
+			
+			apostar.setBorder(null);
+			apostar.setContentAreaFilled(false);
+			imagen = new ImageIcon(getClass().getResource("/recursos/ficha2.png"));
+			apostar.setIcon(new  ImageIcon(imagen.getImage().getScaledInstance(50,50, Image.SCALE_AREA_AVERAGING)));
+			constraints.gridx = 1;
+			constraints.gridy = 1;
+			constraints.gridwidth =1;
+			constraints.gridheight = 1;
+			//constraints.fill = constraints.NORTHEAST;
+			yoFull.add(apostar, constraints);
+			
 			constraints.gridx = 0;
 			constraints.gridy = 2;
-			constraints.gridwidth =1;
+			constraints.gridwidth =2;
 			constraints.gridheight = 2;
 			constraints.anchor = constraints.SOUTHWEST;
 			//constraints.fill = constraints.SOUTHWEST;
 			add(yoFull,constraints);	
+			
+			
 		}
 		
 		public void activarBotones(boolean turno) {
