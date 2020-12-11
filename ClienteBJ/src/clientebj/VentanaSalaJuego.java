@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -34,6 +35,9 @@ public class VentanaSalaJuego extends JInternalFrame {
 		private PanelJugador dealer, yo, jugador2, jugador3;
 		private JTextArea areaMensajes;
 		private JButton pedir, plantar, apostar;
+		private JLabel apuesta1, apuesta2, apuesta3, apuestaDealer, dinero1, dinero2, dinero3, dineroDealer;
+		private JLabel palabraApuesta1, palabraApuesta2, palabraApuesta3, palabraApuestaDealer;
+		private JLabel palabraDinero1, palabraDinero2, palabraDinero3, palabraDineroDealer;
 		private JPanel panelYo, panelBotones, yoFull, panelDealer,panelJugador2, panelJugador3;
 		private Baraja barajaNueva; 
 		private String yoId, jugador2Id, jugador3Id;
@@ -70,13 +74,47 @@ public class VentanaSalaJuego extends JInternalFrame {
 			//Set up JComponents
 			this.getContentPane().setLayout(new GridBagLayout());
 			constraints = new GridBagConstraints();
+			palabraDineroDealer = new JLabel("Dinero: ");
+			palabraApuestaDealer = new JLabel("Apuesta dealer: ");
+			dineroDealer = new JLabel("4000");
+			apuestaDealer = new JLabel("");
 			panelDealer = new JPanel();
+			panelDealer.setLayout(new GridBagLayout());
 			dealer = new PanelJugador("Dealer");
 			constraints.gridx = 0;
 			constraints.gridy = 0;
 			constraints.gridwidth = 1;
 			constraints.gridheight = 1;
 			panelDealer.add(dealer);
+			
+			constraints.gridx = 0;
+			constraints.gridy = 1;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			panelDealer.add(palabraDineroDealer);
+			
+			constraints.gridx = 1;
+			constraints.gridy = 1;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			panelDealer.add(dineroDealer);
+			
+			constraints.gridx = 0;
+			constraints.gridy = 2;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			panelDealer.add(palabraApuestaDealer);
+			
+			constraints.gridx = 2;
+			constraints.gridy = 2;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			panelDealer.add(apuestaDealer);
+			
+			constraints.gridx = 0;
+			constraints.gridy = 0;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
 			add(panelDealer,constraints);		
 			
 			panelJugador2 = new JPanel();
@@ -272,6 +310,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 		}
 		   
 	  
+	   
 	   private class Escucha implements ActionListener{
 
 		@Override
