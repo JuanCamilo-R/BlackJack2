@@ -162,7 +162,8 @@ public class ServidorBJ implements Runnable{
     	try {
     		this.mostrarMensaje("Despertando al jugador 1 para que inicie el juego");
         	jugadores[0].setSuspendido(false);
-        	esperarInicio.signal();
+        	jugadores[1].setSuspendido(false);
+        	esperarInicio.signalAll();
     	}catch(Exception e) {
     		
     	}finally {
@@ -403,6 +404,7 @@ public class ServidorBJ implements Runnable{
 				
 		private void setSuspendido(boolean suspendido) {
 			this.suspendido = suspendido;
+			System.out.println("Jugador "+(indexJugador+1)+" cambia suspendido a "+suspendido);
 		}
 	   
 		@Override
@@ -445,7 +447,7 @@ public class ServidorBJ implements Runnable{
 				//le manda al jugador 1 todos los datos para montar la sala de Juego
 				//le toca el turno a jugador 1
 				
-				mostrarMensaje("manda al jugador 1 todos los datos para montar SalaJuego");
+				mostrarMensaje("jugador 1 manda al jugador 1 todos los datos para montar SalaJuego");
 				datosEnviar = new DatosBlackJack();
 				datosEnviar.setManoDealer(manosJugadores.get(3));
 				datosEnviar.setManoJugador1(manosJugadores.get(0));
@@ -485,7 +487,7 @@ public class ServidorBJ implements Runnable{
 					}
 				}
 				
-				mostrarMensaje("manda al jugador 1 todos los datos para montar SalaJuego");
+				mostrarMensaje("jugador 2 manda al jugador 1 todos los datos para montar SalaJuego");
 				datosEnviar = new DatosBlackJack();
 				datosEnviar.setManoDealer(manosJugadores.get(3));
 				datosEnviar.setManoJugador1(manosJugadores.get(0));
@@ -494,6 +496,7 @@ public class ServidorBJ implements Runnable{
 				datosEnviar.setMazo(mazo);
 				datosEnviar.setIdJugadores(idJugadores);
 				datosEnviar.setValorManos(valorManos);
+				datosEnviar.setMensaje("Inicias "+idJugadores[0]+" tienes "+valorManos[0]);
 				enviarMensajeCliente(datosEnviar);
 				jugadorEnTurno=0;
 			}else {
@@ -517,6 +520,7 @@ public class ServidorBJ implements Runnable{
 				datosEnviar.setManoJugador3(manosJugadores.get(2));
 				datosEnviar.setIdJugadores(idJugadores);
 				datosEnviar.setValorManos(valorManos);
+				datosEnviar.setMensaje("Inicias "+idJugadores[0]+" tienes "+valorManos[0]);
 				enviarMensajeCliente(datosEnviar);
 				
 				iniciarRondaJuego(); //despertar al jugador 1 para iniciar el juego
