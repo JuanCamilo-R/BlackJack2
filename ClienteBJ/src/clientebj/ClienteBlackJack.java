@@ -89,8 +89,8 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 		//Create Control objects
 		turno=false;
 		//Set up JComponents
-	
-		this.setBackground(SystemColor.activeCaption);
+	this.setBackground(Color.black);
+		//this.setBackground(SystemColor.activeCaption);
 		containerInternalFrames = new JDesktopPane();
 		containerInternalFrames.setOpaque(false);
 		this.setContentPane(containerInternalFrames);

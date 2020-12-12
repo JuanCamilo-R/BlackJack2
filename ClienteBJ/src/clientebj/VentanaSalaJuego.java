@@ -2,16 +2,23 @@ package clientebj;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -43,6 +50,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 		private Baraja barajaNueva; 
 		private String yoId, jugador2Id, jugador3Id;
 		private GridBagConstraints constraints;
+		private JLabel icono;
 		private ImageIcon imagen;
 		//private DatosBlackJack datosRecibidos;
 		private Escucha escucha;
@@ -67,13 +75,18 @@ public class VentanaSalaJuego extends JInternalFrame {
 		private void initGUI() {
 			// TODO Auto-generated method stub
 			//set up JFrame Container y Layout
-	        
+	
 			//Create Listeners objects
+			
+		
 			escucha = new Escucha();
 			//Create Control objects
-						
+		
+	
 			//Set up JComponents
 			this.getContentPane().setLayout(new GridBagLayout());
+			this.getContentPane().setBackground(Color.GREEN);
+			
 			constraints = new GridBagConstraints();
 			
 			palabraDineroDealer = new JLabel("Dinero: ");
@@ -81,11 +94,14 @@ public class VentanaSalaJuego extends JInternalFrame {
 			dineroDealer = new JLabel("4000");
 			apuestaDealer = new JLabel("0");
 			paneltextoDealer = new JPanel();
+			paneltextoDealer.setBackground(Color.GREEN);
 			paneltextoDealer.setLayout(new GridBagLayout());
 			
 			panelDealer = new JPanel();
+			panelDealer.setBackground(Color.GREEN);
 			panelDealer.setLayout(new GridBagLayout());
 			dealer = new PanelJugador("Dealer");
+			dealer.setBackground(Color.GREEN);
 			constraints.gridx = 0;
 			constraints.gridy = 0;
 			constraints.gridwidth = 1;
@@ -133,11 +149,14 @@ public class VentanaSalaJuego extends JInternalFrame {
 			dinero2 = new JLabel("4000");
 			apuesta2 = new JLabel("0");
 			paneltexto2 = new JPanel();
-			paneltexto2.setLayout(new GridBagLayout());
 			
+			paneltexto2.setLayout(new GridBagLayout());
+			paneltexto2.setBackground(Color.GREEN);
 			panelJugador2 = new JPanel();
+			panelJugador2.setBackground(Color.GREEN);
 			panelJugador2.setLayout(new GridBagLayout());
 			jugador2= new PanelJugador(jugador2Id);
+			jugador2.setBackground(Color.GREEN);
 			constraints.gridx = 0;
 			constraints.gridy = 0;
 			constraints.gridwidth = 1;
@@ -185,15 +204,19 @@ public class VentanaSalaJuego extends JInternalFrame {
 			
 			palabraDinero3 = new JLabel("Dinero: ");
 			palabraApuesta3 = new JLabel("      Apuesta: ");
+			//palabraDinero3 .setBackground(Color.GREEN);
 			dinero3 = new JLabel("4000");
 			apuesta3 = new JLabel("0");
 			paneltexto3 = new JPanel();
+			paneltexto3.setBackground(Color.GREEN);
+			
 			paneltexto3.setLayout(new GridBagLayout());
 			
 			panelJugador3 = new JPanel();
 			panelJugador3.setLayout(new GridBagLayout());
 			jugador3 = new PanelJugador(jugador3Id);
-			
+			jugador3.setBackground(Color.GREEN);
+			panelJugador3.setBackground(Color.GREEN);
 			constraints.gridx = 0;
 			constraints.gridy = 0;
 			constraints.gridwidth = 1;
@@ -237,18 +260,21 @@ public class VentanaSalaJuego extends JInternalFrame {
 			add(panelJugador3, constraints);
 			
 			areaMensajes = new JTextArea(8,18);
+			areaMensajes.setBackground(Color.white);
 			JScrollPane scroll = new JScrollPane(areaMensajes);	
 			Border blackline;
 			blackline = BorderFactory.createLineBorder(Color.black);
 			TitledBorder bordes;
 			bordes = BorderFactory.createTitledBorder(blackline, "Area de Mensajes");
 	        bordes.setTitleJustification(TitledBorder.CENTER);
+	       
 			scroll.setBorder(bordes);
-			areaMensajes.setOpaque(false);
-			areaMensajes.setBackground(new Color(0, 0, 0, 0));
+		//	areaMensajes.setOpaque(false);
+			//areaMensajes.setBackground(new Color(0, 0, 0, 0));
 			areaMensajes.setEditable(false);
 
 			scroll.getViewport().setOpaque(false);
+			scroll.setBackground(Color.white);
 			scroll.setOpaque(false);
 			constraints.gridx = 1;
 			constraints.gridy = 1;
@@ -257,8 +283,10 @@ public class VentanaSalaJuego extends JInternalFrame {
 			add(scroll,constraints);
 			
 			panelYo = new JPanel();
+			panelYo.setBackground(Color.GREEN);
 			panelYo.setLayout(new BorderLayout());
 			yo = new PanelJugador(yoId);
+			yo.setBackground(Color.GREEN);
 			panelYo.add(yo);
 				
 			pedir = new JButton("Carta");
@@ -278,9 +306,11 @@ public class VentanaSalaJuego extends JInternalFrame {
 			apuesta1 = new JLabel("0");
 			espacio = new JLabel("           ");
 			paneltexto1 = new JPanel();
+			paneltexto1.setBackground(Color.GREEN);
 			paneltexto1.setLayout(new GridBagLayout());
 			
 			yoFull = new JPanel();
+			yoFull.setBackground(Color.GREEN);
 			yoFull.setLayout(new GridBagLayout());
 			//yoFull.setPreferredSize(new Dimension(400,225));//206 100  190 190
 			constraints.gridx = 0;
@@ -293,6 +323,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			constraints.gridy = 1;
 			constraints.gridwidth =1;
 			constraints.gridheight = 1;
+			panelBotones.setBackground(Color.GREEN);
 			yoFull.add(panelBotones, constraints);
 			
 			apostar = new JButton();
@@ -357,6 +388,16 @@ public class VentanaSalaJuego extends JInternalFrame {
 			constraints.anchor = constraints.SOUTHWEST;
 			//constraints.fill = constraints.SOUTHWEST;
 			add(yoFull,constraints);	
+			
+			icono = new JLabel();
+			imagen = new ImageIcon(getClass().getResource("/recursos/imagen1.png"));
+			icono.setIcon(new  ImageIcon(imagen.getImage().getScaledInstance(50,50, Image.SCALE_AREA_AVERAGING)));
+			constraints.gridx = 1;
+			constraints.gridy = 0;
+			constraints.gridwidth =1;
+			constraints.gridheight = 1;
+			constraints.anchor = constraints.CENTER;
+			add(icono,constraints);
 			
 			
 		}
@@ -474,4 +515,5 @@ public class VentanaSalaJuego extends JInternalFrame {
 			}
 		}
 	   }
+	 
 }
