@@ -49,6 +49,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 		private JPanel paneltextoDealer,paneltexto1,paneltexto2,paneltexto3;
 		private Baraja barajaNueva; 
 		private String yoId, jugador2Id, jugador3Id;
+		private int yoN,jugador2N,jugador3N;
 		private GridBagConstraints constraints;
 		private JLabel icono;
 		private int cantidadApuesta;
@@ -58,11 +59,14 @@ public class VentanaSalaJuego extends JInternalFrame {
 		//private DatosBlackJack datosRecibidos;
 		private Escucha escucha;
 		
-		public VentanaSalaJuego(String yoId, String jugador2Id, String jugador3Id) {
+		public VentanaSalaJuego(String yoId, String jugador2Id, String jugador3Id, int yoN, int jugador2N, int jugador3N) {
 			this.yoId = yoId;
 			yoClase = this;
 			this.jugador2Id = jugador2Id;
 			this.jugador3Id = jugador3Id;
+			this.yoN= yoN;
+			this.jugador2N = jugador2N;
+			this.jugador3N = jugador3N;
 			//this.datosRecibidos=datosRecibidos;
 			barajaNueva = new Baraja();	
 			aposto = false;
@@ -536,7 +540,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 					}else {
 						System.out.println("Apuesta[0] = "+datosRecibidos.getApuestas()[0]);
 						//yo.dibujarCarta(datosRecibidos.getCarta());
-						apostar(String.valueOf(datosRecibidos.getApuestas()[0]), "1");
+						apostar(String.valueOf(datosRecibidos.getApuestas()[yoN]), "1");
 						if(datosRecibidos.getJugadorEstado().equals("voló")) {
 							SwingUtilities.invokeLater(new Runnable() {
 								@Override
@@ -553,19 +557,19 @@ public class VentanaSalaJuego extends JInternalFrame {
 						//mensaje para PanelJuego jugador2
 						if(datosRecibidos.getJugadorEstado().equals("apuesta")) {
 							//jugador2.dibujarCarta(datosRecibidos.getCarta());
-							System.out.println("Apuesta[1] = "+datosRecibidos.getApuestas()[1]);
-							apostar(String.valueOf(datosRecibidos.getApuestas()[1]), "2");
-							apostar(String.valueOf(datosRecibidos.getApuestas()[0]),"1");
+							System.out.println("Apuesta["+jugador2N+"] = "+datosRecibidos.getApuestas()[jugador2N]);
+							apostar(String.valueOf(datosRecibidos.getApuestas()[jugador2N]), "2");
+							
 						}
 					}else if(datosRecibidos.getJugador().equals(jugador3Id)) {
 						if(datosRecibidos.getJugadorEstado().equals("apuesta")) {
-							System.out.println("Apuesta[2] = "+datosRecibidos.getApuestas()[2]);
-							apostar(String.valueOf(datosRecibidos.getApuestas()[2]), "3");
-							apostar(String.valueOf(datosRecibidos.getApuestas()[1]), "2");
-							apostar(String.valueOf(datosRecibidos.getApuestas()[0]),"1");
+							System.out.println("Apuesta["+jugador3N+"] = "+datosRecibidos.getApuestas()[jugador3N]);
+							
+							apostar(String.valueOf(datosRecibidos.getApuestas()[jugador3N]),"3");
 						}
 					}
 					else {
+						System.out.println("Te habla el dealer papá");
 						//mensaje para PanelJuego dealer
 						if(datosRecibidos.getJugadorEstado().equals("apuesta")) {
 							//dealer.dibujarCarta(datosRecibidos.getCarta());
@@ -583,12 +587,17 @@ public class VentanaSalaJuego extends JInternalFrame {
 					// TODO Auto-generated method stub
 					if(jugador.equals("1")) {
 						apuesta1.setText(valor);
+						dinero1.setText(Integer.parseInt(dinero1.getText())-Integer.parseInt(valor)+"");
 					}else if(jugador.equals("2")) {
 						apuesta2.setText(valor);
+						dinero2.setText(Integer.parseInt(dinero2.getText())-Integer.parseInt(valor)+"");
 					}else if(jugador.equals("3")) {
 						apuesta3.setText(valor);
+						dinero3.setText(Integer.parseInt(dinero3.getText())-Integer.parseInt(valor)+"");
 					}else {
+						System.out.println("Apostó el dealer");
 						apuestaDealer.setText(valor);
+						dineroDealer.setText(Integer.parseInt(dineroDealer.getText())-Integer.parseInt(valor)+"");
 					}
 				}});
 		}
@@ -630,6 +639,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 				yoClase.pack();
 			}else {
 				if(cantidadApuesta > 0) {
+					System.out.println("Estoy apostando "+cantidadApuesta);
 					enviarDatos(String.valueOf(cantidadApuesta));
 					cantidadApuesta = 0;
 					confirmarApuesta.setEnabled(false);

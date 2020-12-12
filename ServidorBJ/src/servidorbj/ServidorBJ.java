@@ -178,6 +178,7 @@ public class ServidorBJ implements Runnable {
 	}
 
 	private void analizarMensaje(String entrada, int indexJugador) {
+		System.out.println("Analizando el mensaje del jugador con index "+indexJugador);
 		// TODO Auto-generated method stub
 		// garantizar que solo se analice la petición del jugador en turno.
 		while (indexJugador != jugadorEnTurno) {
@@ -387,9 +388,14 @@ public class ServidorBJ implements Runnable {
 			datosEnviar.setValorManos(valorManos);
 			datosEnviar.setJugador(idJugadores[indexJugador]);
 			datosEnviar.setMensaje(idJugadores[indexJugador] + " aposto" + entrada);
+			System.out.println(indexJugador+" apostó "+entrada);
 			datosEnviar.setEstadoJuego(true);
 			datosEnviar.setJugadorEstado("apuesta");
 			datosEnviar.setApuestas(apuestasJugadores);
+			System.out.println("Apuestas a enviar:");
+			for(int i=0; i<apuestasJugadores.length;i++) {
+				System.out.println("["+i+","+apuestasJugadores[i]+"]");
+			}
 
 			jugadores[0].enviarMensajeCliente(datosEnviar);
 			jugadores[1].enviarMensajeCliente(datosEnviar);
@@ -397,7 +403,8 @@ public class ServidorBJ implements Runnable {
 
 			datosEnviar.setJugadorEstado("iniciar");
 			datosEnviar.setMensaje("");
-			datosEnviar.setEstadoJuego(false); // Ronda de pedir cartas.
+			datosEnviar.setEstadoJuego(false);// Ronda de pedir cartas.
+			datosEnviar.setApuestas(apuestasJugadores);
 			jugadores[0].enviarMensajeCliente(datosEnviar);
 			jugadores[1].enviarMensajeCliente(datosEnviar);
 			jugadores[2].enviarMensajeCliente(datosEnviar);
@@ -600,6 +607,15 @@ public class ServidorBJ implements Runnable {
 
 		public void enviarMensajeCliente(Object mensaje) {
 			try {
+				DatosBlackJack prueba = (DatosBlackJack)mensaje;
+				if(prueba.getApuestas()!=null) {
+					System.out.println("Apuestas a enviar cuando envio mensaje al cliente "+indexJugador+":");
+
+					for(int i=0; i<prueba.getApuestas().length;i++) {
+						System.out.println("["+i+","+prueba.getApuestas()[i]+"]");
+					}
+				}
+				out.reset();
 				out.writeObject(mensaje);
 				out.flush();
 			} catch (IOException e) {
@@ -619,6 +635,13 @@ public class ServidorBJ implements Runnable {
 		datosEnviar.setJugador("dealer");
 		datosEnviar.setJugadorEstado("apuesta");
 		datosEnviar.setMensaje("El dealer aposto 4000");
+		datosEnviar.setEstadoJuego(true);
+		datosEnviar.setApuestas(apuestasJugadores);
+		jugadores[0].enviarMensajeCliente(datosEnviar);
+		jugadores[1].enviarMensajeCliente(datosEnviar);
+		jugadores[2].enviarMensajeCliente(datosEnviar);
+		datosEnviar.setEstadoJuego(false);
+		datosEnviar.setApuestas(apuestasJugadores);
 		jugadores[0].enviarMensajeCliente(datosEnviar);
 		jugadores[1].enviarMensajeCliente(datosEnviar);
 		jugadores[2].enviarMensajeCliente(datosEnviar);
