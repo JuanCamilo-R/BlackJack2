@@ -396,6 +396,7 @@ public class ServidorBJ implements Runnable {
 			jugadores[2].enviarMensajeCliente(datosEnviar);
 
 			datosEnviar.setJugadorEstado("iniciar");
+			datosEnviar.setMensaje("");
 			datosEnviar.setEstadoJuego(false); // Ronda de pedir cartas.
 			jugadores[0].enviarMensajeCliente(datosEnviar);
 			jugadores[1].enviarMensajeCliente(datosEnviar);
@@ -617,6 +618,7 @@ public class ServidorBJ implements Runnable {
 		datosEnviar = new DatosBlackJack();
 		datosEnviar.setJugador("dealer");
 		datosEnviar.setJugadorEstado("apuesta");
+		datosEnviar.setMensaje("El dealer aposto 4000");
 		jugadores[0].enviarMensajeCliente(datosEnviar);
 		jugadores[1].enviarMensajeCliente(datosEnviar);
 		jugadores[2].enviarMensajeCliente(datosEnviar);

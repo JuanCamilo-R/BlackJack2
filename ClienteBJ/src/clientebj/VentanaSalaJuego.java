@@ -306,7 +306,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			panelBotones.add(plantar);
 			
 			confirmarApuesta = new JButton("Confirmar apuesta");
-			confirmarApuesta.setPreferredSize(new Dimension(80,20));
+			confirmarApuesta.setPreferredSize(new Dimension(140,20));
 			palabraDinero1 = new JLabel("Dinero: ");
 			palabraApuesta1 = new JLabel("      Apuesta: ");
 			dinero1 = new JLabel("4000");
@@ -512,6 +512,11 @@ public class VentanaSalaJuego extends JInternalFrame {
 		}
 		
 		public void pintarApuestas(DatosBlackJack datosRecibidos) {
+			System.out.println("APUESTAS: ");
+			int[] apuestas = datosRecibidos.getApuestas();
+			for(int i = 0; i < 3; i++) {
+				System.out.println("Apuesta #"+(i+1)+" "+apuestas[i]);
+			}
 			areaMensajes.append(datosRecibidos.getMensaje()+"\n");	
 			ClienteBlackJack cliente = (ClienteBlackJack)this.getTopLevelAncestor();
 			
@@ -522,6 +527,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 					if(datosRecibidos.getJugadorEstado().equals("plantó") ){
 						cliente.setTurno(false);
 					}else {
+						System.out.println("Apuesta[0] = "+datosRecibidos.getApuestas()[0]);
 						//yo.dibujarCarta(datosRecibidos.getCarta());
 						apostar(String.valueOf(datosRecibidos.getApuestas()[0]), "1");
 						if(datosRecibidos.getJugadorEstado().equals("voló")) {
@@ -540,11 +546,16 @@ public class VentanaSalaJuego extends JInternalFrame {
 						//mensaje para PanelJuego jugador2
 						if(datosRecibidos.getJugadorEstado().equals("apuesta")) {
 							//jugador2.dibujarCarta(datosRecibidos.getCarta());
+							System.out.println("Apuesta[1] = "+datosRecibidos.getApuestas()[1]);
 							apostar(String.valueOf(datosRecibidos.getApuestas()[1]), "2");
+							apostar(String.valueOf(datosRecibidos.getApuestas()[0]),"1");
 						}
 					}else if(datosRecibidos.getJugador().equals(jugador3Id)) {
 						if(datosRecibidos.getJugadorEstado().equals("apuesta")) {
+							System.out.println("Apuesta[2] = "+datosRecibidos.getApuestas()[2]);
 							apostar(String.valueOf(datosRecibidos.getApuestas()[2]), "3");
+							apostar(String.valueOf(datosRecibidos.getApuestas()[1]), "2");
+							apostar(String.valueOf(datosRecibidos.getApuestas()[0]),"1");
 						}
 					}
 					else {
@@ -590,20 +601,20 @@ public class VentanaSalaJuego extends JInternalFrame {
 			// TODO Auto-generated method stub
 			if(actionEvent.getSource()==pedir) {
 				//enviar pedir carta al servidor
-				//if(aposto) {
+				if(aposto) {
 					enviarDatos("pedir");
-				//}else {
-					//JOptionPane.showMessageDialog(null,"Debes apostar primero!");
-				//}
+				}else {
+					JOptionPane.showMessageDialog(null,"Debes apostar primero!");
+				}
 								
 			}else if(actionEvent.getSource() == plantar) {
 				//enviar plantar al servidor
-				//if(aposto) {
+				if(aposto) {
 					enviarDatos("plantar");
 					activarBotones(false);	
-				//}else {
-					//JOptionPane.showMessageDialog(null,"Debes apostar primero!");
-				//}
+				}else {
+					JOptionPane.showMessageDialog(null,"Debes apostar primero!");
+				}
 				
 			}else if(actionEvent.getSource() == apostar) {
 				cantidadApuesta += 100;
@@ -613,7 +624,9 @@ public class VentanaSalaJuego extends JInternalFrame {
 			}else {
 				if(cantidadApuesta > 0) {
 					enviarDatos(String.valueOf(cantidadApuesta));
+					cantidadApuesta = 0;
 					confirmarApuesta.setEnabled(false);
+					apostar.setEnabled(false);
 					yoClase.pack();
 				}else {
 					JOptionPane.showMessageDialog(null,"Debes apostar primero!");
