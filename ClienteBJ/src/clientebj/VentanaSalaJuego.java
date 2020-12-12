@@ -34,8 +34,8 @@ public class VentanaSalaJuego extends JInternalFrame {
 	    
 		private PanelJugador dealer, yo, jugador2, jugador3;
 		private JTextArea areaMensajes;
-		private JButton pedir, plantar, apostar;
-		private JLabel apuesta1, apuesta2, apuesta3, apuestaDealer, dinero1, dinero2, dinero3, dineroDealer;
+		private JButton pedir, plantar, apostar,confirmarApuesta;
+		private JLabel apuesta1, apuesta2, apuesta3, apuestaDealer, dinero1, dinero2, dinero3, dineroDealer,espacio;
 		private JLabel palabraApuesta1, palabraApuesta2, palabraApuesta3, palabraApuestaDealer;
 		private JLabel palabraDinero1, palabraDinero2, palabraDinero3, palabraDineroDealer;
 		private JPanel panelYo, panelBotones, yoFull, panelDealer,panelJugador2, panelJugador3;
@@ -271,17 +271,18 @@ public class VentanaSalaJuego extends JInternalFrame {
 			panelBotones.add(pedir);
 			panelBotones.add(plantar);
 			
-			
+			confirmarApuesta = new JButton("Confirmar apuesta");
 			palabraDinero1 = new JLabel("Dinero: ");
 			palabraApuesta1 = new JLabel("      Apuesta: ");
 			dinero1 = new JLabel("4000");
 			apuesta1 = new JLabel("0");
+			espacio = new JLabel("           ");
 			paneltexto1 = new JPanel();
 			paneltexto1.setLayout(new GridBagLayout());
 			
 			yoFull = new JPanel();
 			yoFull.setLayout(new GridBagLayout());
-			yoFull.setPreferredSize(new Dimension(225,225));//206 100  190 190
+			//yoFull.setPreferredSize(new Dimension(400,225));//206 100  190 190
 			constraints.gridx = 0;
 			constraints.gridy = 0;
 			constraints.gridwidth =2;
@@ -330,6 +331,18 @@ public class VentanaSalaJuego extends JInternalFrame {
 			constraints.gridwidth = 1;
 			constraints.gridheight = 1;
 			paneltexto1.add(apuesta1, constraints);
+			
+			constraints.gridx = 4;
+			constraints.gridy = 0;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			paneltexto1.add(espacio, constraints);
+			
+			constraints.gridx = 5;
+			constraints.gridy = 0;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			paneltexto1.add(confirmarApuesta, constraints);
 		
 			constraints.gridx = 0;
 			constraints.gridy = 2;
