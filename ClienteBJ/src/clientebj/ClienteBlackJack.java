@@ -40,10 +40,10 @@ import comunes.DatosBlackJack;
 public class ClienteBlackJack extends JFrame implements Runnable{
 	//Constantes de Interfaz Grafica
 	public static final int WIDTH=800;
-	public static final int HEIGHT=500;
+	public static final int HEIGHT=520;
 	
 	//Constantes de conexión con el Servidor BlackJack
-	public static final int PUERTO=7371;
+	public static final int PUERTO=7378;
 	public static final String IP="127.0.0.1";
 	
 	

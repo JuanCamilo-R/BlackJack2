@@ -39,6 +39,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 		private JLabel palabraApuesta1, palabraApuesta2, palabraApuesta3, palabraApuestaDealer;
 		private JLabel palabraDinero1, palabraDinero2, palabraDinero3, palabraDineroDealer;
 		private JPanel panelYo, panelBotones, yoFull, panelDealer,panelJugador2, panelJugador3;
+		private JPanel paneltextoDealer,paneltexto1,paneltexto2,paneltexto3;
 		private Baraja barajaNueva; 
 		private String yoId, jugador2Id, jugador3Id;
 		private GridBagConstraints constraints;
@@ -74,10 +75,14 @@ public class VentanaSalaJuego extends JInternalFrame {
 			//Set up JComponents
 			this.getContentPane().setLayout(new GridBagLayout());
 			constraints = new GridBagConstraints();
+			
 			palabraDineroDealer = new JLabel("Dinero: ");
-			palabraApuestaDealer = new JLabel("Apuesta dealer: ");
+			palabraApuestaDealer = new JLabel("      Apuesta dealer: ");
 			dineroDealer = new JLabel("4000");
-			apuestaDealer = new JLabel("");
+			apuestaDealer = new JLabel("0");
+			paneltextoDealer = new JPanel();
+			paneltextoDealer.setLayout(new GridBagLayout());
+			
 			panelDealer = new JPanel();
 			panelDealer.setLayout(new GridBagLayout());
 			dealer = new PanelJugador("Dealer");
@@ -85,31 +90,37 @@ public class VentanaSalaJuego extends JInternalFrame {
 			constraints.gridy = 0;
 			constraints.gridwidth = 1;
 			constraints.gridheight = 1;
-			panelDealer.add(dealer);
+			panelDealer.add(dealer,constraints);
 			
 			constraints.gridx = 0;
-			constraints.gridy = 1;
+			constraints.gridy = 0;
 			constraints.gridwidth = 1;
 			constraints.gridheight = 1;
-			panelDealer.add(palabraDineroDealer);
+			paneltextoDealer.add(palabraDineroDealer,constraints);
 			
 			constraints.gridx = 1;
-			constraints.gridy = 1;
+			constraints.gridy = 0;
 			constraints.gridwidth = 1;
 			constraints.gridheight = 1;
-			panelDealer.add(dineroDealer);
-			
-			constraints.gridx = 0;
-			constraints.gridy = 2;
-			constraints.gridwidth = 1;
-			constraints.gridheight = 1;
-			panelDealer.add(palabraApuestaDealer);
+			paneltextoDealer.add(dineroDealer,constraints);
 			
 			constraints.gridx = 2;
-			constraints.gridy = 2;
+			constraints.gridy = 0;
 			constraints.gridwidth = 1;
 			constraints.gridheight = 1;
-			panelDealer.add(apuestaDealer);
+			paneltextoDealer.add(palabraApuestaDealer, constraints);
+			
+			constraints.gridx = 3;
+			constraints.gridy = 0;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			paneltextoDealer.add(apuestaDealer, constraints);
+			
+			constraints.gridx = 0;
+			constraints.gridy = 1;
+			constraints.gridwidth = 4;
+			constraints.gridheight = 1;
+			panelDealer.add(paneltextoDealer,constraints);
 			
 			constraints.gridx = 0;
 			constraints.gridy = 0;
@@ -117,24 +128,112 @@ public class VentanaSalaJuego extends JInternalFrame {
 			constraints.gridheight = 1;
 			add(panelDealer,constraints);		
 			
+			palabraDinero2 = new JLabel("Dinero: ");
+			palabraApuesta2 = new JLabel("      Apuesta: ");
+			dinero2 = new JLabel("4000");
+			apuesta2 = new JLabel("0");
+			paneltexto2 = new JPanel();
+			paneltexto2.setLayout(new GridBagLayout());
+			
 			panelJugador2 = new JPanel();
+			panelJugador2.setLayout(new GridBagLayout());
 			jugador2= new PanelJugador(jugador2Id);
-			constraints.gridx = 2;
-			constraints.gridy = 2;
+			constraints.gridx = 0;
+			constraints.gridy = 0;
 			constraints.gridwidth = 1;
 			constraints.gridheight = 1;
-			panelJugador2.add(jugador2);
-			add(panelJugador2,constraints);	
+			panelJugador2.add(jugador2,constraints);
 			
+			constraints.gridx = 0;
+			constraints.gridy = 0;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			paneltexto2.add(palabraDinero2,constraints);
 			
+			constraints.gridx = 1;
+			constraints.gridy = 0;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			paneltexto2.add(dinero2,constraints);
 			
-			panelJugador3 = new JPanel();
-			jugador3 = new PanelJugador(jugador3Id);
 			constraints.gridx = 2;
 			constraints.gridy = 0;
 			constraints.gridwidth = 1;
 			constraints.gridheight = 1;
-			panelJugador3.add(jugador3);
+			paneltexto2.add(palabraApuesta2, constraints);
+			
+			constraints.gridx = 3;
+			constraints.gridy = 0;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			paneltexto2.add(apuesta2, constraints);
+		
+			constraints.gridx = 0;
+			constraints.gridy = 1;
+			constraints.gridwidth = 4;
+			constraints.gridheight = 1;
+			panelJugador2.add(paneltexto2,constraints);
+			
+			constraints.gridx = 2;
+			constraints.gridy = 2;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			//panelJugador2.add(jugador2);
+			add(panelJugador2,constraints);	
+			
+			
+			
+			palabraDinero3 = new JLabel("Dinero: ");
+			palabraApuesta3 = new JLabel("      Apuesta: ");
+			dinero3 = new JLabel("4000");
+			apuesta3 = new JLabel("0");
+			paneltexto3 = new JPanel();
+			paneltexto3.setLayout(new GridBagLayout());
+			
+			panelJugador3 = new JPanel();
+			panelJugador3.setLayout(new GridBagLayout());
+			jugador3 = new PanelJugador(jugador3Id);
+			
+			constraints.gridx = 0;
+			constraints.gridy = 0;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			panelJugador3.add(jugador3,constraints);
+			
+			constraints.gridx = 0;
+			constraints.gridy = 0;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			paneltexto3.add(palabraDinero3,constraints);
+			
+			constraints.gridx = 1;
+			constraints.gridy = 0;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			paneltexto3.add(dinero3,constraints);
+			
+			constraints.gridx = 2;
+			constraints.gridy = 0;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			paneltexto3.add(palabraApuesta3, constraints);
+			
+			constraints.gridx = 3;
+			constraints.gridy = 0;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			paneltexto3.add(apuesta3, constraints);
+		
+			constraints.gridx = 0;
+			constraints.gridy = 1;
+			constraints.gridwidth = 4;
+			constraints.gridheight = 1;
+			panelJugador3.add(paneltexto3,constraints);
+			
+			constraints.gridx = 2;
+			constraints.gridy = 0;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
 			add(panelJugador3, constraints);
 			
 			areaMensajes = new JTextArea(8,18);
@@ -172,6 +271,14 @@ public class VentanaSalaJuego extends JInternalFrame {
 			panelBotones.add(pedir);
 			panelBotones.add(plantar);
 			
+			
+			palabraDinero1 = new JLabel("Dinero: ");
+			palabraApuesta1 = new JLabel("      Apuesta: ");
+			dinero1 = new JLabel("4000");
+			apuesta1 = new JLabel("0");
+			paneltexto1 = new JPanel();
+			paneltexto1.setLayout(new GridBagLayout());
+			
 			yoFull = new JPanel();
 			yoFull.setLayout(new GridBagLayout());
 			yoFull.setPreferredSize(new Dimension(225,225));//206 100  190 190
@@ -179,18 +286,16 @@ public class VentanaSalaJuego extends JInternalFrame {
 			constraints.gridy = 0;
 			constraints.gridwidth =2;
 			constraints.gridheight = 1;
-			//constraints.fill = constraints.SOUTHWEST;
 			yoFull.add(panelYo, constraints);
+			
 			constraints.gridx = 0;
 			constraints.gridy = 1;
 			constraints.gridwidth =1;
 			constraints.gridheight = 1;
-			//constraints.fill = constraints.SOUTHWEST;
 			yoFull.add(panelBotones, constraints);
 			
 			apostar = new JButton();
 			apostar.setSize(45, 45);
-			
 			apostar.setBorder(null);
 			apostar.setContentAreaFilled(false);
 			imagen = new ImageIcon(getClass().getResource("/recursos/ficha2.png"));
@@ -201,6 +306,36 @@ public class VentanaSalaJuego extends JInternalFrame {
 			constraints.gridheight = 1;
 			//constraints.fill = constraints.NORTHEAST;
 			yoFull.add(apostar, constraints);
+			
+			constraints.gridx = 0;
+			constraints.gridy = 0;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			paneltexto1.add(palabraDinero1,constraints);
+			
+			constraints.gridx = 1;
+			constraints.gridy = 0;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			paneltexto1.add(dinero1,constraints);
+			
+			constraints.gridx = 2;
+			constraints.gridy = 0;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			paneltexto1.add(palabraApuesta1, constraints);
+			
+			constraints.gridx = 3;
+			constraints.gridy = 0;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			paneltexto1.add(apuesta1, constraints);
+		
+			constraints.gridx = 0;
+			constraints.gridy = 2;
+			constraints.gridwidth = 4;
+			constraints.gridheight = 1;
+			yoFull.add(paneltexto1,constraints);
 			
 			constraints.gridx = 0;
 			constraints.gridy = 2;
