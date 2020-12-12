@@ -39,11 +39,11 @@ import comunes.DatosBlackJack;
  */
 public class ClienteBlackJack extends JFrame implements Runnable{
 	//Constantes de Interfaz Grafica
-	public static final int WIDTH=800;
-	public static final int HEIGHT=530;
+	public static final int WIDTH=1200;
+	public static final int HEIGHT=930;
 	
 	//Constantes de conexión con el Servidor BlackJack
-	public static final int PUERTO=7374;
+	public static final int PUERTO=7378;
 	public static final String IP="127.0.0.1";
 	
 	
@@ -190,7 +190,12 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 					datosRecibidos = (DatosBlackJack)in.readObject();
 					mostrarMensajes("Cliente hilo run recibiendo mensaje servidor ");
 					mostrarMensajes(datosRecibidos.getJugador()+" "+datosRecibidos.getJugadorEstado());
-					ventanaSalaJuego.pintarTurno(datosRecibidos);
+					if(datosRecibidos.getEstadoJuego()) { //True significa Ronda apuestas
+						ventanaSalaJuego.pintarApuestas(datosRecibidos);
+					}else {
+						ventanaSalaJuego.pintarTurno(datosRecibidos);
+					}
+					
 					
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block

@@ -7,11 +7,13 @@ import java.util.Collections;
 public class DatosBlackJack implements Serializable{
 	private String[] idJugadores;
 	private ArrayList<Carta> manoJugador1, manoJugador2, manoDealer, manoJugador3;
+	private int[] apuestasJugadores;
 	private int[] valorManos;
 	private Carta carta;
 	private String mensaje;
 	private String jugador,jugadorEstado;
 	private Baraja baraja;
+	private boolean estadoJuego;
 	public String getJugador() {
 		return jugador;
 	}
@@ -55,6 +57,23 @@ public class DatosBlackJack implements Serializable{
 	
 	public ArrayList<Carta> getManoDealer() {
 		return manoDealer;
+	}
+	
+	public void setEstadoJuego(boolean estado) {
+		//Verdadera si esta en ronda de apuestas
+		//Falsa si no.
+		estadoJuego = estado;
+	}
+	
+	public boolean getEstadoJuego() {
+		return estadoJuego;
+	}
+	public void setApuestas(int[] apuestas) {
+		apuestasJugadores = apuestas;
+	}
+	
+	public int[] getApuestas(){
+		return apuestasJugadores;
 	}
 	
 	public ArrayList<Carta> getManoJugador3(){
