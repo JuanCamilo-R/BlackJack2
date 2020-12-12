@@ -28,6 +28,7 @@ public class PanelJugador extends JPanel {
 		//this.setBackground(Color.GREEN);
 		cartasRecuerdo = new ArrayList<Recuerdo>();
 		this.setPreferredSize(new Dimension(ANCHO,ALTO));
+		this.setMinimumSize(this.getPreferredSize());
 		TitledBorder bordes;
 		bordes = BorderFactory.createTitledBorder(nombreJugador);
 		this.setBorder(bordes);

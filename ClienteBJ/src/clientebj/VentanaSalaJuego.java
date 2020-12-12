@@ -267,7 +267,9 @@ public class VentanaSalaJuego extends JInternalFrame {
 			
 			areaMensajes = new JTextArea(8,18);
 			areaMensajes.setBackground(Color.white);
-			JScrollPane scroll = new JScrollPane(areaMensajes);	
+			System.out.println("Tamano areaMensajes: "+areaMensajes.getSize().width+","+areaMensajes.getSize().height);
+			JScrollPane scroll = new JScrollPane(areaMensajes);
+			System.out.println("Tamano scroll: "+scroll.getSize().width+","+scroll.getSize().height);
 			Border blackline;
 			blackline = BorderFactory.createLineBorder(Color.black);
 			TitledBorder bordes;
@@ -282,11 +284,15 @@ public class VentanaSalaJuego extends JInternalFrame {
 			scroll.getViewport().setOpaque(false);
 			scroll.setBackground(Color.white);
 			scroll.setOpaque(false);
+			scroll.setSize(new Dimension(225,150));
+			scroll.setMinimumSize(scroll.getSize());
 			constraints.gridx = 1;
 			constraints.gridy = 1;
 			constraints.gridwidth = 1;
 			constraints.gridheight = 1;
 			add(scroll,constraints);
+			System.out.println("Tamano areaMensajes: "+areaMensajes.getSize().width+","+areaMensajes.getSize().height);
+			System.out.println("Tamano scroll: "+scroll.getViewport().getSize().width+","+scroll.getViewport().getSize().height);
 			
 			panelYo = new JPanel();
 			panelYo.setBackground(Color.GREEN);
@@ -307,6 +313,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			
 			confirmarApuesta = new JButton("Confirmar apuesta");
 			confirmarApuesta.setPreferredSize(new Dimension(140,20));
+			confirmarApuesta.setMinimumSize(confirmarApuesta.getPreferredSize());
 			palabraDinero1 = new JLabel("Dinero: ");
 			palabraApuesta1 = new JLabel("      Apuesta: ");
 			dinero1 = new JLabel("4000");
