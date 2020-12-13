@@ -27,6 +27,7 @@ import comunes.DatosBlackJack;
  */
 public class ServidorBJ implements Runnable {
 	// constantes para manejo de la conexion.
+
 	public static final int PUERTO = 7374;
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
@@ -34,7 +35,7 @@ public class ServidorBJ implements Runnable {
 	// variables para funcionar como servidor
 	private ServerSocket server;
 	private Socket conexionJugador;
-
+	private String ganador;
 	// variables para manejo de hilos
 	private ExecutorService manejadorHilos;
 	private Lock bloqueoJuego;
@@ -43,6 +44,7 @@ public class ServidorBJ implements Runnable {
 
 	// variables de control del juego
 	private String[] idJugadores;
+	private ArrayList<String> idJugadores2;
 	private int jugadorEnTurno;
 	// private boolean iniciarJuego;
 	private Baraja mazo;
@@ -53,6 +55,7 @@ public class ServidorBJ implements Runnable {
 	private ArrayList<Carta> manoJugador3;
 	private ArrayList<Carta> manoDealer;
 	private int[] valorManos;
+	private int o,u;
 	private DatosBlackJack datosEnviar;
 
 	public ServidorBJ() {
@@ -85,6 +88,7 @@ public class ServidorBJ implements Runnable {
 		// Variables de control del juego.
 
 		idJugadores = new String[3];
+		idJugadores2 = new ArrayList<String>();
 		valorManos = new int[4];
 
 		mazo = new Baraja();
@@ -467,6 +471,8 @@ public class ServidorBJ implements Runnable {
 				try {
 					// guarda el nombre del primer jugador
 					idJugadores[0] = (String) in.readObject();
+					//idJugadores2.add((String) in.readObject());
+					//idJugadores2.set(0, (String) in.readObject());
 					mostrarMensaje("Hilo establecido con jugador (1) " + idJugadores[0]);
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
@@ -512,6 +518,8 @@ public class ServidorBJ implements Runnable {
 				try {
 					// guarda el nombre del primer jugador
 					idJugadores[1] = (String) in.readObject();
+					//idJugadores2.add((String) in.readObject());
+					//idJugadores2.set(1, (String) in.readObject());
 					mostrarMensaje("Hilo establecido con jugador (2) " + idJugadores[1]);
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
@@ -553,6 +561,8 @@ public class ServidorBJ implements Runnable {
 				// Es jugador 3
 				try {
 					idJugadores[2] = (String) in.readObject();
+					//idJugadores2.add((String) in.readObject());
+					//idJugadores2.set(2, (String) in.readObject());
 					mostrarMensaje("Hilo jugador (3)" + idJugadores[2]);
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
@@ -626,7 +636,36 @@ public class ServidorBJ implements Runnable {
 			}
 		}
 	}// fin inner class Jugador
-	
+	 public void determinarGanador() {
+		 int contador =0;
+		 int mayor=valorManos[0];
+		 int cont =0;
+		 for(int i=0;i<2;i++) {
+			 if(mayor<valorManos[i+1] && valorManos[i+1]<=21) {
+				 mayor=valorManos[i+1];
+				 cont=i+1;
+			 }
+		 }
+		 /*for(int i=0;i<idJugadores2.size();i++) {
+			 if(valorManos[i]>21) {
+				 idJugadores2.remove(i);
+				 contador++;
+			 }
+		 }*/
+		 if(mayor>21 && valorManos[3]>mayor) {
+			 ganador="Dealer";
+			 System.out.print("Ahh");
+		 }else{
+			 System.out.print("Ehh");
+			ganador=idJugadores[cont];
+		 }
+		 /*
+		 if(idJugadores2.size()==0) {
+			 ganador="Dealer";
+		 }*/
+		 
+		 
+	 }
 	
 	
 	// Jugador dealer emulado por el servidor
@@ -675,11 +714,13 @@ public class ServidorBJ implements Runnable {
 					datosEnviar.setMensaje("Dealer ahora tiene " + valorManos[3] + " voló :(");
 					pedir = false;
 					mostrarMensaje("El dealer voló"); 
+					o=1;
 				} else {
 					datosEnviar.setJugadorEstado("plantó");
 					datosEnviar.setMensaje("Dealer ahora tiene " + valorManos[3] + " plantó");
 					pedir = false;
 					mostrarMensaje("El dealer plantó");
+					u=1;
 				}
 				
 			}
@@ -688,13 +729,18 @@ public class ServidorBJ implements Runnable {
 			jugadores[0].enviarMensajeCliente(datosEnviar);
 			jugadores[1].enviarMensajeCliente(datosEnviar);
 			jugadores[2].enviarMensajeCliente(datosEnviar);
-			
+		} // fin while
+		if(u==1 || o==1) {
+			determinarGanador();
+			datosEnviar.setGanador(ganador);
+			datosEnviar.setMensaje("El ganador es "+ganador);
 			jugadores[0].enviarMensajeCliente(datosEnviar);
 			jugadores[1].enviarMensajeCliente(datosEnviar);
 			jugadores[2].enviarMensajeCliente(datosEnviar);
-		} // fin while
 		
+		}
 		
+			
 	}
 
 }// Fin class ServidorBJ

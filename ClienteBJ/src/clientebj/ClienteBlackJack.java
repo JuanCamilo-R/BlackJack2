@@ -206,13 +206,23 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 					}
 					mostrarMensajes("Cliente hilo run recibiendo mensaje servidor ");
 					mostrarMensajes(datosRecibidos.getJugador()+" "+datosRecibidos.getJugadorEstado());
-					if(datosRecibidos.getEstadoJuego()) { //True significa Ronda apuestas
+					/*if(datosRecibidos.getEstadoJuego()) { //True significa Ronda apuestas
 						System.out.println("ENTRO A PINTAR APUESTAS");
 						
+						ventanaSalaJuego.pintarApuestas(datosRecibidos);
+						
+					}else {
+						ventanaSalaJuego.pintarTurno(datosRecibidos);
+					}*/
+					if(datosRecibidos.getGanador()!=null) {
+						System.out.print("Entrandoo");
+						ventanaSalaJuego.pintarGanador(datosRecibidos);
+					}else if(datosRecibidos.getEstadoJuego()) {
 						ventanaSalaJuego.pintarApuestas(datosRecibidos);
 					}else {
 						ventanaSalaJuego.pintarTurno(datosRecibidos);
 					}
+					
 					
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
