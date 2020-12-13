@@ -79,7 +79,7 @@ public class DatosBlackJack implements Serializable{
 	}
 	
 	public void setMensajeGanancias(String mensaje) {
-		this.mensajeGanancia += mensaje;
+		this.mensajeGanancia = mensaje;
 	}
 	
 	public String getMensajeGanancias() {

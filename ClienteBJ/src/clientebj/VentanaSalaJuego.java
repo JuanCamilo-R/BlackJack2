@@ -562,7 +562,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 
 			reiniciarJuego.setEnabled(true);
 			reiniciarJuego.addActionListener(escucha);
-			ClienteBlackJack cliente = (ClienteBlackJack)this.getTopLevelAncestor();
+			
 			
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
@@ -644,6 +644,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			
 			areaMensajes.append(datosRecibidos.getMensaje()+"\n");	
 			ClienteBlackJack cliente = (ClienteBlackJack)this.getTopLevelAncestor();
+			
 			
 	
 			
