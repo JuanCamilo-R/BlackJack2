@@ -650,10 +650,10 @@ public class ServidorBJ implements Runnable {
 			 }
 		 }else if(((valorManos[0] <= valorManos[3]) && (valorManos[1] <= valorManos[3]) &&( valorManos[2] <= valorManos[3]))){
 			 System.out.print("ganoo dealer");
-			 ganador.add("Dealer");
+			 ganador.add("dealer");
 			// numGanadores ++;
 		 }else if(valorManos[0]>21 && valorManos[1] >21  && valorManos[2]>21) {
-			 ganador.add("Dealer");
+			 ganador.add("dealer");
 			// numGanadores ++;
 		 }
 		 else {
@@ -667,7 +667,7 @@ public class ServidorBJ implements Runnable {
 			 }
 		 }
 		 if(ganador.size()==0) {
-			 ganador.add("Dealer");
+			 ganador.add("dealer");
 		 }
 	 }
 	 
@@ -680,25 +680,41 @@ public class ServidorBJ implements Runnable {
 						 if(manosJugadores.get(i).get(j).getValor().contains("As")) {
 							 if(manosJugadores.get(i).get(j).getValor().contains("K") || manosJugadores.get(i).get(j).getValor().contains("J") ||
 									 manosJugadores.get(i).get(j).getValor().contains("Q")) {
+								 System.out.println(idJugadores[i]+" ha ganado 25");
 								 parejaNombreGanancia.add(new Pair<String, Integer>(idJugadores[i],25));
+							 }else {
+								 System.out.println(idJugadores[i]+" ha ganado 20");
+								 parejaNombreGanancia.add(new Pair<String, Integer>(idJugadores[i],20));
 							 }
+						 }else {
+							 System.out.println(idJugadores[i]+" ha ganado 20");
+							 parejaNombreGanancia.add(new Pair<String, Integer>(idJugadores[i],20));
 						 }
 					 }
 				 }else {
+					 System.out.println(idJugadores[i]+" ha ganado 20");
 					 parejaNombreGanancia.add(new Pair<String,Integer>(idJugadores[i],20));
 				 }
-			 }else if(ganador.get(i).equals("Dealer")){
+			 }else if(ganador.get(i).equals("dealer")){
 				 if(manosJugadores.get(i).size() == 2) {
 					 for(int j = 0; j < 2; j++) {
 						 if(manosJugadores.get(i).get(j).getValor().contains("As")) {
 							 if(manosJugadores.get(i).get(j).getValor().contains("K") || manosJugadores.get(i).get(j).getValor().contains("J") ||
 									 manosJugadores.get(i).get(j).getValor().contains("Q")) {
-								 parejaNombreGanancia.add(new Pair<String, Integer>(idJugadores[i],25));
+								 System.out.println("dealer ha ganado 25");
+								 parejaNombreGanancia.add(new Pair<String, Integer>("dealer",25));
+							 }else {
+								 System.out.println("dealer ha ganado 20");
+								 parejaNombreGanancia.add(new Pair<String, Integer>("dealer",20));
 							 }
+						 }else {
+							 System.out.println("dealer ha ganado 20");
+							 parejaNombreGanancia.add(new Pair<String, Integer>("dealer",20));
 						 }
 					 }
 				 }else {
-					 parejaNombreGanancia.add(new Pair<String,Integer>(idJugadores[i],20));
+					 System.out.println(" dealer ha ganado 20");
+					 parejaNombreGanancia.add(new Pair<String,Integer>("dealer",20));
 				 }
 			 }
 		 }
