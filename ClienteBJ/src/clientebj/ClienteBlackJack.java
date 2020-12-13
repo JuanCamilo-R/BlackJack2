@@ -199,6 +199,7 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 				try {
 					datosRecibidos = new DatosBlackJack();
 					datosRecibidos = (DatosBlackJack)in.readObject();
+					System.out.println("El estado es "+datosRecibidos.getJugadorEstado());
 					if(datosRecibidos.getApuestas()!=null) {
 						System.out.println("Apuestas a enviar solicitadas por "+datosRecibidos.getJugador()+":");
 						for(int i=0; i<datosRecibidos.getApuestas().length;i++) {
@@ -209,6 +210,10 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 						enviarMensajeServidor("salgo");
 						JOptionPane.showMessageDialog(null,"El jugador "+datosRecibidos.getJugador()+" ha decidido retirarse del juego");
 						cerrarConexion();
+					}
+					if(datosRecibidos.getJugadorEstado().equals("reiniciando")) {
+						ventanaEspera = new VentanaEspera(idYo);
+						add(ventanaEspera);
 					}
 					mostrarMensajes("Cliente hilo run recibiendo mensaje servidor ");
 					mostrarMensajes(datosRecibidos.getJugador()+" "+datosRecibidos.getJugadorEstado());

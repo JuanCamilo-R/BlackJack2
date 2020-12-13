@@ -774,6 +774,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			}
 			else if(actionEvent.getSource() == reiniciarJuego) {
 				enviarDatos("reiniciar");
+				dispose();
 			}
 		}
 	   }
