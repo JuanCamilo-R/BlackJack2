@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -26,7 +27,7 @@ import comunes.DatosBlackJack;
  */
 public class ServidorBJ implements Runnable {
 	// constantes para manejo de la conexion.
-	public static final int PUERTO = 7378;
+	public static final int PUERTO = 7374;
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
 
@@ -604,7 +605,8 @@ public class ServidorBJ implements Runnable {
 			// cerrar conexión
 
 		}
-
+		
+		
 		public void enviarMensajeCliente(Object mensaje) {
 			try {
 				DatosBlackJack prueba = (DatosBlackJack)mensaje;
@@ -624,9 +626,12 @@ public class ServidorBJ implements Runnable {
 			}
 		}
 	}// fin inner class Jugador
-
+	
+	
+	
 	// Jugador dealer emulado por el servidor
-	@Override
+	
+	
 	public void run() {
 		// TODO Auto-generated method stub
 		mostrarMensaje("Incia el dealer ...");
@@ -669,21 +674,27 @@ public class ServidorBJ implements Runnable {
 					datosEnviar.setJugadorEstado("voló");
 					datosEnviar.setMensaje("Dealer ahora tiene " + valorManos[3] + " voló :(");
 					pedir = false;
-					mostrarMensaje("El dealer voló");
+					mostrarMensaje("El dealer voló"); 
 				} else {
 					datosEnviar.setJugadorEstado("plantó");
 					datosEnviar.setMensaje("Dealer ahora tiene " + valorManos[3] + " plantó");
 					pedir = false;
 					mostrarMensaje("El dealer plantó");
 				}
+				
 			}
 			// envia la jugada a los otros jugadores
 			datosEnviar.setCarta(carta);
 			jugadores[0].enviarMensajeCliente(datosEnviar);
 			jugadores[1].enviarMensajeCliente(datosEnviar);
 			jugadores[2].enviarMensajeCliente(datosEnviar);
+			
+			jugadores[0].enviarMensajeCliente(datosEnviar);
+			jugadores[1].enviarMensajeCliente(datosEnviar);
+			jugadores[2].enviarMensajeCliente(datosEnviar);
 		} // fin while
-
+		
+		
 	}
 
 }// Fin class ServidorBJ

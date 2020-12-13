@@ -48,6 +48,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 		private JPanel panelYo, panelBotones, yoFull, panelDealer,panelJugador2, panelJugador3;
 		private JPanel paneltextoDealer,paneltexto1,paneltexto2,paneltexto3;
 		private Baraja barajaNueva; 
+		private int[] valorManos;
 		private String yoId, jugador2Id, jugador3Id;
 		private int yoN,jugador2N,jugador3N;
 		private GridBagConstraints constraints;
@@ -452,6 +453,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			return manoJugadorAuxiliar;
 		}
 		public void pintarCartasInicio(DatosBlackJack datosRecibidos) {
+			valorManos = datosRecibidos.getValorManos();
 			if(datosRecibidos.getIdJugadores()[0].equals(yoId)) {
 				yo.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador1()));
 				jugador2.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador2()));
@@ -471,6 +473,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 		}
 		
 		public void pintarTurno(DatosBlackJack datosRecibidos) {
+			valorManos = datosRecibidos.getValorManos();
 			areaMensajes.append(datosRecibidos.getMensaje()+"\n");	
 			ClienteBlackJack cliente = (ClienteBlackJack)this.getTopLevelAncestor();
 			
@@ -626,8 +629,14 @@ public class VentanaSalaJuego extends JInternalFrame {
 			}else if(actionEvent.getSource() == plantar) {
 				//enviar plantar al servidor
 				if(aposto) {
-					enviarDatos("plantar");
-					activarBotones(false);	
+					if(valorManos[yoN] > 16) {
+						System.out.println("VALOR MANO: "+valorManos[0]);
+						enviarDatos("plantar");
+						activarBotones(false);
+					}else {
+						JOptionPane.showMessageDialog(null, "No puedes plantar, debes pedir carta.");
+					}
+						
 				}else {
 					JOptionPane.showMessageDialog(null,"Debes apostar primero!");
 				}
