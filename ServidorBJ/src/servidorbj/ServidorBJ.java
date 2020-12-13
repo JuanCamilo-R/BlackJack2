@@ -28,7 +28,7 @@ import comunes.DatosBlackJack;
 public class ServidorBJ implements Runnable {
 	// constantes para manejo de la conexion.
 
-	public static final int PUERTO = 7374;
+	public static final int PUERTO = 7376;
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
 
@@ -646,23 +646,27 @@ public class ServidorBJ implements Runnable {
 				 cont=i+1;
 			 }
 		 }
-		 /*for(int i=0;i<idJugadores2.size();i++) {
-			 if(valorManos[i]>21) {
-				 idJugadores2.remove(i);
-				 contador++;
-			 }
-		 }*/
-		 if(mayor>21 && valorManos[3]>mayor) {
+		
+		 if(valorManos[0]>21 && valorManos[3]>=mayor) {
 			 ganador="Dealer";
 			 System.out.print("Ahh");
 		 }else{
 			 System.out.print("Ehh");
 			ganador=idJugadores[cont];
+			if(manosJugadores.get(cont).size() == 2) {
+				ArrayList<String> valoresMano = new ArrayList<String>();
+				for(int i = 0; i < manosJugadores.get(cont).size(); i++) {
+					valoresMano.add(manosJugadores.get(cont).get(i).getValor());
+				}
+				
+				if(valoresMano.contains("As")) {
+					if(valoresMano.contains("J") || valoresMano.contains("K") || valoresMano.contains("Q")) {
+						
+					}
+				}
+			}
 		 }
-		 /*
-		 if(idJugadores2.size()==0) {
-			 ganador="Dealer";
-		 }*/
+		 
 		 
 		 
 	 }

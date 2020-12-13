@@ -424,16 +424,16 @@ public class VentanaSalaJuego extends JInternalFrame {
 		public void activarBotones(boolean turno) {
 			pedir.setEnabled(turno);
 			plantar.setEnabled(turno);
-			if(turno) {
+			if(turno && !aposto) {
 				apostar.setEnabled(turno);
 				confirmarApuesta.setEnabled(turno);
 				apostar.addActionListener(escucha);
 				confirmarApuesta.addActionListener(escucha);
-			}else {
-				apostar.setEnabled(turno);
-				confirmarApuesta.setEnabled(turno);
+			}else{
+				apostar.setEnabled(false);
+				confirmarApuesta.setEnabled(false);
 				apostar.removeActionListener(escucha);
-				confirmarApuesta.addActionListener(escucha);
+				confirmarApuesta.removeActionListener(escucha);
 			}
 			
 		}
@@ -705,7 +705,9 @@ public class VentanaSalaJuego extends JInternalFrame {
 					enviarDatos(String.valueOf(cantidadApuesta));
 					cantidadApuesta = 0;
 					confirmarApuesta.setEnabled(false);
+					confirmarApuesta.removeActionListener(escucha);
 					apostar.setEnabled(false);
+					apostar.removeActionListener(escucha);
 					yoClase.pack();
 				}else {
 					JOptionPane.showMessageDialog(null,"Debes apostar primero!");
