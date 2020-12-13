@@ -648,7 +648,8 @@ public class ServidorBJ implements Runnable {
 					 
 				 }
 			 }
-		 }else if(((valorManos[0] <= valorManos[3]) && (valorManos[1] <= valorManos[3]) &&( valorManos[2] <= valorManos[3]))) {
+		 }else if(((valorManos[0] <= valorManos[3]) && (valorManos[1] <= valorManos[3]) &&( valorManos[2] <= valorManos[3]))){
+			 System.out.print("ganoo dealer");
 			 ganador.add("Dealer");
 			// numGanadores ++;
 		 }else if(valorManos[0]>21 && valorManos[1] >21  && valorManos[2]>21) {
@@ -664,6 +665,9 @@ public class ServidorBJ implements Runnable {
 					// cont=i+1;
 				 }
 			 }
+		 }
+		 if(ganador.size()==0) {
+			 ganador.add("Dealer");
 		 }
 	 }
 	 

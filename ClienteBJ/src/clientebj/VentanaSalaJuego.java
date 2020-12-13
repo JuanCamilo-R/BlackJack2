@@ -105,9 +105,13 @@ public class VentanaSalaJuego extends JInternalFrame {
 			constraints = new GridBagConstraints();
 			
 			palabraDineroDealer = new JLabel("Dinero: ");
+			palabraDineroDealer.setPreferredSize(new Dimension(50,20));
 			palabraApuestaDealer = new JLabel("      Apuesta dealer: ");
+			palabraApuestaDealer.setPreferredSize(new Dimension(80,20));
 			dineroDealer = new JLabel("4000");
+			dineroDealer.setPreferredSize(new Dimension(50,20));
 			apuestaDealer = new JLabel("0");
+			apuestaDealer.setPreferredSize(new Dimension(50,20));
 			paneltextoDealer = new JPanel();
 			paneltextoDealer.setBackground(Color.GREEN);
 			paneltextoDealer.setLayout(new GridBagLayout());
@@ -160,9 +164,13 @@ public class VentanaSalaJuego extends JInternalFrame {
 			add(panelDealer,constraints);		
 			
 			palabraDinero2 = new JLabel("Dinero: ");
+			palabraDinero2.setPreferredSize(new Dimension(50,20));
 			palabraApuesta2 = new JLabel("      Apuesta: ");
+			palabraApuesta2.setPreferredSize(new Dimension(80,20));
 			dinero2 = new JLabel("4000");
+			dinero2.setPreferredSize(new Dimension(50,20));
 			apuesta2 = new JLabel("0");
+			apuesta2.setPreferredSize(new Dimension(50,20));
 			paneltexto2 = new JPanel();
 			
 			paneltexto2.setLayout(new GridBagLayout());
@@ -218,10 +226,14 @@ public class VentanaSalaJuego extends JInternalFrame {
 			
 			
 			palabraDinero3 = new JLabel("Dinero: ");
+			palabraDinero3.setPreferredSize(new Dimension(50,20));
 			palabraApuesta3 = new JLabel("      Apuesta: ");
+			palabraApuesta3.setPreferredSize(new Dimension(80,20));
 			//palabraDinero3 .setBackground(Color.GREEN);
 			dinero3 = new JLabel("4000");
+			dinero3.setPreferredSize(new Dimension(50,20));
 			apuesta3 = new JLabel("0");
+			apuesta3.setPreferredSize(new Dimension(50,20));
 			paneltexto3 = new JPanel();
 			paneltexto3.setBackground(Color.GREEN);
 			
@@ -324,9 +336,13 @@ public class VentanaSalaJuego extends JInternalFrame {
 			confirmarApuesta.setPreferredSize(new Dimension(140,20));
 			confirmarApuesta.setMinimumSize(confirmarApuesta.getPreferredSize());
 			palabraDinero1 = new JLabel("Dinero: ");
+			palabraDinero1.setPreferredSize(new Dimension(50,20));
 			palabraApuesta1 = new JLabel("      Apuesta: ");
+			palabraApuesta1.setPreferredSize(new Dimension(80,20));
 			dinero1 = new JLabel("4000");
+			dinero1.setPreferredSize(new Dimension(50,20));
 			apuesta1 = new JLabel("0");
+			apuesta1.setPreferredSize(new Dimension(50,20));
 			espacio = new JLabel("           ");
 			paneltexto1 = new JPanel();
 			paneltexto1.setBackground(Color.GREEN);
@@ -385,12 +401,12 @@ public class VentanaSalaJuego extends JInternalFrame {
 			constraints.gridwidth = 1;
 			constraints.gridheight = 1;
 			paneltexto1.add(apuesta1, constraints);
-			
+			/*
 			constraints.gridx = 4;
 			constraints.gridy = 0;
 			constraints.gridwidth = 1;
 			constraints.gridheight = 1;
-			paneltexto1.add(espacio, constraints);
+			paneltexto1.add(espacio, constraints);*/
 			
 			constraints.gridx = 5;
 			constraints.gridy = 0;
@@ -665,14 +681,32 @@ public class VentanaSalaJuego extends JInternalFrame {
 				public void run() {
 					// TODO Auto-generated method stub
 					if(jugador.equals("1")) {
+						yoClase.pack();
+						palabraDinero1.setPreferredSize(new Dimension(50,20));
+						apuesta1.setPreferredSize(new Dimension(50,20));
 						apuesta1.setText(valor);
+						palabraDinero1.setPreferredSize(new Dimension(50,20));
+						dinero1.setPreferredSize(new Dimension(50,20));
 						dinero1.setText(Integer.parseInt(dinero1.getText())-Integer.parseInt(valor)+"");
+						yoClase.pack();
 					}else if(jugador.equals("2")) {
+						yoClase.pack();
+						palabraDinero2.setPreferredSize(new Dimension(50,20));
+						apuesta2.setPreferredSize(new Dimension(50,20));
 						apuesta2.setText(valor);
+						palabraDinero2.setPreferredSize(new Dimension(50,20));
+						apuesta2.setPreferredSize(new Dimension(50,20));
 						dinero2.setText(Integer.parseInt(dinero2.getText())-Integer.parseInt(valor)+"");
+						yoClase.pack();
 					}else if(jugador.equals("3")) {
+						yoClase.pack();
+						palabraDinero3.setPreferredSize(new Dimension(50,20));
+						apuesta3.setPreferredSize(new Dimension(50,20));
 						apuesta3.setText(valor);
+						palabraDinero3.setPreferredSize(new Dimension(50,20));
+						apuesta3.setPreferredSize(new Dimension(50,20));
 						dinero3.setText(Integer.parseInt(dinero3.getText())-Integer.parseInt(valor)+"");
+						yoClase.pack();
 					}else {
 						System.out.println("Apostó el dealer");
 						apuestaDealer.setText(valor);
@@ -722,10 +756,12 @@ public class VentanaSalaJuego extends JInternalFrame {
 				apostar.setEnabled(false);
 				apostar.removeActionListener(escucha);
 				aposto = true;
+				apuesta1.setPreferredSize(new Dimension(50,20));
 				apuesta1.setText(String.valueOf(cantidadApuesta));
 				yoClase.pack();
 			}else {
 				if(cantidadApuesta > 0) {
+					yoClase.pack();
 					System.out.println("Estoy apostando "+cantidadApuesta);
 					enviarDatos(String.valueOf(cantidadApuesta));
 					cantidadApuesta = 0;
