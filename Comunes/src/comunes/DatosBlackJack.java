@@ -3,6 +3,8 @@ package comunes;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import javafx.util.*;
 
 public class DatosBlackJack implements Serializable{
 	private String[] idJugadores;
@@ -11,7 +13,9 @@ public class DatosBlackJack implements Serializable{
 	private int[] valorManos;
 	private Carta carta;
 	private String mensaje;
+	private String mensajeGanancia;
 	private String jugador,jugadorEstado;
+	private List<Pair<String, Integer>> parejaNombreGanancia;
 	private Baraja baraja;
 	private boolean estadoJuego;
 	private String ganadorr;
@@ -64,6 +68,22 @@ public class DatosBlackJack implements Serializable{
 	
 	public ArrayList<Carta> getManoJugador2() {
 		return manoJugador2;
+	}
+	
+	public void setParejas(List<Pair<String, Integer>> parejaLlegada) {
+		this.parejaNombreGanancia = parejaLlegada;
+	}
+	
+	public List<Pair<String, Integer>> getParejas(){
+		return this.parejaNombreGanancia;
+	}
+	
+	public void setMensajeGanancias(String mensaje) {
+		this.mensajeGanancia += mensaje;
+	}
+	
+	public String getMensajeGanancias() {
+		return this.mensajeGanancia;
 	}
 	
 	public void setManoJugador3(ArrayList<Carta> manoJugador3) {

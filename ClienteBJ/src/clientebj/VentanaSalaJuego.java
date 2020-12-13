@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import javafx.util.*;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -17,6 +18,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -47,7 +49,8 @@ public class VentanaSalaJuego extends JInternalFrame {
 		private JLabel palabraDinero1, palabraDinero2, palabraDinero3, palabraDineroDealer;
 		private JPanel panelYo, panelBotones, yoFull, panelDealer,panelJugador2, panelJugador3;
 		private JPanel paneltextoDealer,paneltexto1,paneltexto2,paneltexto3;
-		private Baraja barajaNueva; 
+		private Baraja barajaNueva;
+		private List<Pair<String, Integer>> parejaNombreGanancia;
 		private int[] valorManos;
 		private String yoId, jugador2Id, jugador3Id;
 		private int yoN,jugador2N,jugador3N;
@@ -68,6 +71,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			this.yoN= yoN;
 			this.jugador2N = jugador2N;
 			this.jugador3N = jugador3N;
+			parejaNombreGanancia = new ArrayList<Pair<String, Integer>>();
 			//this.datosRecibidos=datosRecibidos;
 			barajaNueva = new Baraja();	
 			aposto = false;
@@ -349,7 +353,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			apostar.setSize(45, 45);
 			apostar.setBorder(null);
 			apostar.setContentAreaFilled(false);
-			imagen = new ImageIcon(getClass().getResource("/recursos/ficha2.png"));
+			imagen = new ImageIcon(getClass().getResource("/recursos/ficha3.png"));
 			apostar.setIcon(new  ImageIcon(imagen.getImage().getScaledInstance(45,45, Image.SCALE_AREA_AVERAGING)));
 			constraints.gridx = 1;
 			constraints.gridy = 1;
@@ -524,7 +528,26 @@ public class VentanaSalaJuego extends JInternalFrame {
 				}
 						 	
 		}
-		
+		public void repartirGanancias(DatosBlackJack datosRecibidos) {
+			parejaNombreGanancia = datosRecibidos.getParejas();
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					areaMensajes.append(datosRecibidos.getMensajeGanancias());
+					for(int i = 0; i < parejaNombreGanancia.size(); i++) {
+						if(parejaNombreGanancia.get(i).getKey().equals(yoId)) {
+							dinero1.setText(String.valueOf(parejaNombreGanancia.get(i).getValue()));
+						}else if(parejaNombreGanancia.get(i).getKey().equals(jugador2Id)) {
+							dinero2.setText(String.valueOf(parejaNombreGanancia.get(i).getValue()));
+						}else if(parejaNombreGanancia.get(i).getKey().equals(jugador3Id)) {
+							dinero3.setText(String.valueOf(parejaNombreGanancia.get(i).getValue()));
+						}else {
+							dineroDealer.setText(String.valueOf(parejaNombreGanancia.get(i).getValue()));
+						}
+					}
+				}});
+		}
 		public void pintarApuestas(DatosBlackJack datosRecibidos) {
 			System.out.println("APUESTAS: ");
 			int[] apuestas = datosRecibidos.getApuestas();
@@ -695,7 +718,9 @@ public class VentanaSalaJuego extends JInternalFrame {
 				}
 				
 			}else if(actionEvent.getSource() == apostar) {
-				cantidadApuesta += 100;
+				cantidadApuesta = 10;
+				apostar.setEnabled(false);
+				apostar.removeActionListener(escucha);
 				aposto = true;
 				apuesta1.setText(String.valueOf(cantidadApuesta));
 				yoClase.pack();

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import javafx.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -28,7 +29,7 @@ import comunes.DatosBlackJack;
 public class ServidorBJ implements Runnable {
 	// constantes para manejo de la conexion.
 
-	public static final int PUERTO = 7376;
+	public static final int PUERTO = 7377;
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
 
@@ -44,6 +45,7 @@ public class ServidorBJ implements Runnable {
 	private int numGanadores;
 	// variables de control del juego
 	private String[] idJugadores;
+	List<Pair<String, Integer>> parejaNombreGanancia;
 	private ArrayList<String> idJugadores2;
 	private int jugadorEnTurno;
 	// private boolean iniciarJuego;
@@ -99,6 +101,7 @@ public class ServidorBJ implements Runnable {
 		manoJugador2 = new ArrayList<Carta>();
 		manoJugador3 = new ArrayList<Carta>();
 		manoDealer = new ArrayList<Carta>();
+		parejaNombreGanancia = new ArrayList<Pair<String,Integer>>(); 
 
 		// reparto inicial jugadores 1 y 2
 		for (int i = 1; i <= 2; i++) {
@@ -663,7 +666,25 @@ public class ServidorBJ implements Runnable {
 			 }
 		 }
 	 }
-	
+	 
+	 public void repartirGanancias() {
+		 
+		 for(int i = 0; i < ganador.size(); i++) {
+			 if(idJugadores[i].equals(ganador.get(i))) {
+				 if(manosJugadores.get(i).size() == 2) {
+					 for(int j = 0; j < 2; j++) {
+						 if(manosJugadores.get(j).contains("As")) {
+							 if(manosJugadores.get(j).contains("K") || manosJugadores.get(j).contains("J") || manosJugadores.get(j).contains("Q")) {
+								 parejaNombreGanancia.add(new Pair<String, Integer>(idJugadores[i],25));
+							 }
+						 }
+					 }
+				 }else {
+					 parejaNombreGanancia.add(new Pair<String,Integer>(idJugadores[i],20));
+				 }
+			 }
+		 }
+	 }
 	
 	// Jugador dealer emulado por el servidor
 	
@@ -729,8 +750,14 @@ public class ServidorBJ implements Runnable {
 		} // fin while
 		if(u==1 || o==1) {
 			determinarGanador();
+			repartirGanancias();
+			datosEnviar.setParejas(parejaNombreGanancia);
 			datosEnviar.setGanadores(ganador);
 			datosEnviar.setMensaje("El ganador es "+ganador);
+			datosEnviar.setMensajeGanancias("Las ganancias son: ");
+			for(int i = 0; i < parejaNombreGanancia.size(); i++) {
+				datosEnviar.setMensajeGanancias(String.valueOf(parejaNombreGanancia.get(i).getValue())+ " ");
+			}
 			jugadores[0].enviarMensajeCliente(datosEnviar);
 			jugadores[1].enviarMensajeCliente(datosEnviar);
 			jugadores[2].enviarMensajeCliente(datosEnviar);

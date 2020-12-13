@@ -43,7 +43,7 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 	public static final int HEIGHT=650;
 	
 	//Constantes de conexión con el Servidor BlackJack
-	public static final int PUERTO=7376;
+	public static final int PUERTO=7377;
 	public static final String IP="127.0.0.1";
 	
 	
@@ -214,8 +214,9 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 					}else {
 						ventanaSalaJuego.pintarTurno(datosRecibidos);
 					}*/
-					if(datosRecibidos.getGanadores()!=null) {
+					if(datosRecibidos.getGanadores() != null && datosRecibidos.getParejas() != null) {
 						System.out.print("Entrandoo");
+						ventanaSalaJuego.repartirGanancias(datosRecibidos);
 						ventanaSalaJuego.pintarGanador(datosRecibidos);
 					}else if(datosRecibidos.getEstadoJuego()) {
 						ventanaSalaJuego.pintarApuestas(datosRecibidos);
