@@ -318,6 +318,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			
 			panelControles = new JPanel();
 			panelControles.setPreferredSize(new Dimension(170,50));
+			panelControles.setMinimumSize(panelControles.getPreferredSize());
 			panelControles.setOpaque(false);
 			reiniciarJuego = new JButton("Iniciar nueva ronda");
 			reiniciarJuego.setPreferredSize(new Dimension(160,20));
