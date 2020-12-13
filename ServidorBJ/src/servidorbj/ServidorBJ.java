@@ -35,13 +35,13 @@ public class ServidorBJ implements Runnable {
 	// variables para funcionar como servidor
 	private ServerSocket server;
 	private Socket conexionJugador;
-	private String ganador;
+	private ArrayList<String> ganador;
 	// variables para manejo de hilos
 	private ExecutorService manejadorHilos;
 	private Lock bloqueoJuego;
 	private Condition esperarInicio, esperarTurno, finalizar;
 	private Jugador[] jugadores;
-
+	private int numGanadores;
 	// variables de control del juego
 	private String[] idJugadores;
 	private ArrayList<String> idJugadores2;
@@ -90,10 +90,10 @@ public class ServidorBJ implements Runnable {
 		idJugadores = new String[3];
 		idJugadores2 = new ArrayList<String>();
 		valorManos = new int[4];
-
+		
 		mazo = new Baraja();
 		Carta carta;
-
+		ganador = new ArrayList<String>();
 		apuestasJugadores = new int[3];
 		manoJugador1 = new ArrayList<Carta>();
 		manoJugador2 = new ArrayList<Carta>();
@@ -637,34 +637,32 @@ public class ServidorBJ implements Runnable {
 		}
 	}// fin inner class Jugador
 	 public void determinarGanador() {
-		 int contador =0;
-		 int mayor=valorManos[0];
-		 int cont =0;
-		 for(int i=0;i<2;i++) {
-			 if(mayor<valorManos[i+1] && valorManos[i+1]<=21) {
-				 mayor=valorManos[i+1];
-				 cont=i+1;
+		
+		 if(valorManos[3]>21) {
+			 for(int i=0;i<3;i++) {
+				 if(valorManos[i]<=21) {
+					 ganador.add(idJugadores[i]);
+					 
+				 }
+			 }
+		 }else if(((valorManos[0] <= valorManos[3]) && (valorManos[1] <= valorManos[3]) &&( valorManos[2] <= valorManos[3]))) {
+			 ganador.add("Dealer");
+			// numGanadores ++;
+		 }else if(valorManos[0]>21 && valorManos[1] >21  && valorManos[2]>21) {
+			 ganador.add("Dealer");
+			// numGanadores ++;
+		 }
+		 else {
+			 for(int i=0;i<3;i++) {
+				 if(valorManos[i]>valorManos[3] && valorManos[i]<=21) {
+					 ganador.add(idJugadores[i]);
+					 //mayor=valorManos[i+1];
+					// numGanadores++;
+					// cont=i+1;
+				 }
 			 }
 		 }
-		 /*for(int i=0;i<idJugadores2.size();i++) {
-			 if(valorManos[i]>21) {
-				 idJugadores2.remove(i);
-				 contador++;
-			 }
-		 }*/
-		 if(mayor>21 && valorManos[3]>mayor) {
-			 ganador="Dealer";
-			 System.out.print("Ahh");
-		 }else{
-			 System.out.print("Ehh");
-			ganador=idJugadores[cont];
-		 }
-		 /*
-		 if(idJugadores2.size()==0) {
-			 ganador="Dealer";
-		 }*/
-		 
-		 
+	
 	 }
 	
 	
@@ -732,7 +730,7 @@ public class ServidorBJ implements Runnable {
 		} // fin while
 		if(u==1 || o==1) {
 			determinarGanador();
-			datosEnviar.setGanador(ganador);
+			datosEnviar.setGanadores(ganador);
 			datosEnviar.setMensaje("El ganador es "+ganador);
 			jugadores[0].enviarMensajeCliente(datosEnviar);
 			jugadores[1].enviarMensajeCliente(datosEnviar);
