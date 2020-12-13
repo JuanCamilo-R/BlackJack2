@@ -22,6 +22,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -43,11 +44,11 @@ public class VentanaSalaJuego extends JInternalFrame {
 	    
 		private PanelJugador dealer, yo, jugador2, jugador3;
 		private JTextArea areaMensajes;
-		private JButton pedir, plantar, apostar,confirmarApuesta, reiniciarJuego;
+		private JButton pedir, plantar, apostar,confirmarApuesta, reiniciarJuego, abandonarJuego;
 		private JLabel apuesta1, apuesta2, apuesta3, apuestaDealer, dinero1, dinero2, dinero3, dineroDealer,espacio;
 		private JLabel palabraApuesta1, palabraApuesta2, palabraApuesta3, palabraApuestaDealer;
 		private JLabel palabraDinero1, palabraDinero2, palabraDinero3, palabraDineroDealer;
-		private JPanel panelYo, panelBotones, yoFull, panelDealer,panelJugador2, panelJugador3;
+		private JPanel panelYo, panelBotones, yoFull, panelDealer,panelJugador2, panelJugador3, panelControles;
 		private JPanel paneltextoDealer,paneltexto1,paneltexto2,paneltexto3;
 		private Baraja barajaNueva;
 		private List<Pair<String, Integer>> parejaNombreGanancia;
@@ -315,16 +316,28 @@ public class VentanaSalaJuego extends JInternalFrame {
 			System.out.println("Tamano areaMensajes: "+areaMensajes.getSize().width+","+areaMensajes.getSize().height);
 			System.out.println("Tamano scroll: "+scroll.getViewport().getSize().width+","+scroll.getViewport().getSize().height);
 			
+			panelControles = new JPanel();
+			panelControles.setPreferredSize(new Dimension(170,50));
+			panelControles.setOpaque(false);
 			reiniciarJuego = new JButton("Iniciar nueva ronda");
 			reiniciarJuego.setPreferredSize(new Dimension(160,20));
 			reiniciarJuego.setMinimumSize(reiniciarJuego.getPreferredSize());
+			reiniciarJuego.setMaximumSize(panelControles.getSize());
 			reiniciarJuego.setEnabled(false);
+			panelControles.add(reiniciarJuego);
+			
+			abandonarJuego = new JButton("Abandonar el juego");
+			abandonarJuego.setPreferredSize(new Dimension(160,20));
+			abandonarJuego.setMinimumSize(abandonarJuego.getPreferredSize());
+			abandonarJuego.setEnabled(false);
+			panelControles.add(abandonarJuego);
+			
 			constraints.gridx = 1;
 			constraints.gridy = 2;
 			constraints.gridwidth = 1;
 			constraints.gridheight = 1;
 			constraints.anchor = constraints.NORTH;
-			add(reiniciarJuego,constraints);
+			add(panelControles,constraints);
 			
 			panelYo = new JPanel();
 			panelYo.setBackground(Color.GREEN);
@@ -556,10 +569,18 @@ public class VentanaSalaJuego extends JInternalFrame {
 						 	
 		}
 		public void repartirGanancias(DatosBlackJack datosRecibidos) {
+
+			parejaNombreGanancia = datosRecibidos.getParejas();
+			areaMensajes.append(datosRecibidos.getMensajeGanancias());
+
 			reiniciarJuego.setEnabled(true);
+			abandonarJuego.setEnabled(true);
 			reiniciarJuego.addActionListener(escucha);
+
+			abandonarJuego.addActionListener(escucha);
 			areaMensajes.append(datosRecibidos.getMensajeGanancias());
 			parejaNombreGanancia = datosRecibidos.getParejas();
+
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
@@ -637,56 +658,13 @@ public class VentanaSalaJuego extends JInternalFrame {
 		}
 		
 		public void pintarGanador(DatosBlackJack datosRecibidos) {
+			
 			areaMensajes.append(datosRecibidos.getMensaje()+"\n");	
 			ClienteBlackJack cliente = (ClienteBlackJack)this.getTopLevelAncestor();
-			/*
-			if(datosRecibidos.getJugador().contentEquals(yoId)){
-				if(datosRecibidos.getJugadorEstado().equals("iniciar")) {
-					activarBotones(true);
-				}else {
-					if(datosRecibidos.getJugadorEstado().equals("plantó") ){
-						cliente.setTurno(false);
-					}else {
-						System.out.println("Apuesta[0] = "+datosRecibidos.getApuestas()[0]);
-						//yo.dibujarCarta(datosRecibidos.getCarta());
-						apostar(String.valueOf(datosRecibidos.getApuestas()[yoN]), "1");
-						if(datosRecibidos.getJugadorEstado().equals("voló")) {
-							SwingUtilities.invokeLater(new Runnable() {
-								@Override
-								public void run() {
-									// TODO Auto-generated method stub
-									activarBotones(false);
-									cliente.setTurno(false);
-								}});			
-						      }
-						}
-					} 
-			 }else {//movidas de los otros jugadores
-					if(datosRecibidos.getJugador().equals(jugador2Id)) {
-						//mensaje para PanelJuego jugador2
-						if(datosRecibidos.getJugadorEstado().equals("apuesta")) {
-							//jugador2.dibujarCarta(datosRecibidos.getCarta());
-							System.out.println("Apuesta["+jugador2N+"] = "+datosRecibidos.getApuestas()[jugador2N]);
-							apostar(String.valueOf(datosRecibidos.getApuestas()[jugador2N]), "2");
-							
-						}
-					}else if(datosRecibidos.getJugador().equals(jugador3Id)) {
-						if(datosRecibidos.getJugadorEstado().equals("apuesta")) {
-							System.out.println("Apuesta["+jugador3N+"] = "+datosRecibidos.getApuestas()[jugador3N]);
-							
-							apostar(String.valueOf(datosRecibidos.getApuestas()[jugador3N]),"3");
-						}
-					}
-					else {
-						System.out.println("Te habla el dealer papá");
-						//mensaje para PanelJuego dealer
-						if(datosRecibidos.getJugadorEstado().equals("apuesta")) {
-							//dealer.dibujarCarta(datosRecibidos.getCarta());
-							apostar("4000", "dealer");
-						}
-					}
-					
-				}*/
+			
+			
+	
+			
 		}
 		
 		private void apostar(String valor, String jugador) {
@@ -788,8 +766,11 @@ public class VentanaSalaJuego extends JInternalFrame {
 					JOptionPane.showMessageDialog(null,"Debes apostar primero!");
 				}
 				
-			}else {
-				
+			}else if(actionEvent.getSource() == abandonarJuego){
+				enviarDatos("abandonar");
+			}
+			else if(actionEvent.getSource() == reiniciarJuego) {
+				enviarDatos("reiniciar");
 			}
 		}
 	   }
