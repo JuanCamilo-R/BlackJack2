@@ -26,7 +26,7 @@ import javafx.util.Pair;
 public class ServidorBJ implements Runnable {
 	// constantes para manejo de la conexion.
 
-	public static final int PUERTO = 7376;
+	public static final int PUERTO = 7373;
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
 
