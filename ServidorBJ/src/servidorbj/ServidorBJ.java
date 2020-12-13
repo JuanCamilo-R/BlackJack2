@@ -29,7 +29,7 @@ import comunes.DatosBlackJack;
 public class ServidorBJ implements Runnable {
 	// constantes para manejo de la conexion.
 
-	public static final int PUERTO = 7377;
+	public static final int PUERTO = 7378;
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
 
@@ -677,8 +677,22 @@ public class ServidorBJ implements Runnable {
 			 if(idJugadores[i].equals(ganador.get(i))) {
 				 if(manosJugadores.get(i).size() == 2) {
 					 for(int j = 0; j < 2; j++) {
-						 if(manosJugadores.get(j).contains("As")) {
-							 if(manosJugadores.get(j).contains("K") || manosJugadores.get(j).contains("J") || manosJugadores.get(j).contains("Q")) {
+						 if(manosJugadores.get(i).get(j).getValor().contains("As")) {
+							 if(manosJugadores.get(i).get(j).getValor().contains("K") || manosJugadores.get(i).get(j).getValor().contains("J") ||
+									 manosJugadores.get(i).get(j).getValor().contains("Q")) {
+								 parejaNombreGanancia.add(new Pair<String, Integer>(idJugadores[i],25));
+							 }
+						 }
+					 }
+				 }else {
+					 parejaNombreGanancia.add(new Pair<String,Integer>(idJugadores[i],20));
+				 }
+			 }else if(ganador.get(i).equals("Dealer")){
+				 if(manosJugadores.get(i).size() == 2) {
+					 for(int j = 0; j < 2; j++) {
+						 if(manosJugadores.get(i).get(j).getValor().contains("As")) {
+							 if(manosJugadores.get(i).get(j).getValor().contains("K") || manosJugadores.get(i).get(j).getValor().contains("J") ||
+									 manosJugadores.get(i).get(j).getValor().contains("Q")) {
 								 parejaNombreGanancia.add(new Pair<String, Integer>(idJugadores[i],25));
 							 }
 						 }

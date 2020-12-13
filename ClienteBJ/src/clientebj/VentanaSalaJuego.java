@@ -545,12 +545,13 @@ public class VentanaSalaJuego extends JInternalFrame {
 						 	
 		}
 		public void repartirGanancias(DatosBlackJack datosRecibidos) {
+			areaMensajes.append(datosRecibidos.getMensajeGanancias());
 			parejaNombreGanancia = datosRecibidos.getParejas();
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					areaMensajes.append(datosRecibidos.getMensajeGanancias());
+					
 					for(int i = 0; i < parejaNombreGanancia.size(); i++) {
 						if(parejaNombreGanancia.get(i).getKey().equals(yoId)) {
 							dinero1.setText(String.valueOf(parejaNombreGanancia.get(i).getValue()));
