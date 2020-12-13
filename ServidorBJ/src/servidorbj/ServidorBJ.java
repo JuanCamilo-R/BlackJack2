@@ -26,7 +26,7 @@ import comunes.DatosBlackJack;
  */
 public class ServidorBJ implements Runnable {
 	// constantes para manejo de la conexion.
-	public static final int PUERTO = 7372;
+	public static final int PUERTO = 7375;
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
 
@@ -649,7 +649,7 @@ public class ServidorBJ implements Runnable {
 				 contador++;
 			 }
 		 }*/
-		 if(mayor>21 || valorManos[3]>mayor) {
+		 if(mayor>21 && valorManos[3]>mayor) {
 			 ganador="Dealer";
 			 System.out.print("Ahh");
 		 }else{
