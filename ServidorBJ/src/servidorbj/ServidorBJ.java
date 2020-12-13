@@ -26,7 +26,7 @@ import javafx.util.Pair;
 public class ServidorBJ implements Runnable {
 	// constantes para manejo de la conexion.
 
-	public static final int PUERTO = 7376;
+	public static final int PUERTO = 7377;
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
 
@@ -42,7 +42,7 @@ public class ServidorBJ implements Runnable {
 	private int numGanadores;
 	// variables de control del juego
 	private String[] idJugadores;
-	List<Pair<String, Integer>> parejaNombreGanancia;
+	private ArrayList<Pair<String, Integer>> parejaNombreGanancia;
 	private ArrayList<String> idJugadores2;
 	private int jugadorEnTurno;
 	// private boolean iniciarJuego;
@@ -642,7 +642,6 @@ public class ServidorBJ implements Runnable {
 			 for(int i=0;i<3;i++) {
 				 if(valorManos[i]<=21) {
 					 ganador.add(idJugadores[i]);
-					 
 				 }
 			 }
 		 }else if(((valorManos[0] <= valorManos[3]) && (valorManos[1] <= valorManos[3]) &&( valorManos[2] <= valorManos[3]))){
@@ -667,9 +666,71 @@ public class ServidorBJ implements Runnable {
 			 ganador.add("dealer");
 		 }
 	 }
-	 
+	 public boolean verificarJugadaBJ(ArrayList<Carta> manoJugador) {
+		 if(manoJugador.size() == 2) {
+			 for(int i = 0; i < manoJugador.size(); i++) {
+				 if(manoJugador.get(i).getValor().equals("As")) {
+					 for(int j = 0; j < 2; j++) {
+						 if(manoJugador.get(j).getValor().equals("K") || manoJugador.get(j).getValor().equals("J") ||
+							manoJugador.get(j).getValor().equals("Q")) {
+							return true; 
+						 }
+					 }
+				 }
+			 }
+			 return false;
+		 }else {
+			 return false;
+		 }
+		 
+	 }
+	 //Da las apuestas de los jugadores al dealer
+	 public int verificarCantidadGanadores() {
+		 if(ganador.size() == 1 && !ganador.contains("dealer")) {
+			 return 20;
+		 }else if(ganador.size() == 2 && !ganador.contains("dealer")) {
+			 return 10;
+		 }else if(ganador.size() == 3 && !ganador.contains("dealer")){
+			 return 0;
+		 }else if(ganador.size() == 1 && ganador.contains("dealer")) {
+			 return 30;
+		 }
+		 return 0;
+	 }
 	 public void repartirGanancias() {
 		 
+		 
+		 
+		 for(int i = 0; i < ganador.size(); i++) {
+			 if(ganador.contains(idJugadores[i])) {
+				 if(verificarJugadaBJ(manosJugadores.get(i))) {
+					 parejaNombreGanancia.add(new Pair<String, Integer>(idJugadores[i],25));
+				 }else {
+					 parejaNombreGanancia.add(new Pair<String, Integer>(idJugadores[i],20));
+				 }
+			 }else if(ganador.contains("dealer")) {
+				 if(verificarJugadaBJ(manosJugadores.get(3))) {
+					 int cantidadGanancia = verificarCantidadGanadores() + 15;
+					 parejaNombreGanancia.add(new Pair<String, Integer>("dealer", cantidadGanancia));
+				 }else {
+					 int cantidadGanancia = verificarCantidadGanadores()+10;
+					 parejaNombreGanancia.add(new Pair<String, Integer>("dealer",cantidadGanancia));
+				 }
+			 }
+		 }
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 /*
 		 for(int i = 0; i < ganador.size(); i++) {
 			 if(ganador.contains(idJugadores[i])) {
 				 if(manosJugadores.get(i).size() == 2) {
@@ -692,7 +753,7 @@ public class ServidorBJ implements Runnable {
 					 System.out.println(idJugadores[i]+" ha ganado 20");
 					 parejaNombreGanancia.add(new Pair<String,Integer>(idJugadores[i],20));
 				 }
-			 }else if(ganador.get(i).equals("dealer")){
+			 }else if(ganador.contains("dealer")){
 				 if(manosJugadores.get(i).size() == 2) {
 					 for(int j = 0; j < 2; j++) {
 						 if(manosJugadores.get(i).get(j).getValor().contains("As")) {
@@ -701,12 +762,22 @@ public class ServidorBJ implements Runnable {
 								 System.out.println("dealer ha ganado 25");
 								 parejaNombreGanancia.add(new Pair<String, Integer>("dealer",25));
 							 }else {
-								 System.out.println("dealer ha ganado 20");
-								 parejaNombreGanancia.add(new Pair<String, Integer>("dealer",20));
+								 if(ganador.size() == 1) {
+									 parejaNombreGanancia.add(new Pair<String, Integer>("dealer",40));
+								 }else if(ganador.size() == 2) {
+									 parejaNombreGanancia.add(new Pair<String, Integer>("dealer",30));
+								 }else {
+									 parejaNombreGanancia.add(new Pair<String, Integer>("dealer",20));
+								 }
 							 }
 						 }else {
-							 System.out.println("dealer ha ganado 20");
-							 parejaNombreGanancia.add(new Pair<String, Integer>("dealer",20));
+							 if(ganador.size() == 1) {
+								 parejaNombreGanancia.add(new Pair<String, Integer>("dealer",40));
+							 }else if(ganador.size() == 2) {
+								 parejaNombreGanancia.add(new Pair<String, Integer>("dealer",30));
+							 }else {
+								 parejaNombreGanancia.add(new Pair<String, Integer>("dealer",20));
+							 }
 						 }
 					 }
 				 }else if(ganador.size() == 1){
@@ -721,6 +792,7 @@ public class ServidorBJ implements Runnable {
 				 }
 			 }
 		 }
+		 */
 	 }
 	
 	// Jugador dealer emulado por el servidor
@@ -765,17 +837,19 @@ public class ServidorBJ implements Runnable {
 				mostrarMensaje("El dealer sigue jugando");
 			} else {
 				if (valorManos[3] > 21) {
+					o=1;
 					datosEnviar.setJugadorEstado("voló");
 					datosEnviar.setMensaje("Dealer ahora tiene " + valorManos[3] + " voló :(");
 					pedir = false;
 					mostrarMensaje("El dealer voló"); 
-					o=1;
+					
 				} else {
+					u=1;
 					datosEnviar.setJugadorEstado("plantó");
 					datosEnviar.setMensaje("Dealer ahora tiene " + valorManos[3] + " plantó");
 					pedir = false;
 					mostrarMensaje("El dealer plantó");
-					u=1;
+
 				}
 				
 			}
@@ -788,16 +862,18 @@ public class ServidorBJ implements Runnable {
 		if(u==1 || o==1) {
 			determinarGanador();
 			repartirGanancias();
-			datosEnviar.setParejas(parejaNombreGanancia);
 			datosEnviar.setGanadores(ganador);
+			datosEnviar.setParejas(parejaNombreGanancia);
 			datosEnviar.setMensaje("El ganador es "+ganador);
-
-				datosEnviar.setMensajeGanancias("Las ganancias son:"+String.valueOf(parejaNombreGanancia.get(0).getValue()));
-			
+			for(int i = 0; i < parejaNombreGanancia.size(); i++) {
+				datosEnviar.setMensajeGanancias("Las ganancias son: "+parejaNombreGanancia.get(i).getValue()+" ");
+			}
 			jugadores[0].enviarMensajeCliente(datosEnviar);
 			jugadores[1].enviarMensajeCliente(datosEnviar);
 			jugadores[2].enviarMensajeCliente(datosEnviar);
 		
+		}else {
+			datosEnviar.mensajeMal();
 		}
 		
 			
