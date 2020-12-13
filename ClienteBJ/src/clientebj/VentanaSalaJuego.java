@@ -545,8 +545,9 @@ public class VentanaSalaJuego extends JInternalFrame {
 						 	
 		}
 		public void repartirGanancias(DatosBlackJack datosRecibidos) {
-			areaMensajes.append(datosRecibidos.getMensajeGanancias());
 			parejaNombreGanancia = datosRecibidos.getParejas();
+			areaMensajes.append(datosRecibidos.getMensajeGanancias());
+			ClienteBlackJack cliente = (ClienteBlackJack)this.getTopLevelAncestor();
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
@@ -624,56 +625,12 @@ public class VentanaSalaJuego extends JInternalFrame {
 		}
 		
 		public void pintarGanador(DatosBlackJack datosRecibidos) {
+			
 			areaMensajes.append(datosRecibidos.getMensaje()+"\n");	
 			ClienteBlackJack cliente = (ClienteBlackJack)this.getTopLevelAncestor();
-			/*
-			if(datosRecibidos.getJugador().contentEquals(yoId)){
-				if(datosRecibidos.getJugadorEstado().equals("iniciar")) {
-					activarBotones(true);
-				}else {
-					if(datosRecibidos.getJugadorEstado().equals("plantó") ){
-						cliente.setTurno(false);
-					}else {
-						System.out.println("Apuesta[0] = "+datosRecibidos.getApuestas()[0]);
-						//yo.dibujarCarta(datosRecibidos.getCarta());
-						apostar(String.valueOf(datosRecibidos.getApuestas()[yoN]), "1");
-						if(datosRecibidos.getJugadorEstado().equals("voló")) {
-							SwingUtilities.invokeLater(new Runnable() {
-								@Override
-								public void run() {
-									// TODO Auto-generated method stub
-									activarBotones(false);
-									cliente.setTurno(false);
-								}});			
-						      }
-						}
-					} 
-			 }else {//movidas de los otros jugadores
-					if(datosRecibidos.getJugador().equals(jugador2Id)) {
-						//mensaje para PanelJuego jugador2
-						if(datosRecibidos.getJugadorEstado().equals("apuesta")) {
-							//jugador2.dibujarCarta(datosRecibidos.getCarta());
-							System.out.println("Apuesta["+jugador2N+"] = "+datosRecibidos.getApuestas()[jugador2N]);
-							apostar(String.valueOf(datosRecibidos.getApuestas()[jugador2N]), "2");
-							
-						}
-					}else if(datosRecibidos.getJugador().equals(jugador3Id)) {
-						if(datosRecibidos.getJugadorEstado().equals("apuesta")) {
-							System.out.println("Apuesta["+jugador3N+"] = "+datosRecibidos.getApuestas()[jugador3N]);
-							
-							apostar(String.valueOf(datosRecibidos.getApuestas()[jugador3N]),"3");
-						}
-					}
-					else {
-						System.out.println("Te habla el dealer papá");
-						//mensaje para PanelJuego dealer
-						if(datosRecibidos.getJugadorEstado().equals("apuesta")) {
-							//dealer.dibujarCarta(datosRecibidos.getCarta());
-							apostar("4000", "dealer");
-						}
-					}
-					
-				}*/
+			
+	
+			
 		}
 		
 		private void apostar(String valor, String jugador) {

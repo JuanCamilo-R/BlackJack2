@@ -29,7 +29,7 @@ import comunes.DatosBlackJack;
 public class ServidorBJ implements Runnable {
 	// constantes para manejo de la conexion.
 
-	public static final int PUERTO = 7378;
+	public static final int PUERTO = 7376;
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
 
@@ -795,9 +795,9 @@ public class ServidorBJ implements Runnable {
 			datosEnviar.setGanadores(ganador);
 			datosEnviar.setMensaje("El ganador es "+ganador);
 			datosEnviar.setMensajeGanancias("Las ganancias son: ");
-			for(int i = 0; i < parejaNombreGanancia.size(); i++) {
-				datosEnviar.setMensajeGanancias(String.valueOf(parejaNombreGanancia.get(i).getValue())+ " ");
-			}
+			//for(int i = 0; i < parejaNombreGanancia.size(); i++) {
+				datosEnviar.setMensajeGanancias(String.valueOf(parejaNombreGanancia.get(0).getValue()));
+			//}
 			jugadores[0].enviarMensajeCliente(datosEnviar);
 			jugadores[1].enviarMensajeCliente(datosEnviar);
 			jugadores[2].enviarMensajeCliente(datosEnviar);
