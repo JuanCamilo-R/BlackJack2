@@ -28,7 +28,7 @@ import comunes.DatosBlackJack;
 public class ServidorBJ implements Runnable {
 	// constantes para manejo de la conexion.
 
-	public static final int PUERTO = 7376;
+	public static final int PUERTO = 7377;
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
 
@@ -645,7 +645,8 @@ public class ServidorBJ implements Runnable {
 					 
 				 }
 			 }
-		 }else if(((valorManos[0] <= valorManos[3]) && (valorManos[1] <= valorManos[3]) &&( valorManos[2] <= valorManos[3]))) {
+		 }else if(((valorManos[0] <= valorManos[3]) && (valorManos[1] <= valorManos[3]) &&( valorManos[2] <= valorManos[3]))){
+			 System.out.print("ganoo dealer");
 			 ganador.add("Dealer");
 			// numGanadores ++;
 		 }else if(valorManos[0]>21 && valorManos[1] >21  && valorManos[2]>21) {
@@ -661,6 +662,9 @@ public class ServidorBJ implements Runnable {
 					// cont=i+1;
 				 }
 			 }
+		 }
+		 if(ganador.size()==0) {
+			 ganador.add("Dealer");
 		 }
 	 }
 	
