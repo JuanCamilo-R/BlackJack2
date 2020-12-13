@@ -43,7 +43,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 	    
 		private PanelJugador dealer, yo, jugador2, jugador3;
 		private JTextArea areaMensajes;
-		private JButton pedir, plantar, apostar,confirmarApuesta;
+		private JButton pedir, plantar, apostar,confirmarApuesta, reiniciarJuego;
 		private JLabel apuesta1, apuesta2, apuesta3, apuestaDealer, dinero1, dinero2, dinero3, dineroDealer,espacio;
 		private JLabel palabraApuesta1, palabraApuesta2, palabraApuesta3, palabraApuestaDealer;
 		private JLabel palabraDinero1, palabraDinero2, palabraDinero3, palabraDineroDealer;
@@ -315,6 +315,17 @@ public class VentanaSalaJuego extends JInternalFrame {
 			System.out.println("Tamano areaMensajes: "+areaMensajes.getSize().width+","+areaMensajes.getSize().height);
 			System.out.println("Tamano scroll: "+scroll.getViewport().getSize().width+","+scroll.getViewport().getSize().height);
 			
+			reiniciarJuego = new JButton("Iniciar nueva ronda");
+			reiniciarJuego.setPreferredSize(new Dimension(160,20));
+			reiniciarJuego.setMinimumSize(reiniciarJuego.getPreferredSize());
+			reiniciarJuego.setEnabled(false);
+			constraints.gridx = 1;
+			constraints.gridy = 2;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			constraints.anchor = constraints.NORTH;
+			add(reiniciarJuego,constraints);
+			
 			panelYo = new JPanel();
 			panelYo.setBackground(Color.GREEN);
 			panelYo.setLayout(new BorderLayout());
@@ -545,9 +556,14 @@ public class VentanaSalaJuego extends JInternalFrame {
 						 	
 		}
 		public void repartirGanancias(DatosBlackJack datosRecibidos) {
+
 			parejaNombreGanancia = datosRecibidos.getParejas();
 			areaMensajes.append(datosRecibidos.getMensajeGanancias());
+
+			reiniciarJuego.setEnabled(true);
+			reiniciarJuego.addActionListener(escucha);
 			ClienteBlackJack cliente = (ClienteBlackJack)this.getTopLevelAncestor();
+			
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
@@ -716,7 +732,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 				apuesta1.setPreferredSize(new Dimension(50,20));
 				apuesta1.setText(String.valueOf(cantidadApuesta));
 				yoClase.pack();
-			}else {
+			}else if(actionEvent.getSource() == confirmarApuesta){
 				if(cantidadApuesta > 0) {
 					yoClase.pack();
 					aposto = true;
@@ -731,6 +747,8 @@ public class VentanaSalaJuego extends JInternalFrame {
 				}else {
 					JOptionPane.showMessageDialog(null,"Debes apostar primero!");
 				}
+				
+			}else {
 				
 			}
 		}

@@ -6,11 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import javafx.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Condition;
@@ -20,6 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import comunes.Baraja;
 import comunes.Carta;
 import comunes.DatosBlackJack;
+import javafx.util.Pair;
 
 /* Clase encargada de realizar la gestión del juego, esto es, el manejo de turnos y estado del juego.
  * También gestiona al jugador Dealer. 
