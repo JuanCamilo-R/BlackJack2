@@ -14,11 +14,20 @@ public class DatosBlackJack implements Serializable{
 	private String jugador,jugadorEstado;
 	private Baraja baraja;
 	private boolean estadoJuego;
+	private String ganadorr;
 	public String getJugador() {
 		return jugador;
 	}
 	public void setJugador(String jugador) {
 		this.jugador = jugador;
+	}
+	
+	public void setGanador(String ganador) {
+		this.ganadorr = ganador;
+	}
+	
+	public String getGanador() {
+		return ganadorr;
 	}
 	
 	public String getJugadorEstado() {

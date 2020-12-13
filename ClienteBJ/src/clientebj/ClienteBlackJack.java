@@ -43,7 +43,7 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 	public static final int HEIGHT=650;
 	
 	//Constantes de conexión con el Servidor BlackJack
-	public static final int PUERTO=7378;
+	public static final int PUERTO=7372;
 	public static final String IP="127.0.0.1";
 	
 	
@@ -210,9 +210,15 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 						System.out.println("ENTRO A PINTAR APUESTAS");
 						
 						ventanaSalaJuego.pintarApuestas(datosRecibidos);
+						
 					}else {
 						ventanaSalaJuego.pintarTurno(datosRecibidos);
 					}
+					if(datosRecibidos.getGanador()!=null) {
+						System.out.print("Entrandoo");
+						ventanaSalaJuego.pintarGanador(datosRecibidos);
+					}
+					
 					
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
