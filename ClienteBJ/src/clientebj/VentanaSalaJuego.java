@@ -554,13 +554,13 @@ public class VentanaSalaJuego extends JInternalFrame {
 					
 					for(int i = 0; i < parejaNombreGanancia.size(); i++) {
 						if(parejaNombreGanancia.get(i).getKey().equals(yoId)) {
-							dinero1.setText(dinero1.getText()+String.valueOf(parejaNombreGanancia.get(i).getValue()));
+							dinero1.setText(String.valueOf(parejaNombreGanancia.get(i).getValue()));
 						}else if(parejaNombreGanancia.get(i).getKey().equals(jugador2Id)) {
-							dinero2.setText(dinero2.getText()+String.valueOf(parejaNombreGanancia.get(i).getValue()));
+							dinero2.setText(String.valueOf(parejaNombreGanancia.get(i).getValue()));
 						}else if(parejaNombreGanancia.get(i).getKey().equals(jugador3Id)) {
-							dinero3.setText(dinero3.getText()+String.valueOf(parejaNombreGanancia.get(i).getValue()));
+							dinero3.setText(String.valueOf(parejaNombreGanancia.get(i).getValue()));
 						}else {
-							dineroDealer.setText(dineroDealer.getText()+String.valueOf(parejaNombreGanancia.get(i).getValue()));
+							dineroDealer.setText(String.valueOf(parejaNombreGanancia.get(i).getValue()));
 						}
 					}
 				}});

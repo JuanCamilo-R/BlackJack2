@@ -216,6 +216,7 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 					}*/
 					if(datosRecibidos.getGanadores() != null && datosRecibidos.getParejas() != null) {
 						System.out.print("Entrandoo");
+						datosRecibidos.mostrarGanancias();
 						ventanaSalaJuego.pintarGanador(datosRecibidos);
 						ventanaSalaJuego.repartirGanancias(datosRecibidos);
 					}else if(datosRecibidos.getEstadoJuego()) {

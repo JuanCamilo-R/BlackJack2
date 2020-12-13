@@ -674,7 +674,7 @@ public class ServidorBJ implements Runnable {
 	 public void repartirGanancias() {
 		 
 		 for(int i = 0; i < ganador.size(); i++) {
-			 if(idJugadores[i].equals(ganador.get(i))) {
+			 if(ganador.contains(idJugadores[i])) {
 				 if(manosJugadores.get(i).size() == 2) {
 					 for(int j = 0; j < 2; j++) {
 						 if(manosJugadores.get(i).get(j).getValor().contains("As")) {
@@ -712,6 +712,12 @@ public class ServidorBJ implements Runnable {
 							 parejaNombreGanancia.add(new Pair<String, Integer>("dealer",20));
 						 }
 					 }
+				 }else if(ganador.size() == 1){
+					 System.out.println(" dealer ha ganado 40");
+					 parejaNombreGanancia.add(new Pair<String,Integer>("dealer",40));
+				 }else if(ganador.size() == 2) {
+					 System.out.println(" dealer ha ganado 30");
+					 parejaNombreGanancia.add(new Pair<String,Integer>("dealer",30));
 				 }else {
 					 System.out.println(" dealer ha ganado 20");
 					 parejaNombreGanancia.add(new Pair<String,Integer>("dealer",20));

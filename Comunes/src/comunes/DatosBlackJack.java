@@ -114,6 +114,13 @@ public class DatosBlackJack implements Serializable{
 		return apuestasJugadores;
 	}
 	
+	public void mostrarGanancias() {
+		System.out.println("GANANCIAS DATOS RECIBIDOS: ");
+		for(int i = 0; i < this.parejaNombreGanancia.size(); i++) {
+			System.out.println(this.parejaNombreGanancia.get(i).getKey());
+		}
+	}
+	
 	public ArrayList<Carta> getManoJugador3(){
 		return manoJugador3;
 	}
