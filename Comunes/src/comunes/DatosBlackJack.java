@@ -79,7 +79,7 @@ public class DatosBlackJack implements Serializable{
 	}
 	
 	public void setMensajeGanancias(String mensaje) {
-		this.mensajeGanancia = mensaje;
+		this.mensajeGanancia += mensaje;
 	}
 	
 	public String getMensajeGanancias() {
@@ -127,7 +127,9 @@ public class DatosBlackJack implements Serializable{
 	public void setManoDealer(ArrayList<Carta> manoDealer) {
 		this.manoDealer = manoDealer;
 	}
-	
+	public void mensajeMal() {
+		System.out.println("NO ENTRE AL IF DE GANADORES Y GANANCIAS");
+	}
 	public String getMensaje() {
 		return mensaje;
 	}

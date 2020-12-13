@@ -703,7 +703,6 @@ public class VentanaSalaJuego extends JInternalFrame {
 						dinero3.setText(Integer.parseInt(dinero3.getText())-Integer.parseInt(valor)+"");
 						yoClase.pack();
 					}else {
-						System.out.println("Apostó el dealer");
 						apuestaDealer.setText(valor);
 						dineroDealer.setText(Integer.parseInt(dineroDealer.getText())-Integer.parseInt(valor)+"");
 					}
