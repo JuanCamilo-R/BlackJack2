@@ -580,8 +580,8 @@ public class VentanaSalaJuego extends JInternalFrame {
 
 
 			abandonarJuego.addActionListener(escucha);
-			areaMensajes.append(datosRecibidos.getMensajeGanancias());
-			parejaNombreGanancia = datosRecibidos.getParejas();
+			//areaMensajes.append(datosRecibidos.getMensajeGanancias());
+			//parejaNombreGanancia = datosRecibidos.getParejas();
 
 
 			SwingUtilities.invokeLater(new Runnable() {
