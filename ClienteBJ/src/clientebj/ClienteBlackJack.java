@@ -22,6 +22,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -203,6 +204,11 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 						for(int i=0; i<datosRecibidos.getApuestas().length;i++) {
 							System.out.println("["+i+","+datosRecibidos.getApuestas()[i]+"]");
 						}
+					}
+					if(datosRecibidos.getJugadorEstado().equals("saliendo")) {
+						enviarMensajeServidor("salgo");
+						JOptionPane.showMessageDialog(null,"El jugador "+datosRecibidos.getJugador()+" ha decidido retirarse del juego");
+						cerrarConexion();
 					}
 					mostrarMensajes("Cliente hilo run recibiendo mensaje servidor ");
 					mostrarMensajes(datosRecibidos.getJugador()+" "+datosRecibidos.getJugadorEstado());

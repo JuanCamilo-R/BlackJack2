@@ -26,6 +26,7 @@ import javafx.util.Pair;
 public class ServidorBJ implements Runnable {
 	// constantes para manejo de la conexion.
 
+
 	public static final int PUERTO = 7377;
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
@@ -385,7 +386,15 @@ public class ServidorBJ implements Runnable {
 				iniciarDealer();
 			}
 			// APUESTA
-		} else {
+		}
+		else if(entrada.equals("abandonar")) {
+			datosEnviar.setJugador(idJugadores[indexJugador]);
+			terminarJuego();
+		}
+		else if(entrada.equals("salgo")) {
+			
+		}
+		else {
 			datosEnviar = new DatosBlackJack();
 			apuestasJugadores[indexJugador] = Integer.parseInt(entrada);
 
@@ -417,6 +426,20 @@ public class ServidorBJ implements Runnable {
 		}
 	}
 
+	private void terminarJuego() {
+		// TODO Auto-generated method stub
+		jugadores[0].cerrar();
+		jugadores[1].cerrar();
+		jugadores[2].cerrar();
+		try {
+			server.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.exit(0);
+	}
+
 	public void iniciarDealer() {
 		// le toca turno al dealer.
 		Thread dealer = new Thread(this);
@@ -437,7 +460,7 @@ public class ServidorBJ implements Runnable {
 
 		// variables de control
 		private int indexJugador;
-		private boolean suspendido;
+		private boolean suspendido,jugar=true;
 
 		public Jugador(Socket conexionCliente, int indexJugador) {
 			this.conexionCliente = conexionCliente;
@@ -600,7 +623,7 @@ public class ServidorBJ implements Runnable {
 				}
 			}
 
-			while (!seTerminoRonda()) {
+			while (jugar) {
 				try {
 					entrada = (String) in.readObject();
 					analizarMensaje(entrada, indexJugador);
@@ -612,6 +635,15 @@ public class ServidorBJ implements Runnable {
 					// controlar cuando se cierra un cliente
 				}
 			}
+			try {
+				in.close();
+				out.close();
+				conexionCliente.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("Un hilo muere");
 			// cerrar conexión
 
 		}
@@ -634,6 +666,12 @@ public class ServidorBJ implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		
+		public void cerrar() {
+			jugar=false;
+			datosEnviar.setJugadorEstado("saliendo");
+			enviarMensajeCliente(datosEnviar);
 		}
 	}// fin inner class Jugador
 	 public void determinarGanador() {
