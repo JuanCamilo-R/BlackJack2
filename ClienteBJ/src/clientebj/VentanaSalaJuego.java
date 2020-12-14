@@ -51,7 +51,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 		private JPanel panelYo, panelBotones, yoFull, panelDealer,panelJugador2, panelJugador3, panelControles;
 		private JPanel paneltextoDealer,paneltexto1,paneltexto2,paneltexto3;
 		private Baraja barajaNueva;
-		private List<Pair<String, Integer>> parejaNombreGanancia;
+		private ArrayList<Pair<String, Integer>> parejaNombreGanancia;
 		private int[] valorManos;
 		private String yoId, jugador2Id, jugador3Id;
 		private int yoN,jugador2N,jugador3N;
@@ -580,8 +580,6 @@ public class VentanaSalaJuego extends JInternalFrame {
 
 
 			abandonarJuego.addActionListener(escucha);
-			areaMensajes.append(datosRecibidos.getMensajeGanancias());
-			parejaNombreGanancia = datosRecibidos.getParejas();
 
 
 			SwingUtilities.invokeLater(new Runnable() {

@@ -15,7 +15,7 @@ public class DatosBlackJack implements Serializable{
 	private String mensaje;
 	private String mensajeGanancia;
 	private String jugador,jugadorEstado;
-	private List<Pair<String, Integer>> parejaNombreGanancia;
+	private ArrayList<Pair<String, Integer>> parejaNombreGanancia;
 	private Baraja baraja;
 	private boolean estadoJuego;
 	private String ganadorr;
@@ -70,16 +70,16 @@ public class DatosBlackJack implements Serializable{
 		return manoJugador2;
 	}
 	
-	public void setParejas(List<Pair<String, Integer>> parejaLlegada) {
+	public void setParejas(ArrayList<Pair<String, Integer>> parejaLlegada) {
 		this.parejaNombreGanancia = parejaLlegada;
 	}
 	
-	public List<Pair<String, Integer>> getParejas(){
+	public ArrayList<Pair<String, Integer>> getParejas(){
 		return this.parejaNombreGanancia;
 	}
 	
 	public void setMensajeGanancias(String mensaje) {
-		this.mensajeGanancia += mensaje;
+		this.mensajeGanancia = mensaje;
 	}
 	
 	public String getMensajeGanancias() {

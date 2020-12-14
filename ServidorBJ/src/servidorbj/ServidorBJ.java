@@ -27,7 +27,7 @@ public class ServidorBJ implements Runnable {
 	// constantes para manejo de la conexion.
 
 
-	public static final int PUERTO = 7377;
+	public static final int PUERTO = 7378;
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
 
@@ -735,22 +735,43 @@ public class ServidorBJ implements Runnable {
 		 }
 		 return 0;
 	 }
+	 public boolean contieneJugador(ArrayList<String> ganador, String jugadorBuscado) {
+		 for(int i = 0; i < ganador.size(); i++) {
+			if(ganador.get(i).equals(jugadorBuscado)) {
+				return true;
+			}
+		 }
+		 return false;
+	 }
 	 public void repartirGanancias() {
 		 
-		 
+		 System.out.println("JUGADORES EN GANANCIAS:");
+		 for(int i = 0; i < idJugadores.length;i++) {
+			 System.out.println("idJugador ["+i+"] : "+idJugadores[i]);
+		 }
+		 System.out.println("GANADORES EN GANANCIA");
+		 for(int i = 0; i < ganador.size();i++) {
+			 System.out.println("Ganador ["+i+"] : "+ganador.get(i));
+		 }
 		 
 		 for(int i = 0; i < ganador.size(); i++) {
-			 if(ganador.contains(idJugadores[i])) {
+			 
+			 if(contieneJugador(ganador, idJugadores[i])) {
+				 System.out.println("Entra ganador "+idJugadores[i]);
 				 if(verificarJugadaBJ(manosJugadores.get(i))) {
+					 System.out.println("Pareja nombre agregado: "+idJugadores[i]);
 					 parejaNombreGanancia.add(new Pair<String, Integer>(idJugadores[i],25));
 				 }else {
+					 System.out.println("Pareja nombre agregado --> "+idJugadores[i]);
 					 parejaNombreGanancia.add(new Pair<String, Integer>(idJugadores[i],20));
 				 }
 			 }else if(ganador.contains("dealer")) {
 				 if(verificarJugadaBJ(manosJugadores.get(3))) {
+					 System.out.println("Pareja nombre agregado dealer");
 					 int cantidadGanancia = verificarCantidadGanadores() + 15;
 					 parejaNombreGanancia.add(new Pair<String, Integer>("dealer", cantidadGanancia));
 				 }else {
+					 System.out.println("Pareja nombre agregado --> dealer");
 					 int cantidadGanancia = verificarCantidadGanadores()+10;
 					 parejaNombreGanancia.add(new Pair<String, Integer>("dealer",cantidadGanancia));
 				 }
@@ -898,6 +919,7 @@ public class ServidorBJ implements Runnable {
 			jugadores[2].enviarMensajeCliente(datosEnviar);
 		} // fin while
 		if(u==1 || o==1) {
+			System.out.println("Entro al if despues del while");
 			determinarGanador();
 			repartirGanancias();
 			datosEnviar.setGanadores(ganador);
