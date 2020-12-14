@@ -794,7 +794,7 @@ public class ServidorBJ implements Runnable {
 		 
 		 for(int i = 0; i < idJugadores.length; i++) {
 			 
-			 if(ganador.get(i)==idJugadores[i]) {
+			 if(contieneJugador(ganador, idJugadores[i])) {
 				 System.out.println("Entra ganador "+idJugadores[i]);
 				 if(verificarJugadaBJ(manosJugadores.get(i))) {
 					 System.out.println("Pareja nombre agregado: "+idJugadores[i]);
@@ -803,7 +803,7 @@ public class ServidorBJ implements Runnable {
 					 System.out.println("Pareja nombre agregado --> "+idJugadores[i]);
 					 parejaNombreGanancia.add(new Pair<String, Integer>(idJugadores[i],20));
 				 }
-			 }else if(ganador.get(i)=="dealer") {
+			 }else if(ganador.contains("dealer")) {
 				 if(verificarJugadaBJ(manosJugadores.get(3))) {
 					 System.out.println("Pareja nombre agregado dealer");
 					 int cantidadGanancia = verificarCantidadGanadores() + 15;
