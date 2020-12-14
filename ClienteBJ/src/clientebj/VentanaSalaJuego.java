@@ -595,10 +595,10 @@ public class VentanaSalaJuego extends JInternalFrame {
 					// TODO Auto-generated method stub
 					if(parejaNombreGanancia.size() == 1 && parejaNombreGanancia.get(0).getKey().equals("null")) {
 						System.out.println("ENTROOOO");
-						dinero1.setText(String.valueOf(DINERO_INICIAL));
-						dinero2.setText(String.valueOf(DINERO_INICIAL));
-						dinero3.setText(String.valueOf(DINERO_INICIAL));
-						dineroDealer.setText(String.valueOf(DINERO_INICIAL));
+						dinero1.setText(String.valueOf(Integer.parseInt(dinero1.getText())+Integer.parseInt(apuesta1.getText())));
+						dinero2.setText(String.valueOf(Integer.parseInt(dinero2.getText())+Integer.parseInt(apuesta2.getText())));
+						dinero3.setText(String.valueOf(Integer.parseInt(dinero3.getText())+Integer.parseInt(apuesta3.getText())));
+						dineroDealer.setText(String.valueOf(Integer.parseInt(dineroDealer.getText())+Integer.parseInt(apuestaDealer.getText())));
 					}else {
 						System.out.println("Entro a dar ganancias vez");
 						System.out.println("dinero1 :"+dinero1.getText());
