@@ -71,6 +71,7 @@ public class Baraja implements Serializable {
 		      } 
 		     }		    
 	  }
+  	
    public Carta revisarCarta(Carta carta) {
 	   
 	   for(int i = 0; i < mazo.size(); i++) {
