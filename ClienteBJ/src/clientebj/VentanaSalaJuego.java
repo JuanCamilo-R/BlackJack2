@@ -367,7 +367,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			palabraDinero1.setPreferredSize(new Dimension(50,20));
 			palabraApuesta1 = new JLabel("      Apuesta: ");
 			palabraApuesta1.setPreferredSize(new Dimension(80,20));
-			dinero1 = new JLabel((10+yoCliente.getTesoro1())+"");
+			dinero1 = new JLabel((DINERO_INICIAL+yoCliente.getTesoro1())+"");
 			dinero1.setPreferredSize(new Dimension(50,20));
 			apuesta1 = new JLabel("0");
 			apuesta1.setPreferredSize(new Dimension(50,20));
@@ -787,10 +787,8 @@ public class VentanaSalaJuego extends JInternalFrame {
 				apuesta1.setPreferredSize(new Dimension(50,20));
 				apuesta1.setText((Integer.parseInt(apuesta1.getText())+10)+"");
 				yoClase.pack();
-				if(Integer.parseInt(dinero1.getText())-Integer.parseInt(apuesta1.getText())<10) {
-					apostar.setEnabled(false);
-					apostar.removeActionListener(escucha);
-				}
+				apostar.setEnabled(false);
+				apostar.removeActionListener(escucha);
 			}else if(actionEvent.getSource() == confirmarApuesta){
 				if(cantidadApuesta > 0) {
 					yoClase.pack();
