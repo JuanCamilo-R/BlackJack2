@@ -30,8 +30,9 @@ public class PanelJugador extends JPanel {
 	private int x;
 	    
 	public PanelJugador(String nombreJugador) {
-		//this.setBackground(Color.GREEN);
 		cartasRecuerdo = new ArrayList<Recuerdo>();
+		
+		//Configuracion de la ventana.
 		this.setPreferredSize(new Dimension(ANCHO,ALTO));
 		this.setMinimumSize(this.getPreferredSize());
 		TitledBorder bordes;
@@ -48,40 +49,22 @@ public class PanelJugador extends JPanel {
 	    repaint();
 	}
 	
+	
 	public void dibujarCarta(Carta carta) {
 		cartasRecuerdo.add(new Recuerdo(carta.getImagen(),x));
-		x+=17;
+		x+=17; //Espacio entre las cartas
 		repaint();
 	}
-	/*
-	public void pintarLaCarta (Carta carta) {
-		dibujoRecordar.add(new Recuerdo(carta,x));
-		x+=27;
-		repaint();
-	}
-	*/
+	
 	public void paintComponent(Graphics g)  {
 		super.paintComponent(g); 
 		//Pinta con memoria
-		
 			for(Recuerdo carta : cartasRecuerdo) {
 				g.drawImage(carta.getImagenRecordar(), carta.getxRecordar(),20, this);
-			}
-			//clase.seguir=true;		
+			}		
 		}
-	/*
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Font font =new Font(Font.DIALOG,Font.BOLD,12);
-		g.setFont(font);
-				
-		//pinta la mano inicial
-		for(int i=0;i<dibujoRecordar.size();i++) {
-			g.drawString(dibujoRecordar.get(i).getCartaRecordar(), dibujoRecordar.get(i).getxRecordar(),35);
-		}	
-	}
-	*/
-	
+
+	//Clase que recuerda las cartas anteriores.
 	private class Recuerdo{
 		private Image imagenRecordar;
 		private int xRecordar;
@@ -99,24 +82,6 @@ public class PanelJugador extends JPanel {
 			return xRecordar;
 		}
 	}
-	/*
-	private class Recuerdo{
-		private Carta cartaRecordar;
-		private int xRecordar;
 
-		public Recuerdo(Carta cartaRecordar, int xRecordar) {
-			this.cartaRecordar = cartaRecordar;
-			this.xRecordar = xRecordar;
-		}
-
-		public String getCartaRecordar() {
-			return cartaRecordar.toString();
-		}
-
-		public int getxRecordar() {
-			return xRecordar;
-		}
-	}
-	*/
 
 }

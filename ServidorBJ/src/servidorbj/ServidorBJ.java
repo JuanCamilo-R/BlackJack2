@@ -748,17 +748,19 @@ public class ServidorBJ implements Runnable {
 
 			// numGanadores ++;
 		 }else if(valorManos[0]>21 && valorManos[1] >21  && valorManos[2]>21 && valorManos[3] <= 21) {
-
 			 ganador.add("dealer");
 
 		 }
-		 else {
+		 else if(valorManos[0] >  valorManos[3] || valorManos[1] > valorManos[3] ||
+				 valorManos[2] > valorManos[3]) {
 			 for(int i=0;i<3;i++) {
 				 if(valorManos[i]>valorManos[3] && valorManos[i]<=21) {
 					 ganador.add(idJugadores[i]);
-
 				 }
 			 }
+		 }else if(!(valorManos[0] > 21 && valorManos[1] > 21 && valorManos[2] > 21 && 
+				 valorManos[3] > 21)){
+			 ganador.add("dealer");
 		 }
 	 }
 	 public boolean verificarJugadaBJ(ArrayList<Carta> manoJugador) {
