@@ -633,8 +633,10 @@ public class VentanaSalaJuego extends JInternalFrame {
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
+					System.out.println("Tamaño pareja ganadores: "+parejaNombreGanancia.size());
+					System.out.println("Primer ganador: "+parejaNombreGanancia.get(0).getKey());
 					// TODO Auto-generated method stub
-					if(parejaNombreGanancia.size() == 1 && parejaNombreGanancia.get(0).getKey().equals("null")) {
+					if(parejaNombreGanancia.size() == 2 && parejaNombreGanancia.get(0).getKey().equals("null")) {
 						System.out.println("ENTROOOO");
 						dinero1.setText(String.valueOf(Integer.parseInt(dinero1.getText())+Integer.parseInt(apuesta1.getText())));
 						dinero2.setText(String.valueOf(Integer.parseInt(dinero2.getText())+Integer.parseInt(apuesta2.getText())));
