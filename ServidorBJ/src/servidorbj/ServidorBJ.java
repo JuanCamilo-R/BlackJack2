@@ -131,7 +131,11 @@ public class ServidorBJ implements Runnable {
 		// TODO Auto-generated method stub
 
 		if (carta.getValor().equals("As")) {
-			valorManos[i] += 11;
+			if(valorManos[i] <= 20 && valorManos[i] > 10) {
+				valorManos[i] += 1;
+			}else if(valorManos[i] <= 10) {
+				valorManos[i] += 11;
+			}
 		} else {
 			if (carta.getValor().equals("J") || carta.getValor().equals("Q") || carta.getValor().equals("K")) {
 				valorManos[i] += 10;
