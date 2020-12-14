@@ -27,7 +27,7 @@ public class ServidorBJ implements Runnable {
 	// constantes para manejo de la conexion.
 
 
-	public static final int PUERTO = 7379;
+	public static final int PUERTO = 7378;
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
 
@@ -797,7 +797,11 @@ public class ServidorBJ implements Runnable {
 				 int cantidadGanancia = verificarCantidadGanadores()+10;
 				 parejaNombreGanancia.add(new Pair<String, Integer>("dealer",cantidadGanancia));
 			 }
+		 }else {
+			 int cantidadGanancia = verificarCantidadGanadores();
+			 parejaNombreGanancia.add(new Pair<String, Integer>("dealer",cantidadGanancia));
 		 }
+		 
 	 }
 	 public void repartirGanancias() {
 		 
