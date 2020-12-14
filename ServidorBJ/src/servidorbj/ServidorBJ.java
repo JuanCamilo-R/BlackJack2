@@ -799,7 +799,8 @@ public class ServidorBJ implements Runnable {
 		 }
 		 
 		 for(int i = 0; i < idJugadores.length; i++) {
-			 if(contieneJugador(ganador, idJugadores[i])) {
+
+			if(contieneJugador(ganador, idJugadores[i])) {
 				 System.out.println("Entra ganador "+idJugadores[i]);
 				 if(verificarJugadaBJ(manosJugadores.get(i))) {
 					 System.out.println("Pareja nombre agregado: "+idJugadores[i]);
