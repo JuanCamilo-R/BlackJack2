@@ -969,9 +969,7 @@ public class ServidorBJ implements Runnable {
 			datosEnviar.setGanadores(ganador);
 			datosEnviar.setParejas(parejaNombreGanancia);
 			datosEnviar.setMensaje("El ganador es "+ganador);
-			for(int i = 0; i < parejaNombreGanancia.size(); i++) {
-				datosEnviar.setMensajeGanancias("Las ganancias son: "+parejaNombreGanancia.get(i).getValue()+" ");
-			}
+			datosEnviar.setMensajeGanancias("Se han dado las ganancias, revisa las tuyas!!");
 			jugadores[0].enviarMensajeCliente(datosEnviar);
 			jugadores[1].enviarMensajeCliente(datosEnviar);
 			jugadores[2].enviarMensajeCliente(datosEnviar);
