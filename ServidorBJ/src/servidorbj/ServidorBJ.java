@@ -184,10 +184,10 @@ public class ServidorBJ implements Runnable {
 	}
 
 	private void analizarMensaje(String entrada, int indexJugador) {
-		System.out.println("Analizando el mensaje del jugador con index "+indexJugador);
+		System.out.println("Analizando el mensaje del jugador con index "+indexJugador+" que dice "+entrada);
 		// TODO Auto-generated method stub
 		// garantizar que solo se analice la petición del jugador en turno.
-		while (indexJugador != jugadorEnTurno) {
+		while (indexJugador != jugadorEnTurno && !entrada.equals("reiniciar")) {
 			bloqueoJuego.lock();
 			try {
 				esperarTurno.await();
@@ -393,6 +393,11 @@ public class ServidorBJ implements Runnable {
 		}
 		else if(entrada.equals("salgo")) {
 			
+		}
+		else if(entrada.equals("reiniciar")) {
+			datosEnviar.setJugadorEstado("reiniciando");
+			jugadores[indexJugador].enviarMensajeCliente(datosEnviar);
+			System.out.println("Enviando reiniciar al jugador con index "+indexJugador);
 		}
 		else {
 			datosEnviar = new DatosBlackJack();
