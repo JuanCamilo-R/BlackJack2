@@ -792,7 +792,7 @@ public class ServidorBJ implements Runnable {
 			 System.out.println("Ganador ["+i+"] : "+ganador.get(i));
 		 }
 		 
-		 for(int i = 0; i < ganador.size(); i++) {
+		 for(int i = 0; i < idJugadores.length; i++) {
 			 
 			 if(contieneJugador(ganador, idJugadores[i])) {
 				 System.out.println("Entra ganador "+idJugadores[i]);
