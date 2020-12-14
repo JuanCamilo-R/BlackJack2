@@ -27,7 +27,7 @@ public class ServidorBJ implements Runnable {
 	// constantes para manejo de la conexion.
 
 
-	public static final int PUERTO = 7372;
+	public static final int PUERTO = 7378;
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
 
@@ -131,11 +131,7 @@ public class ServidorBJ implements Runnable {
 		// TODO Auto-generated method stub
 
 		if (carta.getValor().equals("As")) {
-			if(valorManos[i] <= 20 && valorManos[i] > 10) {
-				valorManos[i] += 1;
-			}else if(valorManos[i] <= 10) {
-				valorManos[i] += 11;
-			}
+			valorManos[i] += 11;
 		} else {
 			if (carta.getValor().equals("J") || carta.getValor().equals("Q") || carta.getValor().equals("K")) {
 				valorManos[i] += 10;
@@ -780,11 +776,9 @@ public class ServidorBJ implements Runnable {
 	 public boolean contieneJugador(ArrayList<String> ganador, String jugadorBuscado) {
 		 for(int i = 0; i < ganador.size(); i++) {
 			if(ganador.get(i).equals(jugadorBuscado)) {
-				System.out.println("IGUALES!!");
 				return true;
 			}
 		 }
-		 System.out.println("NO ENTRE, FALSO"+jugadorBuscado);
 		 return false;
 	 }
 	 public void repartirGanancias() {
@@ -799,10 +793,8 @@ public class ServidorBJ implements Runnable {
 		 }
 		 
 		 for(int i = 0; i < idJugadores.length; i++) {
-
 			 
 			 if(ganador.get(i)==idJugadores[i]) {
-
 				 System.out.println("Entra ganador "+idJugadores[i]);
 				 if(verificarJugadaBJ(manosJugadores.get(i))) {
 					 System.out.println("Pareja nombre agregado: "+idJugadores[i]);
@@ -974,7 +966,9 @@ public class ServidorBJ implements Runnable {
 			datosEnviar.setGanadores(ganador);
 			datosEnviar.setParejas(parejaNombreGanancia);
 			datosEnviar.setMensaje("El ganador es "+ganador);
-			datosEnviar.setMensajeGanancias("Se han dado las ganancias, revisa las tuyas!!");
+			for(int i = 0; i < parejaNombreGanancia.size(); i++) {
+				datosEnviar.setMensajeGanancias("Las ganancias son: "+parejaNombreGanancia.get(i).getValue()+" ");
+			}
 			jugadores[0].enviarMensajeCliente(datosEnviar);
 			jugadores[1].enviarMensajeCliente(datosEnviar);
 			jugadores[2].enviarMensajeCliente(datosEnviar);
