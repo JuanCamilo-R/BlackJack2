@@ -50,7 +50,40 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 	
 	//variables de control del juego
 	private String idYo, otroJugador, otroJugador3;
-	private int nYo, nOtroJugador, nOtroJugador3;
+	private int nYo, nOtroJugador, nOtroJugador3,tesoro1=0,tesoro2=0,tesoro3=0,tesoroDealer=0;
+	private ClienteBlackJack yoCliente;
+	public int getTesoro1() {
+		return tesoro1;
+	}
+
+	public void setTesoro1(int tesoro1) {
+		this.tesoro1 = tesoro1;
+	}
+
+	public int getTesoro2() {
+		return tesoro2;
+	}
+
+	public void setTesoro2(int tesoro2) {
+		this.tesoro2 = tesoro2;
+	}
+
+	public int getTesoro3() {
+		return tesoro3;
+	}
+
+	public void setTesoro3(int tesoro3) {
+		this.tesoro3 = tesoro3;
+	}
+
+	public int getTesoroDealer() {
+		return tesoroDealer;
+	}
+
+	public void setTesoroDealer(int tesoroDealer) {
+		this.tesoroDealer = tesoroDealer;
+	}
+
 	private boolean turno;
 	private DatosBlackJack datosRecibidos;
 	
@@ -69,6 +102,7 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 	 * Instantiates a new cliente black jack.
 	 */
 	public ClienteBlackJack() {
+		yoCliente=this;
 		initGUI();
 		
 		//default window settings
@@ -269,7 +303,7 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 					
 				}
 				finally {
-					ventanaSalaJuego = new VentanaSalaJuego(idYo,otroJugador, otroJugador3,nYo,nOtroJugador,nOtroJugador3);
+					ventanaSalaJuego = new VentanaSalaJuego(idYo,otroJugador, otroJugador3,nYo,nOtroJugador,nOtroJugador3,yoCliente);
 					ventanaSalaJuego.pintarCartasInicio(datosRecibidos);
 					adicionarInternalFrame(ventanaSalaJuego);
 					if(turno) {
