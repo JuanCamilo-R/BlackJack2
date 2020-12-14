@@ -27,7 +27,7 @@ public class ServidorBJ implements Runnable {
 	// constantes para manejo de la conexion.
 
 
-	public static final int PUERTO = 7372;
+	public static final int PUERTO = 7379;
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
 
@@ -101,7 +101,13 @@ public class ServidorBJ implements Runnable {
 		manoJugador3 = new ArrayList<Carta>();
 		manoDealer = new ArrayList<Carta>();
 		parejaNombreGanancia = new ArrayList<Pair<String,Integer>>(); 
-
+		
+		// gestiona las tres manos en un solo objeto para facilitar el manejo del hilo
+		manosJugadores = new ArrayList<ArrayList<Carta>>(4);
+		manosJugadores.add(manoJugador1);
+		manosJugadores.add(manoJugador2);
+		manosJugadores.add(manoJugador3);
+		manosJugadores.add(manoDealer);
 		// reparto inicial jugadores 1 y 2
 		for (int i = 1; i <= 2; i++) {
 			carta = mazo.getCarta();
@@ -119,21 +125,18 @@ public class ServidorBJ implements Runnable {
 		manoDealer.add(carta);
 		calcularValorMano(carta, 3);
 
-		// gestiona las tres manos en un solo objeto para facilitar el manejo del hilo
-		manosJugadores = new ArrayList<ArrayList<Carta>>(4);
-		manosJugadores.add(manoJugador1);
-		manosJugadores.add(manoJugador2);
-		manosJugadores.add(manoJugador3);
-		manosJugadores.add(manoDealer);
+		
 	}
 
 	private void calcularValorMano(Carta carta, int i) {
 		// TODO Auto-generated method stub
-
+		boolean noMas = false;
 		if (carta.getValor().equals("As")) {
 			if(valorManos[i] <= 20 && valorManos[i] > 10) {
 				valorManos[i] += 1;
-			}else if(valorManos[i] <= 10) {
+			}else if(valorManos[i] <= 10 && !noMas) {
+				valorManos[i] += 11;
+			}else {
 				valorManos[i] += 11;
 			}
 		} else {
@@ -696,7 +699,6 @@ public class ServidorBJ implements Runnable {
 				DatosBlackJack prueba = (DatosBlackJack)mensaje;
 				if(prueba.getApuestas()!=null) {
 					System.out.println("Apuestas a enviar cuando envio mensaje al cliente "+indexJugador+":");
-
 					for(int i=0; i<prueba.getApuestas().length;i++) {
 						System.out.println("["+i+","+prueba.getApuestas()[i]+"]");
 					}
@@ -724,11 +726,12 @@ public class ServidorBJ implements Runnable {
 					 ganador.add(idJugadores[i]);
 				 }
 			 }
-		 }else if(((valorManos[0] <= valorManos[3]) && (valorManos[1] <= valorManos[3]) &&( valorManos[2] <= valorManos[3]))){
+		 }else if(((valorManos[0] <= valorManos[3]) && (valorManos[1] <= valorManos[3]) &&( valorManos[2] <= valorManos[3]))
+				 && valorManos[3] <= 21){
 			 System.out.print("ganoo dealer");
 			 ganador.add("dealer");
 			// numGanadores ++;
-		 }else if(valorManos[0]>21 && valorManos[1] >21  && valorManos[2]>21) {
+		 }else if(valorManos[0]>21 && valorManos[1] >21  && valorManos[2]>21 && valorManos[3] <= 21) {
 			 ganador.add("dealer");
 			// numGanadores ++;
 		 }
@@ -741,9 +744,6 @@ public class ServidorBJ implements Runnable {
 					// cont=i+1;
 				 }
 			 }
-		 }
-		 if(ganador.size()==0) {
-			 ganador.add("dealer");
 		 }
 	 }
 	 public boolean verificarJugadaBJ(ArrayList<Carta> manoJugador) {
@@ -787,6 +787,20 @@ public class ServidorBJ implements Runnable {
 		 System.out.println("NO ENTRE, FALSO"+jugadorBuscado);
 		 return false;
 	 }
+	 
+	 public void repartirGananciasDealer() {
+		 if(contieneJugador(ganador,"dealer")) {
+			 if(verificarJugadaBJ(manosJugadores.get(3))) {
+				 System.out.println("Pareja nombre agregado dealer");
+				 int cantidadGanancia = verificarCantidadGanadores() + 15;
+				 parejaNombreGanancia.add(new Pair<String, Integer>("dealer", cantidadGanancia));
+			 }else {
+				 System.out.println("Pareja nombre agregado --> dealer");
+				 int cantidadGanancia = verificarCantidadGanadores()+10;
+				 parejaNombreGanancia.add(new Pair<String, Integer>("dealer",cantidadGanancia));
+			 }
+		 }
+	 }
 	 public void repartirGanancias() {
 		 
 		 System.out.println("JUGADORES EN GANANCIAS:");
@@ -797,30 +811,24 @@ public class ServidorBJ implements Runnable {
 		 for(int i = 0; i < ganador.size();i++) {
 			 System.out.println("Ganador ["+i+"] : "+ganador.get(i));
 		 }
-		 
-		 for(int i = 0; i < idJugadores.length; i++) {
+		 if(ganador.size() >= 1) {
+			 for(int i = 0; i < idJugadores.length; i++) {
 
-			if(contieneJugador(ganador, idJugadores[i])) {
-				 System.out.println("Entra ganador "+idJugadores[i]);
-				 if(verificarJugadaBJ(manosJugadores.get(i))) {
-					 System.out.println("Pareja nombre agregado: "+idJugadores[i]);
-					 parejaNombreGanancia.add(new Pair<String, Integer>(idJugadores[i],25));
-				 }else {
-					 System.out.println("Pareja nombre agregado --> "+idJugadores[i]);
-					 parejaNombreGanancia.add(new Pair<String, Integer>(idJugadores[i],20));
+				 if(contieneJugador(ganador, idJugadores[i])) {
+					 System.out.println("Entra ganador "+idJugadores[i]);
+					 if(verificarJugadaBJ(manosJugadores.get(i))) {
+						 System.out.println("Pareja nombre agregado: "+idJugadores[i]);
+						 parejaNombreGanancia.add(new Pair<String, Integer>(idJugadores[i],25));
+					 }else {
+						 System.out.println("Pareja nombre agregado --> "+idJugadores[i]);
+						 parejaNombreGanancia.add(new Pair<String, Integer>(idJugadores[i],20));
+					 }
 				 }
-			 }else if(ganador.contains("dealer")) {
-				 if(verificarJugadaBJ(manosJugadores.get(3))) {
-					 System.out.println("Pareja nombre agregado dealer");
-					 int cantidadGanancia = verificarCantidadGanadores() + 15;
-					 parejaNombreGanancia.add(new Pair<String, Integer>("dealer", cantidadGanancia));
-				 }else {
-					 System.out.println("Pareja nombre agregado --> dealer");
-					 int cantidadGanancia = verificarCantidadGanadores()+10;
-					 parejaNombreGanancia.add(new Pair<String, Integer>("dealer",cantidadGanancia));
-				 }
-			 }
+			 } 
+		 }else {
+			 parejaNombreGanancia.add(new Pair<String, Integer>("null",0));
 		 }
+		 
 		 
 		 
 		 
@@ -915,6 +923,7 @@ public class ServidorBJ implements Runnable {
 		jugadores[1].enviarMensajeCliente(datosEnviar);
 		jugadores[2].enviarMensajeCliente(datosEnviar);
 		datosEnviar.setEstadoJuego(false);
+		datosEnviar.setMensaje("");
 		datosEnviar.setApuestas(apuestasJugadores);
 		jugadores[0].enviarMensajeCliente(datosEnviar);
 		jugadores[1].enviarMensajeCliente(datosEnviar);
@@ -966,10 +975,16 @@ public class ServidorBJ implements Runnable {
 			System.out.println("Entro al if despues del while");
 			determinarGanador();
 			repartirGanancias();
+			repartirGananciasDealer();
 			datosEnviar.setGanadores(ganador);
 			datosEnviar.setParejas(parejaNombreGanancia);
 			datosEnviar.setMensaje("El ganador es "+ganador);
-			datosEnviar.setMensajeGanancias("Se han dado las ganancias, revisa las tuyas!!");
+			if(parejaNombreGanancia.size() == 1 && parejaNombreGanancia.get(0).getKey().equals("null")) {
+				datosEnviar.setMensajeGanancias("Nadie ha ganado, las apuestas han sido devueltas!");
+			}else {
+				datosEnviar.setMensajeGanancias("Se han dado las ganancias, revisa las tuyas!! "+parejaNombreGanancia.get(0).getValue());
+			}
+			System.out.println("DESPUÉS DEL IF");
 			jugadores[0].enviarMensajeCliente(datosEnviar);
 			jugadores[1].enviarMensajeCliente(datosEnviar);
 			jugadores[2].enviarMensajeCliente(datosEnviar);
