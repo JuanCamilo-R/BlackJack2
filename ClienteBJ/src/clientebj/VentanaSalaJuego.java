@@ -112,7 +112,9 @@ public class VentanaSalaJuego extends JInternalFrame {
 			palabraDineroDealer.setPreferredSize(new Dimension(50,20));
 			palabraApuestaDealer = new JLabel("      Apuesta dealer: ");
 			palabraApuestaDealer.setPreferredSize(new Dimension(80,20));
-			dineroDealer = new JLabel((DINERO_INICIAL+yoCliente.getTesoroDealer())+"");
+			dineroDealer = new JLabel(String.valueOf(yoCliente.getTesoroDealer()));
+			if(yoCliente.getTesoroDealer()==0)
+			dineroDealer = new JLabel(String.valueOf(DINERO_INICIAL));
 			dineroDealer.setPreferredSize(new Dimension(50,20));
 			apuestaDealer = new JLabel("0");
 			apuestaDealer.setPreferredSize(new Dimension(50,20));
@@ -171,7 +173,9 @@ public class VentanaSalaJuego extends JInternalFrame {
 			palabraDinero2.setPreferredSize(new Dimension(50,20));
 			palabraApuesta2 = new JLabel("      Apuesta: ");
 			palabraApuesta2.setPreferredSize(new Dimension(80,20));
-			dinero2 = new JLabel((DINERO_INICIAL+yoCliente.getTesoro2())+"");
+			dinero2 = new JLabel(String.valueOf(yoCliente.getTesoro2()));
+			if(yoCliente.getTesoro2()==0)
+			dinero2 = new JLabel(String.valueOf(DINERO_INICIAL));
 			dinero2.setPreferredSize(new Dimension(50,20));
 			apuesta2 = new JLabel("0");
 			apuesta2.setPreferredSize(new Dimension(50,20));
@@ -234,7 +238,9 @@ public class VentanaSalaJuego extends JInternalFrame {
 			palabraApuesta3 = new JLabel("      Apuesta: ");
 			palabraApuesta3.setPreferredSize(new Dimension(80,20));
 			//palabraDinero3 .setBackground(Color.GREEN);
-			dinero3 = new JLabel((DINERO_INICIAL+yoCliente.getTesoro3())+"");
+			dinero3 = new JLabel(String.valueOf(yoCliente.getTesoro3()));
+			if(yoCliente.getTesoro3()==0)
+			dinero3 = new JLabel(String.valueOf(DINERO_INICIAL));
 			dinero3.setPreferredSize(new Dimension(50,20));
 			apuesta3 = new JLabel("0");
 			apuesta3.setPreferredSize(new Dimension(50,20));
@@ -367,7 +373,9 @@ public class VentanaSalaJuego extends JInternalFrame {
 			palabraDinero1.setPreferredSize(new Dimension(50,20));
 			palabraApuesta1 = new JLabel("      Apuesta: ");
 			palabraApuesta1.setPreferredSize(new Dimension(80,20));
-			dinero1 = new JLabel((DINERO_INICIAL+yoCliente.getTesoro1())+"");
+			dinero1 = new JLabel(String.valueOf(yoCliente.getTesoro1()));
+			if(yoCliente.getTesoro1()==0)
+			dinero1 = new JLabel(String.valueOf(DINERO_INICIAL));
 			dinero1.setPreferredSize(new Dimension(50,20));
 			apuesta1 = new JLabel("0");
 			apuesta1.setPreferredSize(new Dimension(50,20));

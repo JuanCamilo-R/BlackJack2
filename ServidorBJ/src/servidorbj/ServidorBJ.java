@@ -824,6 +824,7 @@ public class ServidorBJ implements Runnable {
 				 }
 			 } 
 		 }else {
+			 System.out.println("no ganó nadie");
 			 parejaNombreGanancia.add(new Pair<String, Integer>("null",0));
 		 }
 		 
