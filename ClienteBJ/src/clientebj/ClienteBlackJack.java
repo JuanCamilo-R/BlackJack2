@@ -215,6 +215,12 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 						ventanaEspera = new VentanaEspera(idYo);
 						add(ventanaEspera);
 					}
+					if(datosRecibidos.getJugadorEstado().equals("reiniciar")) {
+						if(nYo==0) {
+							turno=true;
+						}
+						this.habilitarSalaJuego(datosRecibidos);
+					}
 					mostrarMensajes("Cliente hilo run recibiendo mensaje servidor ");
 					mostrarMensajes(datosRecibidos.getJugador()+" "+datosRecibidos.getJugadorEstado());
 					/*if(datosRecibidos.getEstadoJuego()) { //True significa Ronda apuestas
@@ -255,14 +261,21 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
+				try {
 				ventanaEspera = (VentanaEspera)containerInternalFrames.getComponent(0);
 				ventanaEspera.cerrarSalaEspera();
-				ventanaSalaJuego = new VentanaSalaJuego(idYo,otroJugador, otroJugador3,nYo,nOtroJugador,nOtroJugador3);
-				ventanaSalaJuego.pintarCartasInicio(datosRecibidos);
-				adicionarInternalFrame(ventanaSalaJuego);
-                if(turno) {
-                	ventanaSalaJuego.activarBotones(turno);
-                }
+				}
+				catch(java.lang.ArrayIndexOutOfBoundsException e) {
+					
+				}
+				finally {
+					ventanaSalaJuego = new VentanaSalaJuego(idYo,otroJugador, otroJugador3,nYo,nOtroJugador,nOtroJugador3);
+					ventanaSalaJuego.pintarCartasInicio(datosRecibidos);
+					adicionarInternalFrame(ventanaSalaJuego);
+					if(turno) {
+						ventanaSalaJuego.activarBotones(turno);
+					}
+				}
 			}
 			
 		});
