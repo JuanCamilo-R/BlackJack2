@@ -50,7 +50,7 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 	
 	//Constantes de conexión con el Servidor BlackJack
 
-	public static final int PUERTO=7375;
+	public static final int PUERTO=7373;
 
 	public static final String IP="127.0.0.1";
 	

@@ -33,7 +33,7 @@ public class ServidorBJ implements Runnable {
 
 
 
-	public static final int PUERTO = 7375;
+	public static final int PUERTO = 7373;
 
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
@@ -737,6 +737,7 @@ public class ServidorBJ implements Runnable {
 	 public void determinarGanador() {
 		
 		 if(valorManos[3]>21) {
+
 			 for(int i=0;i<3;i++) {
 				 if(valorManos[i]<=21) {
 					 ganador.add(idJugadores[i]);
@@ -744,23 +745,27 @@ public class ServidorBJ implements Runnable {
 			 }
 		 }else if(((valorManos[0] <= valorManos[3]) && (valorManos[1] <= valorManos[3]) &&( valorManos[2] <= valorManos[3]))
 				 && valorManos[3] <= 21){
-			 System.out.print("ganoo dealer");
+
 			 ganador.add("dealer");
 
 			// numGanadores ++;
 		 }else if(valorManos[0]>21 && valorManos[1] >21  && valorManos[2]>21 && valorManos[3] <= 21) {
+
 			 ganador.add("dealer");
 
 		 }
-		 else if(valorManos[0] >  valorManos[3] || valorManos[1] > valorManos[3] ||
-				 valorManos[2] > valorManos[3]) {
+		 else { 
 			 for(int i=0;i<3;i++) {
 				 if(valorManos[i]>valorManos[3] && valorManos[i]<=21) {
 					 ganador.add(idJugadores[i]);
 				 }
 			 }
-		 }else if(!(valorManos[0] > 21 && valorManos[1] > 21 && valorManos[2] > 21 && 
-				 valorManos[3] > 21)){
+		 }
+		 
+		 if(valorManos[0] > 21 && valorManos[1] > 21 && valorManos[2] > 21 && 
+				 valorManos[3] > 21){
+			
+		 }else if(valorManos[3]<21 && ganador.size()==0){
 			 ganador.add("dealer");
 		 }
 	 }
