@@ -1,3 +1,8 @@
+/*
+ * Jennyfer Belalcazar 		- 1925639-3743
+ * Samuel Riascos Prieto 	- 1922540-3743
+ * Juan Camilo Randazzo		- 1923948-3743
+ */
 package servidorbj;
 
 import java.io.IOException;
@@ -27,7 +32,7 @@ public class ServidorBJ implements Runnable {
 	// constantes para manejo de la conexion.
 
 
-	public static final int PUERTO = 7372;
+	public static final int PUERTO = 7375;
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
 
@@ -40,11 +45,9 @@ public class ServidorBJ implements Runnable {
 	private Lock bloqueoJuego;
 	private Condition esperarInicio, esperarTurno, finalizar;
 	private Jugador[] jugadores;
-	private int numGanadores;
 	// variables de control del juego
 	private String[] idJugadores;
 	private ArrayList<Pair<String, Integer>> parejaNombreGanancia;
-	private ArrayList<String> idJugadores2;
 	private int jugadorEnTurno;
 	// private boolean iniciarJuego;
 	private Baraja mazo;
@@ -55,7 +58,7 @@ public class ServidorBJ implements Runnable {
 	private ArrayList<Carta> manoJugador3;
 	private ArrayList<Carta> manoDealer;
 	private int[] valorManos;
-	private int o,u;
+	private int saberSiVolo,saberSiPlanto;
 	private int numeroJugadoresReiniciando;
 	private DatosBlackJack datosEnviar;
 
@@ -89,7 +92,6 @@ public class ServidorBJ implements Runnable {
 		// Variables de control del juego.
 
 		idJugadores = new String[3];
-		idJugadores2 = new ArrayList<String>();
 		valorManos = new int[4];
 		
 		mazo = new Baraja();
@@ -536,8 +538,7 @@ public class ServidorBJ implements Runnable {
 				try {
 					// guarda el nombre del primer jugador
 					idJugadores[0] = (String) in.readObject();
-					//idJugadores2.add((String) in.readObject());
-					//idJugadores2.set(0, (String) in.readObject());
+
 					mostrarMensaje("Hilo establecido con jugador (1) " + idJugadores[0]);
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
@@ -583,8 +584,7 @@ public class ServidorBJ implements Runnable {
 				try {
 					// guarda el nombre del primer jugador
 					idJugadores[1] = (String) in.readObject();
-					//idJugadores2.add((String) in.readObject());
-					//idJugadores2.set(1, (String) in.readObject());
+				
 					mostrarMensaje("Hilo establecido con jugador (2) " + idJugadores[1]);
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
@@ -626,8 +626,7 @@ public class ServidorBJ implements Runnable {
 				// Es jugador 3
 				try {
 					idJugadores[2] = (String) in.readObject();
-					//idJugadores2.add((String) in.readObject());
-					//idJugadores2.set(2, (String) in.readObject());
+					
 					mostrarMensaje("Hilo jugador (3)" + idJugadores[2]);
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
@@ -727,18 +726,16 @@ public class ServidorBJ implements Runnable {
 		 }else if(((valorManos[0] <= valorManos[3]) && (valorManos[1] <= valorManos[3]) &&( valorManos[2] <= valorManos[3]))){
 			 System.out.print("ganoo dealer");
 			 ganador.add("dealer");
-			// numGanadores ++;
+
 		 }else if(valorManos[0]>21 && valorManos[1] >21  && valorManos[2]>21) {
 			 ganador.add("dealer");
-			// numGanadores ++;
+
 		 }
 		 else {
 			 for(int i=0;i<3;i++) {
 				 if(valorManos[i]>valorManos[3] && valorManos[i]<=21) {
 					 ganador.add(idJugadores[i]);
-					 //mayor=valorManos[i+1];
-					// numGanadores++;
-					// cont=i+1;
+
 				 }
 			 }
 		 }
@@ -940,14 +937,14 @@ public class ServidorBJ implements Runnable {
 				mostrarMensaje("El dealer sigue jugando");
 			} else {
 				if (valorManos[3] > 21) {
-					o=1;
+					saberSiVolo=1;
 					datosEnviar.setJugadorEstado("voló");
 					datosEnviar.setMensaje("Dealer ahora tiene " + valorManos[3] + " voló :(");
 					pedir = false;
 					mostrarMensaje("El dealer voló"); 
 					
 				} else {
-					u=1;
+					saberSiPlanto=1;
 					datosEnviar.setJugadorEstado("plantó");
 					datosEnviar.setMensaje("Dealer ahora tiene " + valorManos[3] + " plantó");
 					pedir = false;
@@ -962,7 +959,7 @@ public class ServidorBJ implements Runnable {
 			jugadores[1].enviarMensajeCliente(datosEnviar);
 			jugadores[2].enviarMensajeCliente(datosEnviar);
 		} // fin while
-		if(u==1 || o==1) {
+		if(saberSiPlanto==1 || saberSiVolo==1) {
 			System.out.println("Entro al if despues del while");
 			determinarGanador();
 			repartirGanancias();

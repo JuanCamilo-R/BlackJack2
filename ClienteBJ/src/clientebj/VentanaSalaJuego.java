@@ -1,3 +1,8 @@
+/*
+ * Jennyfer Belalcazar 		- 1925639-3743
+ * Samuel Riascos Prieto 	- 1922540-3743
+ * Juan Camilo Randazzo		- 1923948-3743
+ */
 package clientebj;
 
 import java.awt.BorderLayout;
@@ -6,6 +11,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import javafx.util.*;
+
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -44,7 +51,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 	    
 		private PanelJugador dealer, yo, jugador2, jugador3;
 		private JTextArea areaMensajes;
-		private JButton pedir, plantar, apostar,confirmarApuesta, reiniciarJuego, abandonarJuego;
+		private JButton pedir, plantar, apostar,confirmarApuesta, reiniciarJuego, abandonarJuego,instrucciones;
 		private JLabel apuesta1, apuesta2, apuesta3, apuestaDealer, dinero1, dinero2, dinero3, dineroDealer,espacio;
 		private JLabel palabraApuesta1, palabraApuesta2, palabraApuesta3, palabraApuestaDealer;
 		private JLabel palabraDinero1, palabraDinero2, palabraDinero3, palabraDineroDealer;
@@ -53,6 +60,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 		private Baraja barajaNueva;
 		private ArrayList<Pair<String, Integer>> parejaNombreGanancia;
 		private int[] valorManos;
+		private Instrucciones instrucciones2;
 		private String yoId, jugador2Id, jugador3Id;
 		private int yoN,jugador2N,jugador3N;
 		private GridBagConstraints constraints;
@@ -77,6 +85,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			barajaNueva = new Baraja();	
 			aposto = false;
 			cantidadApuesta = 0;
+			instrucciones2 = new  Instrucciones();
 			initGUI();
 			
 			//default window settings
@@ -317,21 +326,45 @@ public class VentanaSalaJuego extends JInternalFrame {
 			System.out.println("Tamano scroll: "+scroll.getViewport().getSize().width+","+scroll.getViewport().getSize().height);
 			
 			panelControles = new JPanel();
-			panelControles.setPreferredSize(new Dimension(170,50));
+			panelControles.setLayout(new GridBagLayout());
+			panelControles.setPreferredSize(new Dimension(210,50));//170  50
 			panelControles.setMinimumSize(panelControles.getPreferredSize());
 			panelControles.setOpaque(false);
+			
+			
 			reiniciarJuego = new JButton("Iniciar nueva ronda");
 			reiniciarJuego.setPreferredSize(new Dimension(160,20));
 			reiniciarJuego.setMinimumSize(reiniciarJuego.getPreferredSize());
 			reiniciarJuego.setMaximumSize(panelControles.getSize());
 			reiniciarJuego.setEnabled(false);
-			panelControles.add(reiniciarJuego);
+			constraints.gridx = 0;
+			constraints.gridy = 0;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			panelControles.add(reiniciarJuego,constraints);
 			
 			abandonarJuego = new JButton("Abandonar el juego");
 			abandonarJuego.setPreferredSize(new Dimension(160,20));
 			abandonarJuego.setMinimumSize(abandonarJuego.getPreferredSize());
 			abandonarJuego.setEnabled(false);
-			panelControles.add(abandonarJuego);
+			constraints.gridx = 0;
+			constraints.gridy = 1;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			panelControles.add(abandonarJuego,constraints);
+			
+			
+
+			instrucciones = new JButton("Instrucciones");
+			instrucciones.setPreferredSize(new Dimension(160,20));
+			instrucciones.addActionListener(escucha);
+			instrucciones.setMinimumSize(instrucciones.getPreferredSize());
+			instrucciones.setEnabled(true);
+			constraints.gridx = 0;
+			constraints.gridy = 2;
+			constraints.gridwidth = 1;
+			constraints.gridheight = 1;
+			panelControles.add(instrucciones,constraints);
 			
 			constraints.gridx = 1;
 			constraints.gridy = 2;
@@ -787,6 +820,10 @@ public class VentanaSalaJuego extends JInternalFrame {
 			else if(actionEvent.getSource() == reiniciarJuego) {
 				enviarDatos("reiniciar");
 				dispose();
+			}
+			
+			if (actionEvent.getSource() == instrucciones) {
+				instrucciones2.setVisible(true);
 			}
 		}
 	   }

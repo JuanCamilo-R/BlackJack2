@@ -1,3 +1,8 @@
+/*
+ * Jennyfer Belalcazar 		- 1925639-3743
+ * Samuel Riascos Prieto 	- 1922540-3743
+ * Juan Camilo Randazzo		- 1923948-3743
+ */
 package clientebj;
 
 import java.awt.BorderLayout;
