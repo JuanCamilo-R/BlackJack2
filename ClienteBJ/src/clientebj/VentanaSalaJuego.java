@@ -48,32 +48,96 @@ import comunes.Carta;
 import comunes.DatosBlackJack;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class VentanaSalaJuego.
+ */
 public class VentanaSalaJuego extends JInternalFrame {
+		
+		/** The Constant DINERO_INICIAL. 
+		 * Dinero con el que empiezan todos los jugadores inluido el Dealer
+		 *  */
 		public static final int DINERO_INICIAL=40;
+		
+		/** Paneles de los jugadores. */
 		private PanelJugador dealer, yo, jugador2, jugador3;
+		
+		/** Mensajes para ver el historial del juego. */
 		private JTextArea areaMensajes;
+		
+		/** 
+		 * Botones para el desarrollo del juego
+		 * . */
 		private JButton pedir, plantar, apostar,confirmarApuesta, reiniciarJuego, abandonarJuego,instrucciones;
-		private JLabel apuesta1, apuesta2, apuesta3, apuestaDealer, dinero1, dinero2, dinero3, dineroDealer,espacio;
+		
+		/** Labels para mostrar en el JFrame el dinero de cada jugador y apuestas */
+		private JLabel apuesta1, apuesta2, apuesta3, apuestaDealer, dinero1, dinero2, dinero3, dineroDealer;
+		
+		/** Labels para mostrar la palabra "Apuesta" en cada Panel */
 		private JLabel palabraApuesta1, palabraApuesta2, palabraApuesta3, palabraApuestaDealer;
+		
+		/** Labels para mostrar la palabra "Dinero" en cada Panel */
 		private JLabel palabraDinero1, palabraDinero2, palabraDinero3, palabraDineroDealer;
+		
+		/** Paneles donde estan los jugadores y otros para organizar la GUI*/
 		private JPanel panelYo, panelBotones, yoFull, panelDealer,panelJugador2, panelJugador3, panelControles;
+		
+		/** Paneles para organizar la GUI */
 		private JPanel paneltextoDealer,paneltexto1,paneltexto2,paneltexto3;
+		
+		/** The baraja nueva. */
 		private Baraja barajaNueva;
+		
+		/** Array para mostrar cuales fueron las ganancias de cada jugador. */
 		private ArrayList<Pair<String, Integer>> parejaNombreGanancia;
+		
+		/**  Array para tener la suma de cada mano de los jugadores. */
 		private int[] valorManos;
+		
+		/** JFrame para darle instrucciones al usuario */
 		private Instrucciones instrucciones2;
+		
+		/** Nombres de los jugadores */
 		private String yoId, jugador2Id, jugador3Id;
+		
+		/** Turno de cada jugador */
 		private int yoN,jugador2N,jugador3N;
+		
+		/** The constraints. */
 		private GridBagConstraints constraints;
+		
+		/** The icono. */
 		private JLabel icono;
+		
+		/** The cantidad apuesta. */
 		private int cantidadApuesta;
+		
+		/** The aposto. */
 		private boolean aposto;
+		
+		/** The yo clase. */
 		private JInternalFrame yoClase;
+		
+		/** The yo cliente. */
 		private ClienteBlackJack yoCliente;
+		
+		/** The imagen. */
 		private ImageIcon imagen;
-		//private DatosBlackJack datosRecibidos;
+		
+		/** The escucha. */
 		private Escucha escucha;
 		
+		/**
+		 * Instantiates a new ventana sala juego.
+		 *
+		 * @param yoId the yo id
+		 * @param jugador2Id the jugador 2 id
+		 * @param jugador3Id the jugador 3 id
+		 * @param yoN the yo N
+		 * @param jugador2N the jugador 2 N
+		 * @param jugador3N the jugador 3 N
+		 * @param cliente the cliente
+		 */
 		public VentanaSalaJuego(String yoId, String jugador2Id, String jugador3Id, int yoN, int jugador2N, int jugador3N, ClienteBlackJack cliente) {
 			this.yoId = yoId;
 			yoClase = this;
@@ -84,7 +148,6 @@ public class VentanaSalaJuego extends JInternalFrame {
 			this.jugador2N = jugador2N;
 			this.jugador3N = jugador3N;
 			parejaNombreGanancia = new ArrayList<Pair<String, Integer>>();
-			//this.datosRecibidos=datosRecibidos;
 			barajaNueva = new Baraja();	
 			aposto = false;
 			cantidadApuesta = 0;
@@ -100,27 +163,26 @@ public class VentanaSalaJuego extends JInternalFrame {
 			this.show();
 		}
 
+		/**
+		 * Inits the GUI.
+		 */
 		private void initGUI() {
 			// TODO Auto-generated method stub
-			//set up JFrame Container y Layout
-	
-			//Create Listeners objects
-			
+
 		
 			escucha = new Escucha();
-			//Create Control objects
-		
-	
-			//Set up JComponents
+			//Configuracion de la ventana
 			this.getContentPane().setLayout(new GridBagLayout());
 			this.getContentPane().setBackground(Color.GREEN);
 			
 			constraints = new GridBagConstraints();
 			
+			//Informacion relacionada con el Dealer
 			palabraDineroDealer = new JLabel("Dinero: ");
 			palabraDineroDealer.setPreferredSize(new Dimension(50,20));
 			palabraApuestaDealer = new JLabel("      Apuesta dealer: ");
 			palabraApuestaDealer.setPreferredSize(new Dimension(80,20));
+			//getTesoroDealer hace referencia a las ganancias que ha obtenido el Dealer
 			dineroDealer = new JLabel(String.valueOf(yoCliente.getTesoroDealer()));
 			if(yoCliente.getTesoroDealer()==0)
 			dineroDealer = new JLabel(String.valueOf(DINERO_INICIAL));
@@ -177,6 +239,8 @@ public class VentanaSalaJuego extends JInternalFrame {
 			constraints.gridwidth = 1;
 			constraints.gridheight = 1;
 			add(panelDealer,constraints);		
+			
+			//Informacion relacionada con el segundo jugador
 			
 			palabraDinero2 = new JLabel("Dinero: ");
 			palabraDinero2.setPreferredSize(new Dimension(50,20));
@@ -237,16 +301,14 @@ public class VentanaSalaJuego extends JInternalFrame {
 			constraints.gridy = 2;
 			constraints.gridwidth = 1;
 			constraints.gridheight = 1;
-			//panelJugador2.add(jugador2);
 			add(panelJugador2,constraints);	
 			
 			
-			
+			//Informacion relacionada con el tercer jugador
 			palabraDinero3 = new JLabel("Dinero: ");
 			palabraDinero3.setPreferredSize(new Dimension(50,20));
 			palabraApuesta3 = new JLabel("      Apuesta: ");
 			palabraApuesta3.setPreferredSize(new Dimension(80,20));
-			//palabraDinero3 .setBackground(Color.GREEN);
 			dinero3 = new JLabel(String.valueOf(yoCliente.getTesoro3()));
 			if(yoCliente.getTesoro3()==0)
 			dinero3 = new JLabel(String.valueOf(DINERO_INICIAL));
@@ -255,7 +317,6 @@ public class VentanaSalaJuego extends JInternalFrame {
 			apuesta3.setPreferredSize(new Dimension(50,20));
 			paneltexto3 = new JPanel();
 			paneltexto3.setBackground(Color.GREEN);
-			
 			paneltexto3.setLayout(new GridBagLayout());
 			
 			panelJugador3 = new JPanel();
@@ -305,6 +366,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			constraints.gridheight = 1;
 			add(panelJugador3, constraints);
 			
+			//Historial del juego
 			areaMensajes = new JTextArea(8,18);
 			areaMensajes.setBackground(Color.white);
 			System.out.println("Tamano areaMensajes: "+areaMensajes.getSize().width+","+areaMensajes.getSize().height);
@@ -317,8 +379,6 @@ public class VentanaSalaJuego extends JInternalFrame {
 	        bordes.setTitleJustification(TitledBorder.CENTER);
 	       
 			scroll.setBorder(bordes);
-		//	areaMensajes.setOpaque(false);
-			//areaMensajes.setBackground(new Color(0, 0, 0, 0));
 			areaMensajes.setEditable(false);
 
 			scroll.getViewport().setOpaque(false);
@@ -334,6 +394,9 @@ public class VentanaSalaJuego extends JInternalFrame {
 			System.out.println("Tamano areaMensajes: "+areaMensajes.getSize().width+","+areaMensajes.getSize().height);
 			System.out.println("Tamano scroll: "+scroll.getViewport().getSize().width+","+scroll.getViewport().getSize().height);
 			
+			/**
+			 * Se agregan botones como reiniciarJuego,abandonar el juego e instrucciones
+			 */
 			panelControles = new JPanel();
 			panelControles.setLayout(new GridBagLayout());
 			panelControles.setPreferredSize(new Dimension(210,50));//170  50
@@ -361,8 +424,6 @@ public class VentanaSalaJuego extends JInternalFrame {
 			constraints.gridwidth = 1;
 			constraints.gridheight = 1;
 			panelControles.add(abandonarJuego,constraints);
-			
-			
 
 			instrucciones = new JButton("Instrucciones");
 			instrucciones.setPreferredSize(new Dimension(160,20));
@@ -412,7 +473,8 @@ public class VentanaSalaJuego extends JInternalFrame {
 			dinero1.setPreferredSize(new Dimension(50,20));
 			apuesta1 = new JLabel("0");
 			apuesta1.setPreferredSize(new Dimension(50,20));
-			espacio = new JLabel("           ");
+			
+			//Datos referentes el jugador que esta jugando
 			paneltexto1 = new JPanel();
 			paneltexto1.setBackground(Color.GREEN);
 			paneltexto1.setLayout(new GridBagLayout());
@@ -420,7 +482,6 @@ public class VentanaSalaJuego extends JInternalFrame {
 			yoFull = new JPanel();
 			yoFull.setBackground(Color.GREEN);
 			yoFull.setLayout(new GridBagLayout());
-			//yoFull.setPreferredSize(new Dimension(400,225));//206 100  190 190
 			constraints.gridx = 0;
 			constraints.gridy = 0;
 			constraints.gridwidth =2;
@@ -444,7 +505,6 @@ public class VentanaSalaJuego extends JInternalFrame {
 			constraints.gridy = 1;
 			constraints.gridwidth =1;
 			constraints.gridheight = 1;
-			//constraints.fill = constraints.NORTHEAST;
 			yoFull.add(apostar, constraints);
 			
 			constraints.gridx = 0;
@@ -470,12 +530,6 @@ public class VentanaSalaJuego extends JInternalFrame {
 			constraints.gridwidth = 1;
 			constraints.gridheight = 1;
 			paneltexto1.add(apuesta1, constraints);
-			/*
-			constraints.gridx = 4;
-			constraints.gridy = 0;
-			constraints.gridwidth = 1;
-			constraints.gridheight = 1;
-			paneltexto1.add(espacio, constraints);*/
 			
 			constraints.gridx = 5;
 			constraints.gridy = 0;
@@ -494,9 +548,9 @@ public class VentanaSalaJuego extends JInternalFrame {
 			constraints.gridwidth =2;
 			constraints.gridheight = 2;
 			constraints.anchor = constraints.SOUTHWEST;
-			//constraints.fill = constraints.SOUTHWEST;
 			add(yoFull,constraints);	
 			
+			//Icono del BlackJack
 			icono = new JLabel();
 			imagen = new ImageIcon(getClass().getResource("/recursos/imagen1.png"));
 			icono.setIcon(new  ImageIcon(imagen.getImage().getScaledInstance(50,50, Image.SCALE_AREA_AVERAGING)));
@@ -506,10 +560,14 @@ public class VentanaSalaJuego extends JInternalFrame {
 			constraints.gridheight = 1;
 			constraints.anchor = constraints.CENTER;
 			add(icono,constraints);
-			
-			
+	
 		}
 		
+		/**
+		 * Activar botones.
+		 * Se activan los botones de carta y plantar si el turno es el del jugador
+		 * @param turno the turno
+		 */
 		public void activarBotones(boolean turno) {
 			pedir.setEnabled(turno);
 			plantar.setEnabled(turno);
@@ -526,6 +584,15 @@ public class VentanaSalaJuego extends JInternalFrame {
 			}
 			
 		}
+		
+		/**
+		 * Colocar imagen carta
+		 *Se crea una nueva baraja para guardar la que fue creada por el servidor y así poderle asignar 
+		 *una imagen y mostrarla en pantalla
+		 *Se compara que la baraja sea la misma con la funcion revisarCarta de la clase Baraja
+		 * @param datosRecibidos the datos recibidos
+		 * @return the carta
+		 */
 		//Coloca la imagen a la carta pedida por el usuario (dada por el servidor)
 		public Carta colocarImagenCarta(DatosBlackJack datosRecibidos) {
 			barajaNueva = new Baraja();
@@ -533,6 +600,15 @@ public class VentanaSalaJuego extends JInternalFrame {
 			System.out.println("Carta dada por el servidor: "+carta);
 			return barajaNueva.revisarCarta(carta);
 		}
+		
+		/**
+		 * Asignar cartas.
+		 * Retorna la Baraja (mazo) dependiendo del jugador
+		 * Se usa de parametro para PintarCartasInicio
+		 *	
+		 * @param manoJugador the mano jugador
+		 * @return the array list
+		 */
 		public ArrayList<Carta> asignarCartas(ArrayList<Carta> manoJugador) {
 			
 			ArrayList<Carta> manoJugadorAuxiliar = new ArrayList<Carta>();
@@ -542,8 +618,17 @@ public class VentanaSalaJuego extends JInternalFrame {
 			}
 			return manoJugadorAuxiliar;
 		}
+		
+		/**
+		 * Pintar cartas inicio.
+		 * Recibe los datos que recibio el Cliente desde el servidor para mostrar
+		 * las cartas en pantalla
+		 *
+		 * @param datosRecibidos the datos recibidos
+		 */
 		public void pintarCartasInicio(DatosBlackJack datosRecibidos) {
 			valorManos = datosRecibidos.getValorManos();
+			
 			if(datosRecibidos.getIdJugadores()[0].equals(yoId)) {
 				yo.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador1()));
 				jugador2.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador2()));
@@ -557,12 +642,16 @@ public class VentanaSalaJuego extends JInternalFrame {
 				jugador2.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador2()));
 				jugador3.pintarCartasInicio(asignarCartas(datosRecibidos.getManoJugador1()));
 			}
-			//dealer.pintarCartasInicio(datosRecibidos.getManoDealer());
 			dealer.pintarCartasInicio(asignarCartas(datosRecibidos.getManoDealer()));
 			if(!datosRecibidos.getMensaje().equals(""))
 			areaMensajes.append(datosRecibidos.getMensaje()+"\n");
 		}
 		
+		/**
+		 * Pintar turno.
+		 * Le notifica a los demas jugadores las movidas de los otros y quien sigue
+		 * @param datosRecibidos the datos recibidos
+		 */
 		public void pintarTurno(DatosBlackJack datosRecibidos) {
 			valorManos = datosRecibidos.getValorManos();
 			if(!datosRecibidos.getMensaje().equals(""))
@@ -576,7 +665,6 @@ public class VentanaSalaJuego extends JInternalFrame {
 					if(datosRecibidos.getJugadorEstado().equals("plantó") ){
 						cliente.setTurno(false);
 					}else {
-						//yo.dibujarCarta(datosRecibidos.getCarta());
 						yo.dibujarCarta(colocarImagenCarta(datosRecibidos));
 						if(datosRecibidos.getJugadorEstado().equals("voló")) {
 							SwingUtilities.invokeLater(new Runnable() {
@@ -594,9 +682,9 @@ public class VentanaSalaJuego extends JInternalFrame {
 						//mensaje para PanelJuego jugador2
 						if(datosRecibidos.getJugadorEstado().equals("sigue")||
 						   datosRecibidos.getJugadorEstado().equals("voló")) {
-							//jugador2.dibujarCarta(datosRecibidos.getCarta());
 							jugador2.dibujarCarta(colocarImagenCarta(datosRecibidos));
 						}
+						//mensaje para PanelJuego jugador3
 					}else if(datosRecibidos.getJugador().equals(jugador3Id)) {
 						if(datosRecibidos.getJugadorEstado().equals("sigue")||
 						   datosRecibidos.getJugadorEstado().equals("voló")) {
@@ -608,7 +696,6 @@ public class VentanaSalaJuego extends JInternalFrame {
 						if(datosRecibidos.getJugadorEstado().equals("sigue") ||
 						   datosRecibidos.getJugadorEstado().equals("voló")	||
 						   datosRecibidos.getJugadorEstado().equals("plantó")) {
-							//dealer.dibujarCarta(datosRecibidos.getCarta());
 							dealer.dibujarCarta(colocarImagenCarta(datosRecibidos));
 						}
 					}
@@ -616,55 +703,51 @@ public class VentanaSalaJuego extends JInternalFrame {
 				}
 						 	
 		}
+		
+		/**
+		 * Repartir ganancias.
+		 * Funcion que se ejecuta al final, cuando se tiene el ganador
+		 * Se le da a cada jugador lo que gano y se muestra en sus Labels de Dinero
+		 *
+		 * @param datosRecibidos the datos recibidos
+		 */
 		public void repartirGanancias(DatosBlackJack datosRecibidos) {
 
 			parejaNombreGanancia = datosRecibidos.getParejas();
 			if(!datosRecibidos.getMensaje().equals(""))
+				//Muestro el mensaje en el JTextArea
 			areaMensajes.append(datosRecibidos.getMensajeGanancias());
 
 			reiniciarJuego.setEnabled(true);
 			abandonarJuego.setEnabled(true);
 			reiniciarJuego.addActionListener(escucha);
-
-
 			abandonarJuego.addActionListener(escucha);
 
 
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
-					System.out.println("Tamaño pareja ganadores: "+parejaNombreGanancia.size());
-					System.out.println("Primer ganador: "+parejaNombreGanancia.get(0).getKey());
 					// TODO Auto-generated method stub
+					//Se actualizan los labels
 					if(parejaNombreGanancia.size() == 2 && parejaNombreGanancia.get(0).getKey().equals("null")) {
-						System.out.println("ENTROOOO");
 						dinero1.setText(String.valueOf(Integer.parseInt(dinero1.getText())+Integer.parseInt(apuesta1.getText())));
 						dinero2.setText(String.valueOf(Integer.parseInt(dinero2.getText())+Integer.parseInt(apuesta2.getText())));
 						dinero3.setText(String.valueOf(Integer.parseInt(dinero3.getText())+Integer.parseInt(apuesta3.getText())));
 						dineroDealer.setText(String.valueOf(Integer.parseInt(dineroDealer.getText())+Integer.parseInt(apuestaDealer.getText())));
 					}else {
-						System.out.println("Entro a dar ganancias vez");
-						System.out.println("dinero1 :"+dinero1.getText());
-						System.out.println("dinero2 :"+dinero2.getText());
-						System.out.println("dinero3 :"+dinero3.getText());
-						System.out.println("dinero Dealer :"+dineroDealer.getText());
-						
 						
 						for(int i = 0; i < parejaNombreGanancia.size(); i++) {
 							if(parejaNombreGanancia.get(i).getKey().equals(yoId)) {
 								yoClase.pack();
-								System.out.println("Ganancia1: "+parejaNombreGanancia.get(i).getValue());
 								int cantidadTotal = Integer.parseInt(dinero1.getText())+parejaNombreGanancia.get(i).getValue();
 								dinero1.setText(String.valueOf(cantidadTotal));
 								yoClase.pack();
 							}else if(parejaNombreGanancia.get(i).getKey().equals(jugador2Id)) {
 								yoClase.pack();
-								System.out.println("Ganancia2: "+parejaNombreGanancia.get(i).getValue());
 								int cantidadTotal = Integer.parseInt(dinero2.getText())+parejaNombreGanancia.get(i).getValue();
 								dinero2.setText(String.valueOf(cantidadTotal));
 								yoClase.pack();
 							}else if(parejaNombreGanancia.get(i).getKey().equals(jugador3Id)) {
-								System.out.println("Ganancia3: "+parejaNombreGanancia.get(i).getValue());
 								yoClase.pack();
 								int cantidadTotal = Integer.parseInt(dinero3.getText())+parejaNombreGanancia.get(i).getValue();
 								dinero3.setText(String.valueOf(cantidadTotal));
@@ -672,7 +755,6 @@ public class VentanaSalaJuego extends JInternalFrame {
 							}else if(parejaNombreGanancia.get(i).getKey().equals("dealer")){
 								System.out.println("Ganancia4: "+parejaNombreGanancia.get(i).getValue());
 								yoClase.pack();
-								System.out.println("Entro una vez");
 								int cantidadTotal = Integer.parseInt(dineroDealer.getText())+parejaNombreGanancia.get(i).getValue();
 								dineroDealer.setText(String.valueOf(cantidadTotal));
 								yoClase.pack();
@@ -681,6 +763,12 @@ public class VentanaSalaJuego extends JInternalFrame {
 					}
 				}});
 		}
+		
+		/**
+		 * Pintar apuestas.
+		 * Para mostrar en el JtextArea y Labels lo que ha apostado acada jugador
+		 * @param datosRecibidos the datos recibidos
+		 */
 		public void pintarApuestas(DatosBlackJack datosRecibidos) {
 			System.out.println("APUESTAS: ");
 			int[] apuestas = datosRecibidos.getApuestas();
@@ -716,11 +804,11 @@ public class VentanaSalaJuego extends JInternalFrame {
 					if(datosRecibidos.getJugador().equals(jugador2Id)) {
 						//mensaje para PanelJuego jugador2
 						if(datosRecibidos.getJugadorEstado().equals("apuesta")) {
-							//jugador2.dibujarCarta(datosRecibidos.getCarta());
 							System.out.println("Apuesta["+jugador2N+"] = "+datosRecibidos.getApuestas()[jugador2N]);
 							apostar(String.valueOf(datosRecibidos.getApuestas()[jugador2N]), "2");
 							
 						}
+						//mensaje para PanelJuego jugador3
 					}else if(datosRecibidos.getJugador().equals(jugador3Id)) {
 						if(datosRecibidos.getJugadorEstado().equals("apuesta")) {
 							System.out.println("Apuesta["+jugador3N+"] = "+datosRecibidos.getApuestas()[jugador3N]);
@@ -729,10 +817,8 @@ public class VentanaSalaJuego extends JInternalFrame {
 						}
 					}
 					else {
-						System.out.println("Te habla el dealer papá");
 						//mensaje para PanelJuego dealer
 						if(datosRecibidos.getJugadorEstado().equals("apuesta")) {
-							//dealer.dibujarCarta(datosRecibidos.getCarta());
 							apostar("10", "dealer");
 						}
 					}
@@ -740,16 +826,23 @@ public class VentanaSalaJuego extends JInternalFrame {
 				}
 		}
 		
+		/**
+		 * Pintar ganador.
+		 * Muestra el ganador en el JTextArea
+		 * @param datosRecibidos the datos recibidos
+		 */
 		public void pintarGanador(DatosBlackJack datosRecibidos) {
 			if(!datosRecibidos.getMensaje().equals(""))
 			areaMensajes.append(datosRecibidos.getMensaje()+"\n");	
-			ClienteBlackJack cliente = (ClienteBlackJack)this.getTopLevelAncestor();
-			
-			
-	
-			
+			ClienteBlackJack cliente = (ClienteBlackJack)this.getTopLevelAncestor();	
 		}
 		
+		/**
+		 * Apostar.
+		 * Funcion para actualizar la GUI cuando un jugador apuesta
+		 * @param valor the valor
+		 * @param jugador the jugador
+		 */
 		private void apostar(String valor, String jugador) {
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
@@ -789,7 +882,12 @@ public class VentanaSalaJuego extends JInternalFrame {
 				}});
 		}
 	   
-	   private void enviarDatos(String mensaje) {
+	   /**
+   	 * Enviar datos al servidor
+   	 *
+   	 * @param mensaje the mensaje
+   	 */
+   	private void enviarDatos(String mensaje) {
 			// TODO Auto-generated method stub
 		  ClienteBlackJack cliente = (ClienteBlackJack)this.getTopLevelAncestor();
 		  cliente.enviarMensajeServidor(mensaje);
@@ -797,8 +895,16 @@ public class VentanaSalaJuego extends JInternalFrame {
 		   
 	  
 	   
-	   private class Escucha implements ActionListener{
+	   /**
+   	 * The Class Escucha.
+   	 */
+   	private class Escucha implements ActionListener{
 		   
+		/**
+		 * Action performed.
+		 *
+		 * @param actionEvent the action event
+		 */
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			// TODO Auto-generated method stub
@@ -825,6 +931,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 					JOptionPane.showMessageDialog(null,"Debes apostar primero!");
 				}
 				
+				//Ficha 10 de apostar
 			}else if(actionEvent.getSource() == apostar) {
 				cantidadApuesta = 10;
 				apuesta1.setPreferredSize(new Dimension(50,20));
@@ -833,10 +940,10 @@ public class VentanaSalaJuego extends JInternalFrame {
 				apostar.setEnabled(false);
 				apostar.removeActionListener(escucha);
 			}else if(actionEvent.getSource() == confirmarApuesta){
+				//Confirma la apuesta
 				if(cantidadApuesta > 0) {
 					yoClase.pack();
 					aposto = true;
-					System.out.println("Estoy apostando "+apuesta1.getText());
 					enviarDatos(apuesta1.getText());
 					cantidadApuesta = 0;
 					confirmarApuesta.setEnabled(false);
@@ -847,10 +954,13 @@ public class VentanaSalaJuego extends JInternalFrame {
 				}else {
 					JOptionPane.showMessageDialog(null,"Debes apostar primero!");
 				}
-				
+			
+				//Le envia datos al servidor de que alguien abandono la partida, entonces el juego se termina
 			}else if(actionEvent.getSource() == abandonarJuego){
 				enviarDatos("abandonar");
 			}
+			//Se actualizan los Labels del dinero con las ganancias que se obtuvieron en el juego anterior
+			//y se avisa al servidor que se iniciara una nueva ronda
 			else if(actionEvent.getSource() == reiniciarJuego) {
 				yoCliente.setTesoro1(Integer.parseInt(dinero1.getText()));
 				yoCliente.setTesoro2(Integer.parseInt(dinero2.getText()));
@@ -859,7 +969,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 				enviarDatos("reiniciar");
 				dispose();
 			}
-			
+			//JFrame con las instrucciones
 			if (actionEvent.getSource() == instrucciones) {
 				instrucciones2.setVisible(true);
 			}
