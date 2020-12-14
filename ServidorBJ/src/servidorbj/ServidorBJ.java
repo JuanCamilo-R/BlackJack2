@@ -27,7 +27,7 @@ public class ServidorBJ implements Runnable {
 	// constantes para manejo de la conexion.
 
 
-	public static final int PUERTO = 7378;
+	public static final int PUERTO = 7372;
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
 
@@ -776,9 +776,11 @@ public class ServidorBJ implements Runnable {
 	 public boolean contieneJugador(ArrayList<String> ganador, String jugadorBuscado) {
 		 for(int i = 0; i < ganador.size(); i++) {
 			if(ganador.get(i).equals(jugadorBuscado)) {
+				System.out.println("IGUALES!!");
 				return true;
 			}
 		 }
+		 System.out.println("NO ENTRE, FALSO"+jugadorBuscado);
 		 return false;
 	 }
 	 public void repartirGanancias() {
@@ -793,8 +795,8 @@ public class ServidorBJ implements Runnable {
 		 }
 		 
 		 for(int i = 0; i < idJugadores.length; i++) {
-			 
-			 if(contieneJugador(ganador, idJugadores[i])) {
+
+			if(contieneJugador(ganador, idJugadores[i])) {
 				 System.out.println("Entra ganador "+idJugadores[i]);
 				 if(verificarJugadaBJ(manosJugadores.get(i))) {
 					 System.out.println("Pareja nombre agregado: "+idJugadores[i]);
