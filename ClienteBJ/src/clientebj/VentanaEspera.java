@@ -12,6 +12,8 @@ import java.awt.Font;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 
+
+
 public class VentanaEspera extends JInternalFrame {
 	private JLabel enEspera, jugador;
 	
