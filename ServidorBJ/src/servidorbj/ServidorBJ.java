@@ -780,11 +780,9 @@ public class ServidorBJ implements Runnable {
 	 public boolean contieneJugador(ArrayList<String> ganador, String jugadorBuscado) {
 		 for(int i = 0; i < ganador.size(); i++) {
 			if(ganador.get(i).equals(jugadorBuscado)) {
-				System.out.println("IGUALES!!");
 				return true;
 			}
 		 }
-		 System.out.println("NO ENTRE, FALSO"+jugadorBuscado);
 		 return false;
 	 }
 	 

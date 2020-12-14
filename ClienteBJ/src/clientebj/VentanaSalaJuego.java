@@ -40,8 +40,9 @@ import comunes.Baraja;
 import comunes.Carta;
 import comunes.DatosBlackJack;
 
+
 public class VentanaSalaJuego extends JInternalFrame {
-		public static int DINERO_INICIAL = 40;
+		public static final int DINERO_INICIAL=40;
 		private PanelJugador dealer, yo, jugador2, jugador3;
 		private JTextArea areaMensajes;
 		private JButton pedir, plantar, apostar,confirmarApuesta, reiniciarJuego, abandonarJuego;
@@ -60,13 +61,15 @@ public class VentanaSalaJuego extends JInternalFrame {
 		private int cantidadApuesta;
 		private boolean aposto;
 		private JInternalFrame yoClase;
+		private ClienteBlackJack yoCliente;
 		private ImageIcon imagen;
 		//private DatosBlackJack datosRecibidos;
 		private Escucha escucha;
 		
-		public VentanaSalaJuego(String yoId, String jugador2Id, String jugador3Id, int yoN, int jugador2N, int jugador3N) {
+		public VentanaSalaJuego(String yoId, String jugador2Id, String jugador3Id, int yoN, int jugador2N, int jugador3N, ClienteBlackJack cliente) {
 			this.yoId = yoId;
 			yoClase = this;
+			yoCliente=cliente;
 			this.jugador2Id = jugador2Id;
 			this.jugador3Id = jugador3Id;
 			this.yoN= yoN;
@@ -109,7 +112,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			palabraDineroDealer.setPreferredSize(new Dimension(50,20));
 			palabraApuestaDealer = new JLabel("      Apuesta dealer: ");
 			palabraApuestaDealer.setPreferredSize(new Dimension(80,20));
-			dineroDealer = new JLabel(String.valueOf(DINERO_INICIAL));
+			dineroDealer = new JLabel((DINERO_INICIAL+yoCliente.getTesoroDealer())+"");
 			dineroDealer.setPreferredSize(new Dimension(50,20));
 			apuestaDealer = new JLabel("0");
 			apuestaDealer.setPreferredSize(new Dimension(50,20));
@@ -168,7 +171,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			palabraDinero2.setPreferredSize(new Dimension(50,20));
 			palabraApuesta2 = new JLabel("      Apuesta: ");
 			palabraApuesta2.setPreferredSize(new Dimension(80,20));
-			dinero2 = new JLabel(String.valueOf(DINERO_INICIAL));
+			dinero2 = new JLabel((DINERO_INICIAL+yoCliente.getTesoro2())+"");
 			dinero2.setPreferredSize(new Dimension(50,20));
 			apuesta2 = new JLabel("0");
 			apuesta2.setPreferredSize(new Dimension(50,20));
@@ -231,7 +234,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			palabraApuesta3 = new JLabel("      Apuesta: ");
 			palabraApuesta3.setPreferredSize(new Dimension(80,20));
 			//palabraDinero3 .setBackground(Color.GREEN);
-			dinero3 = new JLabel(String.valueOf(DINERO_INICIAL));
+			dinero3 = new JLabel((DINERO_INICIAL+yoCliente.getTesoro3())+"");
 			dinero3.setPreferredSize(new Dimension(50,20));
 			apuesta3 = new JLabel("0");
 			apuesta3.setPreferredSize(new Dimension(50,20));
@@ -364,7 +367,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			palabraDinero1.setPreferredSize(new Dimension(50,20));
 			palabraApuesta1 = new JLabel("      Apuesta: ");
 			palabraApuesta1.setPreferredSize(new Dimension(80,20));
-			dinero1 = new JLabel(String.valueOf(DINERO_INICIAL));
+			dinero1 = new JLabel((10+yoCliente.getTesoro1())+"");
 			dinero1.setPreferredSize(new Dimension(50,20));
 			apuesta1 = new JLabel("0");
 			apuesta1.setPreferredSize(new Dimension(50,20));
@@ -515,11 +518,13 @@ public class VentanaSalaJuego extends JInternalFrame {
 			}
 			//dealer.pintarCartasInicio(datosRecibidos.getManoDealer());
 			dealer.pintarCartasInicio(asignarCartas(datosRecibidos.getManoDealer()));
+			if(!datosRecibidos.getMensaje().equals(""))
 			areaMensajes.append(datosRecibidos.getMensaje()+"\n");
 		}
 		
 		public void pintarTurno(DatosBlackJack datosRecibidos) {
 			valorManos = datosRecibidos.getValorManos();
+			if(!datosRecibidos.getMensaje().equals(""))
 			areaMensajes.append(datosRecibidos.getMensaje()+"\n");	
 			ClienteBlackJack cliente = (ClienteBlackJack)this.getTopLevelAncestor();
 			
@@ -571,8 +576,9 @@ public class VentanaSalaJuego extends JInternalFrame {
 						 	
 		}
 		public void repartirGanancias(DatosBlackJack datosRecibidos) {
-			yoClase.pack();
+
 			parejaNombreGanancia = datosRecibidos.getParejas();
+			if(!datosRecibidos.getMensaje().equals(""))
 			areaMensajes.append(datosRecibidos.getMensajeGanancias());
 
 			reiniciarJuego.setEnabled(true);
@@ -638,7 +644,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			for(int i = 0; i < 3; i++) {
 				System.out.println("Apuesta #"+(i+1)+" "+apuestas[i]);
 			}
-			yoClase.pack();
+			if(!datosRecibidos.getMensaje().equals(""))
 			areaMensajes.append(datosRecibidos.getMensaje()+"\n");	
 			ClienteBlackJack cliente = (ClienteBlackJack)this.getTopLevelAncestor();
 			
@@ -667,29 +673,24 @@ public class VentanaSalaJuego extends JInternalFrame {
 					if(datosRecibidos.getJugador().equals(jugador2Id)) {
 						//mensaje para PanelJuego jugador2
 						if(datosRecibidos.getJugadorEstado().equals("apuesta")) {
-							yoClase.pack();
 							//jugador2.dibujarCarta(datosRecibidos.getCarta());
 							System.out.println("Apuesta["+jugador2N+"] = "+datosRecibidos.getApuestas()[jugador2N]);
 							apostar(String.valueOf(datosRecibidos.getApuestas()[jugador2N]), "2");
-							yoClase.pack();
+							
 						}
 					}else if(datosRecibidos.getJugador().equals(jugador3Id)) {
 						if(datosRecibidos.getJugadorEstado().equals("apuesta")) {
-							yoClase.pack();
 							System.out.println("Apuesta["+jugador3N+"] = "+datosRecibidos.getApuestas()[jugador3N]);
 							
 							apostar(String.valueOf(datosRecibidos.getApuestas()[jugador3N]),"3");
-							yoClase.pack();
 						}
 					}
 					else {
-						yoClase.pack();
 						System.out.println("Te habla el dealer papá");
 						//mensaje para PanelJuego dealer
 						if(datosRecibidos.getJugadorEstado().equals("apuesta")) {
 							//dealer.dibujarCarta(datosRecibidos.getCarta());
 							apostar("10", "dealer");
-							yoClase.pack();
 						}
 					}
 					
@@ -697,10 +698,10 @@ public class VentanaSalaJuego extends JInternalFrame {
 		}
 		
 		public void pintarGanador(DatosBlackJack datosRecibidos) {
-			yoClase.pack();
+			if(!datosRecibidos.getMensaje().equals(""))
 			areaMensajes.append(datosRecibidos.getMensaje()+"\n");	
 			ClienteBlackJack cliente = (ClienteBlackJack)this.getTopLevelAncestor();
-			yoClase.pack();
+			
 			
 	
 			
@@ -782,19 +783,20 @@ public class VentanaSalaJuego extends JInternalFrame {
 				}
 				
 			}else if(actionEvent.getSource() == apostar) {
-				yoClase.pack();
 				cantidadApuesta = 10;
-				apostar.setEnabled(false);
-				apostar.removeActionListener(escucha);
 				apuesta1.setPreferredSize(new Dimension(50,20));
-				apuesta1.setText(String.valueOf(cantidadApuesta));
+				apuesta1.setText((Integer.parseInt(apuesta1.getText())+10)+"");
 				yoClase.pack();
+				if(Integer.parseInt(dinero1.getText())-Integer.parseInt(apuesta1.getText())<10) {
+					apostar.setEnabled(false);
+					apostar.removeActionListener(escucha);
+				}
 			}else if(actionEvent.getSource() == confirmarApuesta){
 				if(cantidadApuesta > 0) {
 					yoClase.pack();
 					aposto = true;
-					System.out.println("Estoy apostando "+cantidadApuesta);
-					enviarDatos(String.valueOf(cantidadApuesta));
+					System.out.println("Estoy apostando "+apuesta1.getText());
+					enviarDatos(apuesta1.getText());
 					cantidadApuesta = 0;
 					confirmarApuesta.setEnabled(false);
 					confirmarApuesta.removeActionListener(escucha);
@@ -809,6 +811,10 @@ public class VentanaSalaJuego extends JInternalFrame {
 				enviarDatos("abandonar");
 			}
 			else if(actionEvent.getSource() == reiniciarJuego) {
+				yoCliente.setTesoro1(Integer.parseInt(dinero1.getText()));
+				yoCliente.setTesoro2(Integer.parseInt(dinero2.getText()));
+				yoCliente.setTesoro3(Integer.parseInt(dinero3.getText()));
+				yoCliente.setTesoroDealer(Integer.parseInt(dineroDealer.getText()));
 				enviarDatos("reiniciar");
 				dispose();
 			}
