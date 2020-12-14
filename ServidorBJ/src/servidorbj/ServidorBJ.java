@@ -56,6 +56,7 @@ public class ServidorBJ implements Runnable {
 	private ArrayList<Carta> manoDealer;
 	private int[] valorManos;
 	private int o,u;
+	private int numeroJugadoresReiniciando;
 	private DatosBlackJack datosEnviar;
 
 	public ServidorBJ() {
@@ -187,7 +188,7 @@ public class ServidorBJ implements Runnable {
 		System.out.println("Analizando el mensaje del jugador con index "+indexJugador+" que dice "+entrada);
 		// TODO Auto-generated method stub
 		// garantizar que solo se analice la petición del jugador en turno.
-		while (indexJugador != jugadorEnTurno && !entrada.equals("reiniciar")) {
+		while (indexJugador != jugadorEnTurno && !entrada.equals("reiniciar") && !entrada.equals("abandonar")) {
 			bloqueoJuego.lock();
 			try {
 				esperarTurno.await();
@@ -395,9 +396,15 @@ public class ServidorBJ implements Runnable {
 			
 		}
 		else if(entrada.equals("reiniciar")) {
-			datosEnviar.setJugadorEstado("reiniciando");
-			jugadores[indexJugador].enviarMensajeCliente(datosEnviar);
-			System.out.println("Enviando reiniciar al jugador con index "+indexJugador);
+			numeroJugadoresReiniciando++;
+			if(numeroJugadoresReiniciando==3) {
+				reiniciar();
+			}
+			else {
+				datosEnviar.setJugadorEstado("reiniciando");
+				jugadores[indexJugador].enviarMensajeCliente(datosEnviar);
+				System.out.println("Enviando reiniciar al jugador con index "+indexJugador);
+			}
 		}
 		else {
 			datosEnviar = new DatosBlackJack();
@@ -429,6 +436,32 @@ public class ServidorBJ implements Runnable {
 			jugadores[2].enviarMensajeCliente(datosEnviar);
 
 		}
+	}
+
+	private void reiniciar() {
+		// TODO Auto-generated method stub
+		int[] apuestas = {0,0,0};
+		String[] idJugadores = this.idJugadores;
+		inicializarVariablesControlRonda();
+		this.idJugadores=idJugadores;
+		datosEnviar = new DatosBlackJack();
+		datosEnviar.setManoDealer(manosJugadores.get(3));
+		datosEnviar.setManoJugador1(manosJugadores.get(0));
+		datosEnviar.setManoJugador2(manosJugadores.get(1));
+		datosEnviar.setManoJugador3(manosJugadores.get(2));
+		datosEnviar.setMazo(mazo);
+		datosEnviar.setIdJugadores(idJugadores);
+		datosEnviar.setValorManos(valorManos);
+		datosEnviar.setEstadoJuego(true); // Ronda de apuestas activado.
+		datosEnviar.setMensaje("Inicias " + idJugadores[0] + " tienes " + valorManos[0]);
+		datosEnviar.setJugadorEstado("reiniciar");
+		datosEnviar.setJugador(idJugadores[0]);
+		datosEnviar.setApuestas(apuestas);
+		jugadores[0].enviarMensajeCliente(datosEnviar);
+		jugadores[1].enviarMensajeCliente(datosEnviar);
+		jugadores[2].enviarMensajeCliente(datosEnviar);
+		jugadorEnTurno = 0;
+		numeroJugadoresReiniciando=0;
 	}
 
 	private void terminarJuego() {
