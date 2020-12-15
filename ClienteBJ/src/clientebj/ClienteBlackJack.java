@@ -207,7 +207,6 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 		//datosRecibidos = new DatosBlackJack();
 		// TODO Auto-generated method stub
 		//mostrar bienvenida al jugador	
-		   System.out.println("Corriendo papá");
 			try {
 				datosRecibidos = new DatosBlackJack();
 				datosRecibidos = (DatosBlackJack) in.readObject();

@@ -180,7 +180,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			//Informacion relacionada con el Dealer
 			palabraDineroDealer = new JLabel("Dinero: ");
 			palabraDineroDealer.setPreferredSize(new Dimension(50,20));
-			palabraApuestaDealer = new JLabel("      Apuesta dealer: ");
+			palabraApuestaDealer = new JLabel("      Apuesta: ");
 			palabraApuestaDealer.setPreferredSize(new Dimension(80,20));
 			//getTesoroDealer hace referencia a las ganancias que ha obtenido el Dealer
 			dineroDealer = new JLabel(String.valueOf(yoCliente.getTesoroDealer()));
