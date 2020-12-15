@@ -434,8 +434,8 @@ public class ServidorBJ implements Runnable {
 			datosEnviar.setIdJugadores(idJugadores);
 			datosEnviar.setValorManos(valorManos);
 			datosEnviar.setJugador(idJugadores[indexJugador]);
-			datosEnviar.setMensaje(idJugadores[indexJugador] + " aposto" + entrada);
-			System.out.println(indexJugador+" apostó "+entrada);
+			datosEnviar.setMensaje(idJugadores[indexJugador] + " aposto " + entrada);
+			System.out.println(indexJugador+" aposto "+entrada);
 			datosEnviar.setEstadoJuego(true);
 			datosEnviar.setJugadorEstado("apuesta");
 			datosEnviar.setApuestas(apuestasJugadores);
