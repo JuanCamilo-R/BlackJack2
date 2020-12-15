@@ -41,7 +41,7 @@ public class Instrucciones extends JFrame {
 	private JLabel texto1,imagen10,texto2,imagenBoton,texto5,texto6,texto11,texto14,texto15;
 	
 	/** The texto 17. */
-	private JTextArea texto3,texto4,texto7,texto8,texto9,texto10,texto12,texto13,texto16,texto17;
+	private JTextArea texto3,texto4,texto7,texto8,texto9,texto10,texto12,texto13,texto16,texto17,texto18;
 	
 	/** The imagen. */
 	private ImageIcon imagen;
@@ -225,7 +225,7 @@ public class Instrucciones extends JFrame {
 		contraints.gridheight=1;
 		contraints.anchor = contraints.CENTER;
 		add(texto12,contraints);	
-
+                                //                                                       //
 		texto13 = new JTextArea("*Si no gano con BlackJack se le da 10 mas de lo que     \n aposto en total 20 fichas");
 		texto13.setFont(fuente2);
 		texto13.setEditable(false);
@@ -236,11 +236,22 @@ public class Instrucciones extends JFrame {
 		contraints.gridheight=1;
 		contraints.anchor = contraints.CENTER;
 		add(texto13,contraints);
+                                //                                                       //		
+		texto18 = new JTextArea("*Si pierde contra el dealer le debe dar sus 10 fichas   \n apostadas al dealer");
+		texto18.setFont(fuente2);
+		texto18.setEditable(false);
+		texto18.setBackground(Color.green);
+		contraints.gridx=0;
+		contraints.gridy=15;
+		contraints.gridwidth=1;
+		contraints.gridheight=1;
+		contraints.anchor = contraints.CENTER;
+		add(texto18,contraints);
 		
 		texto14 = new JLabel("Nota");
 		texto14.setFont(fuente);
 		contraints.gridx=0;
-		contraints.gridy=15;
+		contraints.gridy=16;
 		contraints.gridwidth=1;
 		contraints.gridheight=1;
 		contraints.anchor = contraints.WEST;
@@ -250,7 +261,7 @@ public class Instrucciones extends JFrame {
 
 		texto15.setFont(fuente);
 		contraints.gridx=0;
-		contraints.gridy=16;
+		contraints.gridy=17;
 		contraints.gridwidth=1;
 		contraints.gridheight=1;
 		contraints.anchor = contraints.WEST;
@@ -261,7 +272,7 @@ public class Instrucciones extends JFrame {
 		texto16.setEditable(false);
 		texto16.setBackground(Color.green);
 		contraints.gridx=0;
-		contraints.gridy=17;
+		contraints.gridy=18;
 		contraints.gridwidth=1;
 		contraints.gridheight=1;
 		contraints.anchor = contraints.CENTER;
@@ -273,7 +284,7 @@ public class Instrucciones extends JFrame {
 		texto17.setEditable(false);
 		texto17.setBackground(Color.green);
 		contraints.gridx=0;
-		contraints.gridy=18;
+		contraints.gridy=19;
 		contraints.gridwidth=1;
 		contraints.gridheight=1;
 		contraints.anchor = contraints.CENTER;
@@ -283,7 +294,7 @@ public class Instrucciones extends JFrame {
 		aceptar.setEnabled(true);
 		aceptar.addActionListener(escuchas);
 		contraints.gridx=0;
-		contraints.gridy=19;
+		contraints.gridy=20;
 		contraints.gridwidth=1;
 		contraints.gridheight=1;
 		contraints.anchor = contraints.CENTER;
