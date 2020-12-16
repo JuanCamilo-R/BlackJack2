@@ -17,7 +17,13 @@ import javax.imageio.ImageIO;
 
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Baraja.
+ */
 public class Baraja implements Serializable {
+	
+	/** The Constant CARTAS_FILE. */
 	public static final String CARTAS_FILE="/recursos/cards.png";
 	   
    	/** The Constant CARTA_WIDTH. */
@@ -32,10 +38,16 @@ public class Baraja implements Serializable {
    	/** The Constant VALORES. */
    	private static final int VALORES=13;
    	
+   /** The mazo. */
    private ArrayList<Carta> mazo;
+   
+   /** The aleatorio. */
    private Random aleatorio;
  
    
+   /**
+    * Instantiates a new baraja.
+    */
    public Baraja() {
 	   aleatorio = new Random();
 	   mazo = new ArrayList<Carta>();
@@ -59,7 +71,11 @@ public class Baraja implements Serializable {
 	   }
 	   asignarImagen();
    }
-  	private void asignarImagen() {   	   
+  	
+	  /**
+	   * Asignar imagen.
+	   */
+	  private void asignarImagen() {   	   
   		BufferedImage cardsImage = FileIO.readImageFile(this, CARTAS_FILE);
 			int index = 0;
 		    for (int palo = 0; palo < PALOS; palo++) {
@@ -71,7 +87,14 @@ public class Baraja implements Serializable {
 		      } 
 		     }		    
 	  }
-  	
+   
+   /**
+    * Revisar carta.
+    *  Compara dos cartas, si la encuentra la elimina del mazo y la retorna.
+    * @param carta the carta
+    * @return the carta
+    * 
+    */
    public Carta revisarCarta(Carta carta) {
 	   
 	   for(int i = 0; i < mazo.size(); i++) {
@@ -84,12 +107,23 @@ public class Baraja implements Serializable {
 	   
    }
  
+   /**
+    * Eliminar carta.
+    * Elimina una carta del mazo y la retorna.
+    * @param i the i
+    * @return the carta
+    */
    public Carta eliminarCarta(int i) {
 	   Carta carta = mazo.get(i);
 	   mazo.remove(i);
 	   return carta;
    }
    
+   /**
+    * Gets the carta.
+    * 	
+    * @return the carta
+    */
    public Carta getCarta() {
 	   int index = aleatorio.nextInt(mazo.size());
 	   Carta carta = mazo.get(index);
@@ -97,6 +131,11 @@ public class Baraja implements Serializable {
 	   return carta;   
    }
    
+   /**
+    * Mazo size.
+    *
+    * @return the int
+    */
    public int mazoSize() {
 	   return mazo.size();
    }

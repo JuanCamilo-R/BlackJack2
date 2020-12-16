@@ -50,7 +50,7 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 	
 	//Constantes de conexión con el Servidor BlackJack
 
-	public static final int PUERTO=7375;
+	public static final int PUERTO=7371;
 
 	public static final String IP="127.0.0.1";
 	
@@ -59,6 +59,11 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 	private String idYo, otroJugador, otroJugador3;
 	private int nYo, nOtroJugador, nOtroJugador3,tesoro1=0,tesoro2=0,tesoro3=0,tesoroDealer=0;
 	private ClienteBlackJack yoCliente;
+	
+	/*
+	 * Inician los get y set Tesoros de los jugadores.
+	 * Lo que hacen es que guardan las ganancias de los jugadores para la siguiente ronda (si la hay)
+	 */
 	public int getTesoro1() {
 		return tesoro1;
 	}
@@ -202,7 +207,6 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 		//datosRecibidos = new DatosBlackJack();
 		// TODO Auto-generated method stub
 		//mostrar bienvenida al jugador	
-		   System.out.println("Corriendo papá");
 			try {
 				datosRecibidos = new DatosBlackJack();
 				datosRecibidos = (DatosBlackJack) in.readObject();
@@ -210,6 +214,7 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 				if(datosRecibidos.getIdJugadores()[0].equals(idYo)) {
 					otroJugador=datosRecibidos.getIdJugadores()[1];
 					otroJugador3 = datosRecibidos.getIdJugadores()[2];
+					//Indice del jugador absoluto para el servidor.
 					nYo=0;
 					nOtroJugador=1;
 					nOtroJugador3=2;
@@ -240,22 +245,18 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 				try {
 					datosRecibidos = new DatosBlackJack();
 					datosRecibidos = (DatosBlackJack)in.readObject();
-					System.out.println("El estado es "+datosRecibidos.getJugadorEstado());
-					if(datosRecibidos.getApuestas()!=null) {
-						System.out.println("Apuestas a enviar solicitadas por "+datosRecibidos.getJugador()+":");
-						for(int i=0; i<datosRecibidos.getApuestas().length;i++) {
-							System.out.println("["+i+","+datosRecibidos.getApuestas()[i]+"]");
-						}
-					}
+					//Si no decide jugar otra ronda mas
 					if(datosRecibidos.getJugadorEstado().equals("saliendo")) {
 						enviarMensajeServidor("salgo");
 						JOptionPane.showMessageDialog(null,"El jugador "+datosRecibidos.getJugador()+" ha decidido retirarse del juego");
 						cerrarConexion();
 					}
+					//Jugador decide jugar otra ronda mas, es puesto en espera hacia los demas jugadores
 					if(datosRecibidos.getJugadorEstado().equals("reiniciando")) {
 						ventanaEspera = new VentanaEspera(idYo);
 						add(ventanaEspera);
 					}
+					//Todos los jugadores aceptaron otra ronda mas, se reinicia el juego.
 					if(datosRecibidos.getJugadorEstado().equals("reiniciar")) {
 						if(nYo==0) {
 							turno=true;
@@ -264,16 +265,9 @@ public class ClienteBlackJack extends JFrame implements Runnable{
 					}
 					mostrarMensajes("Cliente hilo run recibiendo mensaje servidor ");
 					mostrarMensajes(datosRecibidos.getJugador()+" "+datosRecibidos.getJugadorEstado());
-					/*if(datosRecibidos.getEstadoJuego()) { //True significa Ronda apuestas
-						System.out.println("ENTRO A PINTAR APUESTAS");
-						
-						ventanaSalaJuego.pintarApuestas(datosRecibidos);
-						
-					}else {
-						ventanaSalaJuego.pintarTurno(datosRecibidos);
-					}*/
+					
+					//If para la parte final del juego.
 					if(datosRecibidos.getGanadores() != null && datosRecibidos.getParejas() != null) {
-						System.out.print("Entrandoo");
 						datosRecibidos.mostrarGanancias();
 						ventanaSalaJuego.pintarGanador(datosRecibidos);
 						ventanaSalaJuego.repartirGanancias(datosRecibidos);

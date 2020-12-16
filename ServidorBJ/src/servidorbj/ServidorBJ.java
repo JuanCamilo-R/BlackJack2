@@ -33,7 +33,7 @@ public class ServidorBJ implements Runnable {
 
 
 
-	public static final int PUERTO = 7375;
+	public static final int PUERTO = 7371;
 
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
@@ -428,8 +428,8 @@ public class ServidorBJ implements Runnable {
 			datosEnviar.setIdJugadores(idJugadores);
 			datosEnviar.setValorManos(valorManos);
 			datosEnviar.setJugador(idJugadores[indexJugador]);
-			datosEnviar.setMensaje(idJugadores[indexJugador] + " aposto" + entrada);
-			System.out.println(indexJugador+" apostó "+entrada);
+			datosEnviar.setMensaje(idJugadores[indexJugador] + " aposto " + entrada);
+			System.out.println(indexJugador+" aposto "+entrada);
 			datosEnviar.setEstadoJuego(true);
 			datosEnviar.setJugadorEstado("apuesta");
 			datosEnviar.setApuestas(apuestasJugadores);
@@ -731,6 +731,7 @@ public class ServidorBJ implements Runnable {
 	 public void determinarGanador() {
 		
 		 if(valorManos[3]>21) {
+
 			 for(int i=0;i<3;i++) {
 				 if(valorManos[i]<=21) {
 					 ganador.add(idJugadores[i]);
@@ -738,7 +739,7 @@ public class ServidorBJ implements Runnable {
 			 }
 		 }else if(((valorManos[0] <= valorManos[3]) && (valorManos[1] <= valorManos[3]) &&( valorManos[2] <= valorManos[3]))
 				 && valorManos[3] <= 21){
-			 System.out.print("ganoo dealer");
+
 			 ganador.add("dealer");
 
 			// numGanadores ++;
@@ -747,13 +748,19 @@ public class ServidorBJ implements Runnable {
 			 ganador.add("dealer");
 
 		 }
-		 else {
+		 else { 
 			 for(int i=0;i<3;i++) {
 				 if(valorManos[i]>valorManos[3] && valorManos[i]<=21) {
 					 ganador.add(idJugadores[i]);
-
 				 }
 			 }
+		 }
+		 
+		 if(valorManos[0] > 21 && valorManos[1] > 21 && valorManos[2] > 21 && 
+				 valorManos[3] > 21){
+			
+		 }else if(valorManos[3]<21 && ganador.size()==0){
+			 ganador.add("dealer");
 		 }
 	 }
 	 //Determina si la jugada del jugador fue o no un BlackJack

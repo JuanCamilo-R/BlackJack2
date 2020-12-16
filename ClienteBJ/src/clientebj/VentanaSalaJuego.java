@@ -57,7 +57,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 		/** The Constant DINERO_INICIAL. 
 		 * Dinero con el que empiezan todos los jugadores inluido el Dealer
 		 *  */
-		public static final int DINERO_INICIAL=40;
+		public static final int DINERO_INICIAL=100;
 		
 		/** Paneles de los jugadores. */
 		private PanelJugador dealer, yo, jugador2, jugador3;
@@ -180,7 +180,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 			//Informacion relacionada con el Dealer
 			palabraDineroDealer = new JLabel("Dinero: ");
 			palabraDineroDealer.setPreferredSize(new Dimension(50,20));
-			palabraApuestaDealer = new JLabel("      Apuesta dealer: ");
+			palabraApuestaDealer = new JLabel("      Apuesta: ");
 			palabraApuestaDealer.setPreferredSize(new Dimension(80,20));
 			//getTesoroDealer hace referencia a las ganancias que ha obtenido el Dealer
 			dineroDealer = new JLabel(String.valueOf(yoCliente.getTesoroDealer()));
