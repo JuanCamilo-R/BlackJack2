@@ -57,7 +57,7 @@ public class VentanaSalaJuego extends JInternalFrame {
 		/** The Constant DINERO_INICIAL. 
 		 * Dinero con el que empiezan todos los jugadores inluido el Dealer
 		 *  */
-		public static final int DINERO_INICIAL=40;
+		public static final int DINERO_INICIAL=100;
 		
 		/** Paneles de los jugadores. */
 		private PanelJugador dealer, yo, jugador2, jugador3;

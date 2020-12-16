@@ -33,7 +33,7 @@ public class ServidorBJ implements Runnable {
 
 
 
-	public static final int PUERTO = 7373;
+	public static final int PUERTO = 7371;
 
 	public static final String IP = "127.0.0.1";
 	public static final int LONGITUD_COLA = 3;
