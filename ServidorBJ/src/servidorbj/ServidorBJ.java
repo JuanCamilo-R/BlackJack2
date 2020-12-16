@@ -150,7 +150,8 @@ public class ServidorBJ implements Runnable {
 			}
 			
 		}
-		for(int j=0;j<tieneAs[i];j++) {
+		int Ases = tieneAs[i];
+		for(int j=0;j<Ases;j++) {
 			if(valorManos[i]>21) {
 				tieneAs[i]--;
 				System.out.println("Cambio el As de "+i+" a "+tieneAs[i]);
