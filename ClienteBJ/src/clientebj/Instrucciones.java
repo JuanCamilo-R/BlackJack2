@@ -50,7 +50,7 @@ public class Instrucciones extends JFrame {
 	private Instrucciones instruccionesYo;
 	
 	/**
-	 * Instantiates a new instrucciones.
+	 * Instantiates a new instrucciones..
 	 */
 	public Instrucciones() {
 		this.setVisible(true);
@@ -124,7 +124,7 @@ public class Instrucciones extends JFrame {
 		imagen10.setSize(100, 45);
 		imagen10.setBorder(null);
 		imagen = new ImageIcon(getClass().getResource("/recursos/botones.png"));
-		imagen10.setIcon(new  ImageIcon(imagen.getImage().getScaledInstance(100,45, Image.SCALE_AREA_AVERAGING)));
+		imagen10.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(100,45, Image.SCALE_AREA_AVERAGING)));
 		contraints.gridx=0;
 		contraints.gridy=4;
 		contraints.gridwidth=1;
