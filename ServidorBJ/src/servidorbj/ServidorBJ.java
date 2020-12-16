@@ -62,7 +62,7 @@ public class ServidorBJ implements Runnable {
 	private int saberSiVolo,saberSiPlanto;
 	private int numeroJugadoresReiniciando;
 	private DatosBlackJack datosEnviar;
-	private boolean[] tieneAs;
+	private int[] tieneAs;
 
 	public ServidorBJ() {
 		// inicializar variables de control del juego
@@ -92,9 +92,9 @@ public class ServidorBJ implements Runnable {
 	private void inicializarVariablesControlRonda() {
 		// TODO Auto-generated method stub
 		// Variables de control del juego.
-		tieneAs = new boolean[4];
+		tieneAs = new int[4];
 		for(int i=0;i<tieneAs.length;i++) {
-			tieneAs[i]=false;
+			tieneAs[i]=0;
 		}
 		idJugadores = new String[3];
 		valorManos = new int[4];
@@ -138,27 +138,21 @@ public class ServidorBJ implements Runnable {
 	private void calcularValorMano(Carta carta, int i) {
 		System.out.println("El índice "+i+" tiene As?: "+tieneAs[i]);
 		// TODO Auto-generated method stub
-		boolean noMas = false;
 		if (carta.getValor().equals("As")) {
-			tieneAs[i] = true;
+			tieneAs[i]++;
 			System.out.println("Cambio el As de "+i+" a "+tieneAs[i]);
-			if(valorManos[i] <= 20 && valorManos[i] > 10) {
-				tieneAs[i] = false;
-				System.out.println("Cambio el As de "+i+" a "+tieneAs[i]);
-				valorManos[i] += 1;
-			}else if(valorManos[i] <= 10 && !noMas) {
-				valorManos[i] += 11;
-			}else {
-				valorManos[i] += 11;
-			}
+			valorManos[i]+=11;
 		} else {
 			if (carta.getValor().equals("J") || carta.getValor().equals("Q") || carta.getValor().equals("K")) {
 				valorManos[i] += 10;
 			} else {
 				valorManos[i] += Integer.parseInt(carta.getValor());
 			}
-			if(tieneAs[i] && valorManos[i]>21) {
-				tieneAs[i]=false;
+			
+		}
+		for(int j=0;j<tieneAs[i];j++) {
+			if(valorManos[i]>21) {
+				tieneAs[i]--;
 				System.out.println("Cambio el As de "+i+" a "+tieneAs[i]);
 				valorManos[i]-=10;
 			}

@@ -91,10 +91,10 @@ public class Baraja implements Serializable {
    }
    
    public Carta getCarta() {
-	   int index = aleatorio.nextInt(mazoSize());
+	   int index = aleatorio.nextInt(mazo.size());
 	   Carta carta = mazo.get(index);
 	   mazo.remove(index); //elimina del mazo la carta usada
-	   return carta;
+	   return carta;   
    }
    
    public int mazoSize() {
